@@ -12,4 +12,4 @@ Liste de choses à faire
 
 ---
 
-Bref, sinon tu peux regarder ce fichier README pour la syntaxe pour le readme, c'est du MarkDown :)
+Bref, sinon tu peux regarder ce fichier README.md pour la syntaxe pour le readme, c'est du MarkDown :)
