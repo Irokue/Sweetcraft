@@ -1,12 +1,10 @@
 Client de Sweetcraft
-=
----
+====
 
 Voilà, j'ai aménagé l'espace Github, tout devrait aller maintenant :)
 
 Liste de choses à faire
 --
------
 
  - Un truc
  - Encore un autre
