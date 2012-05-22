@@ -452,7 +452,6 @@ public abstract class EntityPlayer extends EntityLiving
     }
     
     public void updateCloak(String cloak){
-    	System.out.println(cloak);
     	cloakUrl = cloak;
     }
     
