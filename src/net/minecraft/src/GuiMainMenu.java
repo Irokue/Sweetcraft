@@ -27,7 +27,7 @@ import org.lwjgl.util.glu.GLU;
 
 public class GuiMainMenu extends GuiScreen
 {
-    /** The RNG used by the Main Menu Screen. */
+    /** The RNG used by ME (Nopoza973) the Main Menu Screen. */
     private static final Random rand = new Random();
 
     /** Counts the number of screen updates. */
