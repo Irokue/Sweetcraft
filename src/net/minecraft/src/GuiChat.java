@@ -17,6 +17,7 @@ public class GuiChat extends GuiScreen
     private int field_50067_h;
     private List field_50068_i;
     private URI field_50065_j;
+    private GuiCheckBox checkbox;
 
     /** Chat entry field */
     protected GuiTextField inputField;
@@ -62,6 +63,8 @@ public class GuiChat extends GuiScreen
         inputField.setFocused(true);
         inputField.setText(field_50066_k);
         inputField.func_50026_c(false);
+        checkbox = new GuiCheckBox(1, 30, 30, true);
+        controlList.add(checkbox);
     }
 
     /**
@@ -161,11 +164,22 @@ public class GuiChat extends GuiScreen
         }
     }
 
+    protected void actionPerformed(GuiButton par1GuiButton){
+    	if(par1GuiButton.id == 1){
+    		if(par1GuiButton.enabled){
+    		((GuiCheckBox)par1GuiButton).setChecked(true);
+    		}
+    		else ((GuiCheckBox)par1GuiButton).setChecked(false);
+    	}
+    	System.out.println(mc.ingameGUI.lastChecked);
+    }
+    
     /**
      * Called when the mouse is clicked.
      */
     protected void mouseClicked(int par1, int par2, int par3)
     {
+    	
         if (par3 == 0)
         {
             ChatClickData chatclickdata = mc.ingameGUI.func_50012_a(Mouse.getX(), Mouse.getY());
@@ -182,11 +196,11 @@ public class GuiChat extends GuiScreen
                 }
             }
         }
-
         inputField.mouseClicked(par1, par2, par3);
         super.mouseClicked(par1, par2, par3);
     }
 
+    
     public void confirmClicked(boolean par1, int par2)
     {
         if (par2 == 0)
@@ -333,6 +347,7 @@ public class GuiChat extends GuiScreen
     public void drawScreen(int par1, int par2, float par3)
     {
         drawRect(2, height - 14, width - 2, height - 2, 0x80000000);
+        //fontRenderer.drawString("Test", 2, height - 24, 0xffffff);
         inputField.drawTextBox();
         super.drawScreen(par1, par2, par3);
     }

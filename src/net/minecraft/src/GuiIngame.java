@@ -3,6 +3,7 @@ package net.minecraft.src;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
@@ -23,6 +24,8 @@ public class GuiIngame extends Gui
 
     /** The string specifying which record music is playing */
     private String recordPlaying;
+    
+    public int[] lastChecked;
 
     /** How many ticks the record playing message will be displayed */
     private int recordPlayingUpFor;
@@ -49,6 +52,7 @@ public class GuiIngame extends Gui
         field_50018_o = false;
         prevVignetteBrightness = 1.0F;
         mc = par1Minecraft;
+        lastChecked = new int[4];
     }
 
     /**
