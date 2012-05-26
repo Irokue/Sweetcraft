@@ -63,12 +63,13 @@ public class GuiChat extends GuiScreen
         inputField.setFocused(true);
         inputField.setText(field_50066_k);
         inputField.func_50026_c(false);
-        checkboxGlobal = new GuiCheckBox(1, 2, height - 35, true);
+        controlList.add(new GuiButton(1, 5, height - 37, 90, 20, "Options du chat"));
+        /*checkboxGlobal = new GuiCheckBox(1, 2, height - 35, true);
         checkboxLocal = new GuiCheckBox(2, 24, height - 35, true);
         checkboxCommerce = new GuiCheckBox(3, 46, height - 35, true);
         controlList.add(checkboxGlobal);
         controlList.add(checkboxLocal);
-        controlList.add(checkboxCommerce);
+        controlList.add(checkboxCommerce);*/
     }
 
     /**
@@ -170,6 +171,9 @@ public class GuiChat extends GuiScreen
 
     protected void actionPerformed(GuiButton par1GuiButton){
     	if(par1GuiButton.id == 1){
+    		mc.displayGuiScreen(new GuiChatOptions(this, mc));
+    	}
+    	/*if(par1GuiButton.id == 1){
     		if(checkboxGlobal.isChecked()){
     		checkboxGlobal.setChecked(false);
     		mc.thePlayer.sendChatMessage("/ch leave g");
@@ -193,7 +197,7 @@ public class GuiChat extends GuiScreen
     		else {checkboxCommerce.setChecked(true);
     		mc.thePlayer.sendChatMessage("/ch join c");
     		}
-    	}
+    	}*/
     }
     
     /**

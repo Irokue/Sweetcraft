@@ -33,6 +33,7 @@ public class GameSettings
     public int renderDistance;
     public boolean viewBobbing;
     public boolean anaglyph;
+    public boolean global, commerce, local;
 
     /** Advanced OpenGL */
     public boolean advancedOpengl;
@@ -113,6 +114,9 @@ public class GameSettings
         fancyGraphics = true;
         ambientOcclusion = true;
         clouds = true;
+        global = true;
+        commerce = true;
+        local = true;
         skin = "Default";
         keyBindForward = new KeyBinding("key.forward", 17);
         keyBindLeft = new KeyBinding("key.left", 30);
@@ -168,6 +172,9 @@ public class GameSettings
         fancyGraphics = true;
         ambientOcclusion = true;
         clouds = true;
+        global = true;
+        commerce = true;
+        local = true;
         skin = "Default";
         keyBindForward = new KeyBinding("key.forward", 17);
         keyBindLeft = new KeyBinding("key.left", 30);
@@ -349,6 +356,21 @@ public class GameSettings
             ambientOcclusion = !ambientOcclusion;
             mc.renderGlobal.loadRenderers();
         }
+        
+        if (par1EnumOptions == EnumOptions.SEE_GLOBAL)
+        {
+        	global = !global;
+        }
+        
+        if (par1EnumOptions == EnumOptions.SEE_COMMERCE)
+        {
+        	commerce = !commerce;
+        }
+        
+        if (par1EnumOptions == EnumOptions.SEE_LOCAL)
+        {
+        	local = !local;
+        }
 
         saveOptions();
     }
@@ -406,6 +428,15 @@ public class GameSettings
 
             case 6:
                 return clouds;
+                
+            case 7:
+            	return global;
+            	
+            case 8:
+            	return commerce;
+            	
+            case 9:
+            	return local;
         }
 
         return false;
@@ -670,6 +701,15 @@ public class GameSettings
                     {
                         language = as[1];
                     }
+                    
+                    if(as[0].equals("see_global"))
+                    	global = as[1].equals("true");
+                    
+                    if(as[0].equals("see_commerce"))
+                    	commerce = as[1].equals("true");
+                    
+                    if(as[0].equals("see_local"))
+                    	local = as[1].equals("true");
 
                     int i = 0;
 
@@ -747,6 +787,9 @@ public class GameSettings
             printwriter.println((new StringBuilder()).append("skin:").append(skin).toString());
             printwriter.println((new StringBuilder()).append("lastServer:").append(lastServer).toString());
             printwriter.println((new StringBuilder()).append("lang:").append(language).toString());
+            printwriter.println((new StringBuilder()).append("see_global:").append(global).toString());
+            printwriter.println((new StringBuilder()).append("see_commerce:").append(commerce).toString());
+            printwriter.println((new StringBuilder()).append("see_local:").append(local).toString());
 
             for (int i = 0; i < keyBindings.length; i++)
             {

@@ -43,5 +43,24 @@ class EnumOptionsMappingHelper
             enumOptionsMappingHelperArray[EnumOptions.RENDER_CLOUDS.ordinal()] = 6;
         }
         catch (NoSuchFieldError nosuchfielderror5) { }
+        
+        try
+        {
+            enumOptionsMappingHelperArray[EnumOptions.SEE_GLOBAL.ordinal()] = 7;
+        }
+        catch (NoSuchFieldError nosuchfielderror6) { }
+        
+        try
+        {
+            enumOptionsMappingHelperArray[EnumOptions.SEE_COMMERCE.ordinal()] = 8;
+        }
+        catch (NoSuchFieldError nosuchfielderror7) { }
+        
+        try
+        {
+            enumOptionsMappingHelperArray[EnumOptions.SEE_LOCAL.ordinal()] = 9;
+        }
+        catch (NoSuchFieldError nosuchfielderror8) { }
+        
     }
 }
