@@ -100,7 +100,6 @@ public class GuiMainMenu extends GuiScreen
         	strpos = width + 1;
         	if(announceCount >= announces.length - 1)
         		announceCount = -1;
-        	System.out.println(announceCount);
         	announceCount++;
         }
         strpos -= 2;

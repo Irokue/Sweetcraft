@@ -21,7 +21,10 @@ public enum EnumOptions
     PARTICLES("options.particles", false, false),
     SEE_GLOBAL("options.seeglobal", false, true),
     SEE_COMMERCE("options.seecommerce", false, true),
-    SEE_LOCAL("options.seelocal", false, true);
+    SEE_LOCAL("options.seelocal", false, true),
+    TALK_GLOBAL("options.talkglobal", false, true),
+    TALK_COMMERCE("options.talkcommerce", false, true),
+    TALK_LOCAL("options.talklocal", false, true);
 
     private final boolean enumFloat;
     private final boolean enumBoolean;

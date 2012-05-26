@@ -13,6 +13,7 @@ public class GuiChatOptions extends GuiScreen {
 	protected int imgId;
 	
 	private GuiCheckBox global, commerce, local;
+	private GuiRadioButton talkGlobal, talkCommerce, talkLocal;
 	
 	public GuiChatOptions(GuiScreen parent, Minecraft mc){
 		this.guiParent = parent;
@@ -26,9 +27,21 @@ public class GuiChatOptions extends GuiScreen {
         global = new GuiCheckBox(1, displayX + 5, displayY + 20, "Global", mc.gameSettings.getOptionOrdinalValue(EnumOptions.SEE_GLOBAL), mc.theMinecraft);
         commerce = new GuiCheckBox(2, displayX + 5 + 20 + 10 + fontRenderer.getStringWidth("Global"), displayY + 20, "Commerce", mc.gameSettings.getOptionOrdinalValue(EnumOptions.SEE_COMMERCE), mc.theMinecraft);
         local = new GuiCheckBox(3, displayX + 5 + 40 + 20 + fontRenderer.getStringWidth("Global") + fontRenderer.getStringWidth("Commerce"), displayY + 20, "Local", mc.gameSettings.getOptionOrdinalValue(EnumOptions.SEE_LOCAL), mc.theMinecraft);
+        talkGlobal = new GuiRadioButton(4, displayX + 5, displayY + 60, "Global", true, mc.theMinecraft);
+        talkCommerce = new GuiRadioButton(5, displayX + 5 + 20 + 10 + fontRenderer.getStringWidth("Global"), displayY + 60, "Commerce", true, mc.theMinecraft);
+        talkLocal = new GuiRadioButton(6, displayX + 5 + 40 + 20 + fontRenderer.getStringWidth("Global") + fontRenderer.getStringWidth("Commerce"), displayY + 60, "Local", true, mc.theMinecraft);
         controlList.add(global);
         controlList.add(commerce);
         controlList.add(local);
+        controlList.add(talkGlobal);
+        controlList.add(talkCommerce);
+        controlList.add(talkLocal);
+        talkGlobal.setChecked(mc.gameSettings.getOptionOrdinalValue(EnumOptions.TALK_GLOBAL));
+        talkCommerce.setChecked(mc.gameSettings.getOptionOrdinalValue(EnumOptions.TALK_COMMERCE));
+        talkLocal.setChecked(mc.gameSettings.getOptionOrdinalValue(EnumOptions.TALK_LOCAL));
+        global.setChecked(mc.gameSettings.getOptionOrdinalValue(EnumOptions.SEE_GLOBAL) || talkGlobal.isChecked());
+        commerce.setChecked(mc.gameSettings.getOptionOrdinalValue(EnumOptions.SEE_COMMERCE) || talkCommerce.isChecked());
+        local.setChecked(mc.gameSettings.getOptionOrdinalValue(EnumOptions.SEE_LOCAL) || talkLocal.isChecked());
 	}
 	
 	public void drawScreen(int par1, int par2, float par3)
@@ -58,7 +71,33 @@ public class GuiChatOptions extends GuiScreen {
 		}else if(checkbox.id == 3){
 			local.setChecked(!local.isChecked());
 			mc.gameSettings.setOptionValue(EnumOptions.SEE_LOCAL, local.intValue());
+		}else if(checkbox.id == 4){
+			talkGlobal.setChecked(true);
+			mc.gameSettings.setOptionValue(EnumOptions.TALK_GLOBAL, talkGlobal.intValue());
+			talkCommerce.setChecked(false);
+			talkLocal.setChecked(false);
+		}else if(checkbox.id == 5){
+			talkGlobal.setChecked(false);
+			talkCommerce.setChecked(true);
+			mc.gameSettings.setOptionValue(EnumOptions.TALK_COMMERCE, talkCommerce.intValue());
+			talkLocal.setChecked(false);
+		}else if(checkbox.id == 6){
+			talkGlobal.setChecked(false);
+			talkCommerce.setChecked(false);
+			talkLocal.setChecked(true);
+			mc.gameSettings.setOptionValue(EnumOptions.TALK_LOCAL, talkLocal.intValue());
 		}
+		
+		if(talkGlobal.isChecked() && !global.isChecked()){
+			global.setChecked(true);
+		}else
+		if(talkCommerce.isChecked() && !commerce.isChecked()){
+			commerce.setChecked(true);
+		}else
+		if(talkLocal.isChecked() && !local.isChecked()){
+			local.setChecked(true);
+		}
+		
 	}
 	
 	protected void drawBackgroundImage()

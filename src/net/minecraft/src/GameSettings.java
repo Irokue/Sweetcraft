@@ -34,6 +34,7 @@ public class GameSettings
     public boolean viewBobbing;
     public boolean anaglyph;
     public boolean global, commerce, local;
+    public boolean talkGlobal, talkCommerce, talkLocal;
 
     /** Advanced OpenGL */
     public boolean advancedOpengl;
@@ -116,6 +117,9 @@ public class GameSettings
         clouds = true;
         global = true;
         commerce = true;
+        talkGlobal = true;
+        talkCommerce = false;
+        talkLocal = false;
         local = true;
         skin = "Default";
         keyBindForward = new KeyBinding("key.forward", 17);
@@ -175,6 +179,9 @@ public class GameSettings
         global = true;
         commerce = true;
         local = true;
+        talkGlobal = true;
+        talkCommerce = false;
+        talkLocal = false;
         skin = "Default";
         keyBindForward = new KeyBinding("key.forward", 17);
         keyBindLeft = new KeyBinding("key.left", 30);
@@ -371,6 +378,25 @@ public class GameSettings
         {
         	local = !local;
         }
+        
+        if(par1EnumOptions == EnumOptions.TALK_GLOBAL){
+        	talkGlobal = true;
+        	talkCommerce = false;
+        	talkLocal = false;
+        }
+
+        if(par1EnumOptions == EnumOptions.TALK_COMMERCE){
+        	talkGlobal = false;
+        	talkCommerce = true;
+        	talkLocal = false;
+        }
+
+        if(par1EnumOptions == EnumOptions.TALK_LOCAL){
+        	talkGlobal = false;
+        	talkCommerce = false;
+        	talkLocal = true;
+        }
+        
 
         saveOptions();
     }
@@ -437,6 +463,15 @@ public class GameSettings
             	
             case 9:
             	return local;
+            	
+            case 10:
+            	return talkGlobal;
+            	
+            case 11:
+            	return talkCommerce;
+            
+            case 12:
+            	return talkLocal;
         }
 
         return false;
@@ -711,6 +746,15 @@ public class GameSettings
                     if(as[0].equals("see_local"))
                     	local = as[1].equals("true");
 
+                    if(as[0].equals("talk_global"))
+                    	talkGlobal = as[1].equals("true");
+                    
+                   if(as[0].equals("talk_commerce"))
+                	   talkCommerce = as[1].equals("false");
+                   
+                   if(as[0].equals("talk_local"))
+                	   talkLocal = as[1].equals("false");
+                    
                     int i = 0;
 
                     while (i < keyBindings.length)
@@ -790,6 +834,9 @@ public class GameSettings
             printwriter.println((new StringBuilder()).append("see_global:").append(global).toString());
             printwriter.println((new StringBuilder()).append("see_commerce:").append(commerce).toString());
             printwriter.println((new StringBuilder()).append("see_local:").append(local).toString());
+            printwriter.println((new StringBuilder()).append("talk_global:").append(talkGlobal).toString());
+            printwriter.println((new StringBuilder()).append("talk_commerce:").append(talkCommerce).toString());
+            printwriter.println((new StringBuilder()).append("talk_local:").append(talkLocal).toString());
 
             for (int i = 0; i < keyBindings.length; i++)
             {

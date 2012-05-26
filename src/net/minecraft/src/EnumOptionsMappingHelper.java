@@ -62,5 +62,23 @@ class EnumOptionsMappingHelper
         }
         catch (NoSuchFieldError nosuchfielderror8) { }
         
+        try
+        {
+            enumOptionsMappingHelperArray[EnumOptions.TALK_GLOBAL.ordinal()] = 10;
+        }
+        catch (NoSuchFieldError nosuchfielderror8) { }
+        
+        try
+        {
+            enumOptionsMappingHelperArray[EnumOptions.TALK_COMMERCE.ordinal()] = 11;
+        }
+        catch (NoSuchFieldError nosuchfielderror8) { }
+        
+        try
+        {
+            enumOptionsMappingHelperArray[EnumOptions.TALK_LOCAL.ordinal()] = 12;
+        }
+        catch (NoSuchFieldError nosuchfielderror8) { }
+        
     }
 }
