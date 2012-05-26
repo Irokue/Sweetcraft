@@ -17,7 +17,7 @@ public class GuiChat extends GuiScreen
     private int field_50067_h;
     private List field_50068_i;
     private URI field_50065_j;
-    private GuiCheckBox checkbox;
+    private GuiCheckBox checkboxGlobal, checkboxLocal, checkboxCommerce;
 
     /** Chat entry field */
     protected GuiTextField inputField;
@@ -63,8 +63,12 @@ public class GuiChat extends GuiScreen
         inputField.setFocused(true);
         inputField.setText(field_50066_k);
         inputField.func_50026_c(false);
-        checkbox = new GuiCheckBox(1, 30, 30, true);
-        controlList.add(checkbox);
+        checkboxGlobal = new GuiCheckBox(1, 2, height - 35, true);
+        checkboxLocal = new GuiCheckBox(2, 24, height - 35, true);
+        checkboxCommerce = new GuiCheckBox(3, 46, height - 35, true);
+        controlList.add(checkboxGlobal);
+        controlList.add(checkboxLocal);
+        controlList.add(checkboxCommerce);
     }
 
     /**
@@ -166,12 +170,30 @@ public class GuiChat extends GuiScreen
 
     protected void actionPerformed(GuiButton par1GuiButton){
     	if(par1GuiButton.id == 1){
-    		if(par1GuiButton.enabled){
-    		((GuiCheckBox)par1GuiButton).setChecked(true);
+    		if(checkboxGlobal.isChecked()){
+    		checkboxGlobal.setChecked(false);
+    		mc.thePlayer.sendChatMessage("/ch leave g");
     		}
-    		else ((GuiCheckBox)par1GuiButton).setChecked(false);
+    		else {checkboxGlobal.setChecked(true);
+    		mc.thePlayer.sendChatMessage("/ch join g");
+    		}
+    	}else if(par1GuiButton.id == 2){
+    		if(checkboxLocal.isChecked()){
+        		checkboxLocal.setChecked(false);
+        		mc.thePlayer.sendChatMessage("/ch leave l");
+    		}
+    		else {checkboxLocal.setChecked(true);
+    		mc.thePlayer.sendChatMessage("/ch join l");
+    		}
+    	}else if(par1GuiButton.id == 3){
+    		if(checkboxCommerce.isChecked()){
+    			checkboxCommerce.setChecked(false);
+    			mc.thePlayer.sendChatMessage("/ch leave c");
+    		}
+    		else {checkboxCommerce.setChecked(true);
+    		mc.thePlayer.sendChatMessage("/ch join c");
+    		}
     	}
-    	System.out.println(mc.ingameGUI.lastChecked);
     }
     
     /**

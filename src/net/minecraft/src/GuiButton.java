@@ -90,7 +90,7 @@ public class GuiButton extends Gui
 
         if (!enabled)
         {
-            j = 0xffa0a0a0;
+            j = 0xe0e0e0;
         }
         else if (flag)
         {
