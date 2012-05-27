@@ -36,12 +36,26 @@ public class GuiCheckBox extends GuiButton{
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         boolean flag = par2 >= xPosition && par3 >= yPosition && par2 < xPosition + width && par3 < yPosition + height;
         int i = 106;
-        if (checked)
+
+        int textColor = 0x444444;
+        
+        if (checked && !flag)
         {
             i += height;
         }
+        
+        if(flag && !checked){
+        	i+= height*2;
+        	textColor = 0x222222;
+        }
+        
+        if(flag && checked){
+        	i+= height*3;
+        	textColor = 0x222222;
+        }
+        
         drawTexturedModalRect(xPosition, yPosition, 20, i, width, height);
-        mc.fontRenderer.drawString(text, xPosition + 25, yPosition + 6 , 0x444444);
+        mc.fontRenderer.drawString(text, xPosition + 25, yPosition + 6 , textColor);
     }
 	  
 	/**

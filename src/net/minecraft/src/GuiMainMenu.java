@@ -443,7 +443,7 @@ public class GuiMainMenu extends GuiScreen
         GL11.glScalef(f, f, f);
         drawCenteredString(fontRenderer, splashText, 0, -8, 0xffff00);
         GL11.glPopMatrix();
-        drawString(fontRenderer, FontColors.GREEN + "Sweet" + FontColors.GOLD + "craft" + FontColors.WHITE +" 1.1.2", 2, height - 10, 0xffffff);
+        drawString(fontRenderer, FontColors.GREEN + "Sweet" + FontColors.GOLD + "craft" + FontColors.WHITE +" 1.2.0", 2, height - 10, 0xffffff);
         String s = "Copyright Mojang AB. Do not distribute!";
 			drawRect(0, 0, this.width, fontRenderer.FONT_HEIGHT + 4, Integer.MIN_VALUE);
 			drawString(fontRenderer, announces[announceCount], (int)this.strpos, 2, 0xffffff);

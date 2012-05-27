@@ -64,37 +64,49 @@ public class GuiChatOptions extends GuiScreen {
 	protected void actionPerformed(GuiButton checkbox){
 		if(checkbox.id == 1){
 			global.setChecked(!global.isChecked());
+			if(global.isChecked()) mc.thePlayer.sendChatMessage("/ch join g");
+			else if(!talkGlobal.isChecked()) mc.thePlayer.sendChatMessage("/ch leave g");
 			mc.gameSettings.setOptionValue(EnumOptions.SEE_GLOBAL, global.intValue());
 		}else if(checkbox.id == 2){
 			commerce.setChecked(!commerce.isChecked());
+			if(commerce.isChecked()) mc.thePlayer.sendChatMessage("/ch join c");
+			else if(!talkCommerce.isChecked()) mc.thePlayer.sendChatMessage("/ch leave c");
 			mc.gameSettings.setOptionValue(EnumOptions.SEE_COMMERCE, commerce.intValue());
 		}else if(checkbox.id == 3){
 			local.setChecked(!local.isChecked());
+			if(local.isChecked()) mc.thePlayer.sendChatMessage("/ch join l");
+			else if(!talkLocal.isChecked()) mc.thePlayer.sendChatMessage("/ch leave l");
 			mc.gameSettings.setOptionValue(EnumOptions.SEE_LOCAL, local.intValue());
 		}else if(checkbox.id == 4){
 			talkGlobal.setChecked(true);
 			mc.gameSettings.setOptionValue(EnumOptions.TALK_GLOBAL, talkGlobal.intValue());
 			talkCommerce.setChecked(false);
 			talkLocal.setChecked(false);
+			mc.thePlayer.sendChatMessage("/ch g");
 		}else if(checkbox.id == 5){
 			talkGlobal.setChecked(false);
 			talkCommerce.setChecked(true);
 			mc.gameSettings.setOptionValue(EnumOptions.TALK_COMMERCE, talkCommerce.intValue());
+			mc.thePlayer.sendChatMessage("/ch c");
 			talkLocal.setChecked(false);
 		}else if(checkbox.id == 6){
 			talkGlobal.setChecked(false);
 			talkCommerce.setChecked(false);
 			talkLocal.setChecked(true);
 			mc.gameSettings.setOptionValue(EnumOptions.TALK_LOCAL, talkLocal.intValue());
+			mc.thePlayer.sendChatMessage("/ch l");
 		}
 		
 		if(talkGlobal.isChecked() && !global.isChecked()){
+			mc.thePlayer.sendChatMessage("/ch join g");
 			global.setChecked(true);
 		}else
 		if(talkCommerce.isChecked() && !commerce.isChecked()){
+			mc.thePlayer.sendChatMessage("/ch join c");
 			commerce.setChecked(true);
 		}else
 		if(talkLocal.isChecked() && !local.isChecked()){
+			mc.thePlayer.sendChatMessage("/ch join l");
 			local.setChecked(true);
 		}
 		
