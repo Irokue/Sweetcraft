@@ -1984,36 +1984,59 @@ public class RenderGlobal implements IWorldAccess
     }
 
     /**
-     * Start the skin for this entity downloading, if necessary, and increment its reference counter
+     * Start the skin, Cape, Oreille for this entity downloading, if necessary, and increment its reference counter
      */
-    public void obtainEntitySkin(Entity par1Entity)
+    public void obtainEntitySkin(Entity entity)
     {
-        par1Entity.updateCloak();
-
-        if (par1Entity.skinUrl != null)
+        entity.updateCloak();
+        entity.updateEars();
+        entity.updateHat();
+        if (entity.skinUrl != null)
         {
-            renderEngine.obtainImageData(par1Entity.skinUrl, new ImageBufferDownload());
+            renderEngine.obtainImageData(entity.skinUrl, new ImageBufferDownload());
         }
-
-        if (par1Entity.cloakUrl != null)
+        if (entity.cloakUrl != null)
         {
-            renderEngine.obtainImageData(par1Entity.cloakUrl, new ImageBufferDownload());
+            renderEngine.obtainImageData(entity.cloakUrl, new ImageBufferDownload());
+        }
+        if (entity.earsUrl != null)
+        {
+            renderEngine.obtainImageData(entity.earsUrl, new ImageBufferDownload());
+        }
+        
+        if (entity.hatUrl != null)
+         
+        {
+         
+        renderEngine.obtainImageData(entity.hatUrl, new ImageBufferDownload());
+         
         }
     }
 
     /**
-     * Decrement the reference counter for this entity's skin image data
+     * Decrement the reference counter for this entity's skin, Cape, Oreille image data
      */
-    public void releaseEntitySkin(Entity par1Entity)
+    public void releaseEntitySkin(Entity entity)
     {
-        if (par1Entity.skinUrl != null)
+        if (entity.skinUrl != null)
         {
-            renderEngine.releaseImageData(par1Entity.skinUrl);
+            renderEngine.releaseImageData(entity.skinUrl);
         }
-
-        if (par1Entity.cloakUrl != null)
+        if (entity.cloakUrl != null)
         {
-            renderEngine.releaseImageData(par1Entity.cloakUrl);
+            renderEngine.releaseImageData(entity.cloakUrl);
+        }
+        if (entity.earsUrl != null)
+        {
+            renderEngine.releaseImageData(entity.earsUrl);
+        }
+        
+        if (entity.hatUrl != null)
+         
+        {
+         
+        renderEngine.releaseImageData(entity.hatUrl);
+         
         }
     }
 

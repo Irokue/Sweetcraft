@@ -11,6 +11,12 @@ public class ModelBiped extends ModelBase
     public ModelRenderer bipedLeftLeg;
     public ModelRenderer bipedEars;
     public ModelRenderer bipedCloak;
+    
+    /**
+     * Déclaration variable chapeau
+     */
+    public ModelRenderer HatTop;
+    public ModelRenderer HatBottom;
 
     /**
      * Records whether the model should be rendered holding an item in the left hand, and if that item is a block.
@@ -69,6 +75,14 @@ public class ModelBiped extends ModelBase
         bipedLeftLeg.mirror = true;
         bipedLeftLeg.addBox(-2F, 0.0F, -2F, 4, 12, 4, par1);
         bipedLeftLeg.setRotationPoint(2.0F, 12F + par2, 0.0F);
+        
+        /**
+         *  Forme chapeau
+         */
+        HatTop = new ModelRenderer(this, 0, 0);
+        HatTop.addBox(-5F, -9F, -5F, 10, 1, 10);
+        HatBottom = new ModelRenderer(this, 0, 11);
+        HatBottom.addBox(-4F, -13F, -4F, 8, 4, 8);
     }
 
     /**
@@ -211,6 +225,23 @@ public class ModelBiped extends ModelBase
      */
     public void renderCloak(float par1)
     {
-        bipedCloak.render(par1);
+        bipedCloak.render(par1); 
+    }
+    
+    /**
+     * Rendu chapeau sur tête
+     */
+    public void renderHat(float f)
+    {
+        HatTop.rotateAngleY = bipedHead.rotateAngleY;
+        HatTop.rotateAngleX = bipedHead.rotateAngleX;
+        HatTop.rotationPointX = 0.0F;
+        HatTop.rotationPointY = 0.0F;
+        HatTop.render(f);
+        HatBottom.rotateAngleY = bipedHead.rotateAngleY;
+        HatBottom.rotateAngleX = bipedHead.rotateAngleX;
+        HatBottom.rotationPointX = 0.0F;
+        HatBottom.rotationPointY = 0.0F;
+        HatBottom.render(f);
     }
 }

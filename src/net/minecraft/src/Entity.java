@@ -20,6 +20,12 @@ public abstract class Entity
 
     /** The entity we are currently riding */
     public Entity ridingEntity;
+    
+    /** Variable Oreille */
+    public String earsUrl;
+    
+    /** Variable chapeau */
+    public String hatUrl;
 
     /** Reference to the World object. */
     public World worldObj;
@@ -1708,6 +1714,20 @@ public abstract class Entity
     }
 
     public void updateCloak()
+    {
+    }
+    
+    /**
+     * Init. chapeau
+     */
+    public void updateHat()
+    {
+    }
+    
+    /**
+     * Init. Oreille
+     */
+    public void updateEars()
     {
     }
 

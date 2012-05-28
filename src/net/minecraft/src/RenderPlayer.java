@@ -158,6 +158,16 @@ public class RenderPlayer extends RenderLiving
     {
         super.renderEquippedItems(par1EntityPlayer, par2);
         ItemStack itemstack = par1EntityPlayer.inventory.armorItemInSlot(3);
+        /**
+         * Ajout condition
+         */
+        if (loadDownloadableImageTexture(par1EntityPlayer.playerHatUrl, null))
+        	 
+        {
+         
+        modelBipedMain.renderHat(0.0625F);
+         
+        }
 
         if (itemstack != null && itemstack.getItem().shiftedIndex < 256)
         {
@@ -175,8 +185,10 @@ public class RenderPlayer extends RenderLiving
             renderManager.itemRenderer.renderItem(par1EntityPlayer, itemstack, 0);
             GL11.glPopMatrix();
         }
-
-        if (par1EntityPlayer.username.equals("deadmau5") && loadDownloadableImageTexture(par1EntityPlayer.skinUrl, null))
+        /**
+         * !!!  Changement du 'entityplayer' de Deadmau par 'par1EntityPlayer' se trouvant juste en dessous !!!
+         */
+        if (loadDownloadableImageTexture(par1EntityPlayer.earsUrl, null))
         {
             for (int i = 0; i < 2; i++)
             {

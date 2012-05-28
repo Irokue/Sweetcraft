@@ -12,7 +12,13 @@ public abstract class EntityPlayer extends EntityLiving
 
     /** the crafting inventory you are currently using */
     public Container craftingInventory;
-
+    
+    /** Variable joueur Chapeau */
+    public String playerHatUrl;
+    
+    /** Variable joueur oreille */
+    public String playerEarUrl;
+    
     /** The player's food stats. (See class FoodStats) */
     protected FoodStats foodStats;
 
@@ -445,10 +451,31 @@ public abstract class EntityPlayer extends EntityLiving
         craftingInventory = inventorySlots;
     }
 
+    /**
+     * Ajouts Capes
+     */
     public void updateCloak()
     {
         playerCloakUrl = "http://launcher.sweetcraft.fr/capes/" + this.username.toLowerCase() + ".png";
         updateCloak(playerCloakUrl);
+    }
+    
+    /**
+     * Ajouts chapeau
+     */
+    public void updateHat()
+    {
+        playerHatUrl = (new StringBuilder()).append("http://launcher.sweetcraft.fr/chapeau/").append(username).append(".png").toString();
+        hatUrl = playerHatUrl;
+    }
+    
+    /**
+     * Ajouts Oreilles
+     */
+    public void updateEars()
+    {
+    	playerEarUrl = (new StringBuilder()).append("http://launcher.sweetcraft.fr/oreilles/").append(username).append(".png").toString();
+        earsUrl = playerEarUrl;
     }
     
     public void updateCloak(String cloak){
