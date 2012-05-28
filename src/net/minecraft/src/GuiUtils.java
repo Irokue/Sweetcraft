@@ -23,7 +23,17 @@ public class GuiUtils extends GuiScreen
     private String playerToPay = "";
     private String moneyToPay = "";
     private boolean pvp = true;
+    private int guiLeft, guiTop;
+    /**
+     * x size of the inventory window in pixels. Defined as float, passed as int
+     */
+    private float xSize_lo;
 
+    /**
+     * y size of the inventory window in pixels. Defined as float, passed as int.
+     */
+    private float ySize_lo;
+    
     public GuiUtils(Minecraft mc, World world, EntityPlayer entityplayer)
     {
     	this.player = entityplayer;
@@ -54,6 +64,8 @@ public class GuiUtils extends GuiScreen
         moneyPayTextField.setMaxStringLength(8);
         moneyPayTextField.setText("Montant");
         ((GuiButton)controlList.get(2)).enabled = false;
+        guiLeft = (width - xSize) / 2;
+        guiTop = (height - ySize) / 2;
     }
 
     protected void mouseClicked(int i, int j, int k)
@@ -69,11 +81,15 @@ public class GuiUtils extends GuiScreen
     
     public void drawScreen(int par1, int par2, float par3)
     {
+    	xSize_lo = par1;
+    	ySize_lo = par2;
         int displayX = (width - xSize) / 2;
         int displayY = (height - ySize) / 2;
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glColor3f(1.0F, 1.0F, 1.0F);
+        int j = guiLeft;
+        int k = guiTop;
         drawBackgroundImage();
         drawTexturedModalRect(displayX, displayY, 0, 0, xSize, ySize);
         playerNameTextField.drawTextBox();
@@ -97,17 +113,17 @@ public class GuiUtils extends GuiScreen
         GL11.glTranslatef(displayX + 35, displayY + 90, 10F);
         float f = 30F;
         GL11.glScalef(-f, f, f);
-        GL11.glRotatef(180F, -5.5F, 1.7F, 12.0F);
+        GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
         float f1 = mc.thePlayer.renderYawOffset;
         float f2 = mc.thePlayer.rotationYaw;
         float f3 = mc.thePlayer.rotationPitch;
-        float f4 = xSize;
-        float f5 = ySize;
-        GL11.glRotatef(1F, 10.1F, 0.0F, 10F);
-        GL11.glRotatef(-13F, 1.42F, 1.5F, -0.0F);
-        mc.thePlayer.renderYawOffset = (float)Math.atan(f4 / 40F) * 10F;
-        mc.thePlayer.rotationYaw = (float)Math.atan(f4 / 40F) * 9F;
-        mc.thePlayer.rotationPitch = -(float)Math.atan(f5 / 40F) * 2F;
+        float f4 = (float)(j + 51) - xSize_lo;
+        float f5 = (float)((k + 75) - 50) - ySize_lo;
+        GL11.glRotatef(9F, 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(-(float)Math.atan(f5 / 40F) * 5F, 1.0F, 0.0F, 0.0F);
+        mc.thePlayer.renderYawOffset = (float)Math.atan(f4 / 40F) * 20F;
+        mc.thePlayer.rotationYaw = (float)Math.atan(f4 / 40F) * 40F;
+        mc.thePlayer.rotationPitch = -(float)Math.atan(f5 / 40F) * 20F;
         mc.thePlayer.rotationYawHead = mc.thePlayer.rotationYaw;
         GL11.glTranslatef(0.0F, mc.thePlayer.yOffset, 0.0F);
         RenderManager.instance.playerViewY = 180F;

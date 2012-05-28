@@ -433,7 +433,6 @@ public class RenderEngine
     public int getTextureForDownloadableImage(String par1Str, String par2Str)
     {
         ThreadDownloadImageData threaddownloadimagedata = (ThreadDownloadImageData)urlToImageDataMap.get(par1Str);
-
         if (threaddownloadimagedata != null && threaddownloadimagedata.image != null && !threaddownloadimagedata.textureSetupComplete)
         {
             if (threaddownloadimagedata.textureName < 0)

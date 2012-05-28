@@ -25,7 +25,8 @@ public class EntityOtherPlayerMP extends EntityPlayer
 
         if (par2Str != null && par2Str.length() > 0)
         {
-				skinUrl = (new StringBuilder()).append("http://s3.amazonaws.com/MinecraftSkins/").append(par2Str).append(".png").toString();
+        	//skinUrl = (new StringBuilder()).append("http://dl.dropbox.com/u/52310521/HDCAPskin.png").toString();	
+        	skinUrl = (new StringBuilder()).append("http://launcher.sweetcraft.fr/skins/").append(par2Str).append(".png").toString();
         }
 
         noClip = true;

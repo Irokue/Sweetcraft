@@ -34,6 +34,8 @@ class ThreadDownloadImage extends Thread
             httpurlconnection.setDoOutput(false);
             httpurlconnection.connect();
 
+            System.out.println(location.toString() + " " + httpurlconnection.getResponseCode());
+            
             if (httpurlconnection.getResponseCode() / 100 == 4)
             {
                 return;
