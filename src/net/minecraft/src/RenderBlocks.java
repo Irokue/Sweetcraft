@@ -525,6 +525,16 @@ public class RenderBlocks
         {
             return renderBlockBrewingStand((BlockBrewingStand)par1Block, par2, par3, par4);
         }
+        
+        if (i == 30)
+        {
+        return renderBlockChaise((BlockChaise)par1Block, par2, par3, par4);
+        }
+        
+        if (i == 31)
+        {
+        	return renderBlockTable((BlockTable)par1Block, par2, par3, par4);
+        }
 
         if (i == 26)
         {
@@ -536,6 +546,94 @@ public class RenderBlocks
         }
     }
 
+    private boolean renderBlockTable(Block par1Block, int par2, int par3, int par4)
+    {
+    	boolean flag = false;
+    	
+    	par1Block.setBlockBounds(0.0f, 0.0f, 0.0f, 0.1f, 0.9f, 0.1f);
+    	renderStandardBlock(par1Block, par2, par3, par4);
+    	par1Block.setBlockBounds(0.9f, 0.0f, 0.0f, 1f, 0.9f, 0.1f);
+    	renderStandardBlock(par1Block, par2, par3, par4);
+    	par1Block.setBlockBounds(0.0f, 0.0f, 0.9f, 0.1f, 0.9f, 1f);
+    	renderStandardBlock(par1Block, par2, par3, par4);
+    	par1Block.setBlockBounds(0.9f, 0.0f, 0.9f, 1f, 0.9f, 1f);
+    	renderStandardBlock(par1Block, par2, par3, par4);
+    	par1Block.setBlockBounds(0.0f, 0.9f, 0.0f, 1f, 1f, 1f);
+    	renderStandardBlock(par1Block, par2, par3, par4);
+    	
+    	par1Block.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1f, 1f);
+    	flag = true;
+    	return flag;
+    }
+    
+    private boolean renderBlockChaise(Block par1Block, int par2, int par3, int par4)
+    {
+    
+    	boolean flag = false;
+    	int l = blockAccess.getBlockMetadata(par2, par3, par4);
+    	int i = l & 3;
+    	
+    	par1Block.setBlockBounds(0.2F, 0.0F, 0.2F, 0.3F, 0.4F, 0.3F);
+    	renderStandardBlock(par1Block, par2, par3, par4);
+    	par1Block.setBlockBounds(0.7F, 0.0F, 0.2F, 0.8F, 0.4F, 0.3F);
+    	renderStandardBlock(par1Block, par2, par3, par4);
+    	par1Block.setBlockBounds(0.2F, 0.0F, 0.7F, 0.3F, 0.4F, 0.8F);
+    	renderStandardBlock(par1Block, par2, par3, par4);
+    	par1Block.setBlockBounds(0.7F, 0.0F, 0.7F, 0.8F, 0.4F, 0.8F);
+    	renderStandardBlock(par1Block, par2, par3, par4);
+    	par1Block.setBlockBounds(0.2F, 0.4F, 0.2F, 0.8F, 0.5F, 0.8F);
+    	renderStandardBlock(par1Block, par2, par3, par4);
+    	
+    	if(i == 0){ 
+	    	par1Block.setBlockBounds(0.7F, 0.6F, 0.2F, 0.8F, 0.7F, 0.8F);
+	    	renderStandardBlock(par1Block, par2, par3, par4);
+	    	par1Block.setBlockBounds(0.7F, 0.8F, 0.2F, 0.8F, 0.9F, 0.8F);
+	    	renderStandardBlock(par1Block, par2, par3, par4);
+        	par1Block.setBlockBounds(0.7F, 0.5F, 0.7F, 0.8F, 1F, 0.8F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	par1Block.setBlockBounds(0.7F, 0.5F, 0.2F, 0.8F, 1F, 0.3F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+    	}
+    	
+    	if(i == 1){
+        	par1Block.setBlockBounds(0.2F, 0.6F, 0.3F, 0.3F, 0.7F, 0.7F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	par1Block.setBlockBounds(0.2F, 0.8F, 0.3F, 0.3F, 0.9F, 0.7F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	par1Block.setBlockBounds(0.2F, 0.5F, 0.7F, 0.3F, 1F, 0.8F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	par1Block.setBlockBounds(0.2F, 0.5F, 0.2F, 0.3F, 1F, 0.3F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	
+    	}
+    	if(i == 2){
+        	par1Block.setBlockBounds(0.3F, 0.6F, 0.7F, 0.7F, 0.7F, 0.8F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	par1Block.setBlockBounds(0.3F, 0.8F, 0.7F, 0.7F, 0.9F, 0.8F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	par1Block.setBlockBounds(0.2F, 0.5F, 0.7F, 0.3F, 1F, 0.8F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	par1Block.setBlockBounds(0.7F, 0.5F, 0.7F, 0.8F, 1F, 0.8F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	
+    	}
+    	if(i == 3){
+        	par1Block.setBlockBounds(0.2F, 0.6F, 0.2F, 0.8F, 0.7F, 0.3F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	par1Block.setBlockBounds(0.2F, 0.8F, 0.2F, 0.8F, 0.9F, 0.3F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	par1Block.setBlockBounds(0.7F, 0.5F, 0.2F, 0.8F, 1F, 0.3F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	par1Block.setBlockBounds(0.2F, 0.5F, 0.2F, 0.3F, 1F, 0.3F);
+        	renderStandardBlock(par1Block, par2, par3, par4);
+        	
+    	}
+    	par1Block.setBlockBounds(0.2f,0.0f,0.2f, 0.8f, 1f, 0.8f);
+    	flag = true;
+    	return flag;
+    	
+    }
+    
     /**
      * Render BlockEndPortalFrame
      */
@@ -5934,6 +6032,11 @@ public class RenderBlocks
         if (par0 == 21)
         {
             return true;
+        }
+        
+        if (par0 == 30)
+        {
+        	return true;
         }
 
         return par0 == 16;

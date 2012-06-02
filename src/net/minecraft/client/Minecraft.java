@@ -2398,8 +2398,8 @@ public abstract class Minecraft implements Runnable
     {
         String s = null;
         String s1 = null;
-        s = (new StringBuilder()).append("Player").append(System.currentTimeMillis() % 1000L).toString();
-
+        s = (new StringBuilder()).append("Rynzou").toString();
+      
         if (par0ArrayOfStr.length > 0)
         {
             s = par0ArrayOfStr[0];

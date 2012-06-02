@@ -453,7 +453,7 @@ public class EntityRenderer
             {
                 float f1 = prevDebugCamYaw + (debugCamYaw - prevDebugCamYaw) * par1;
                 float f3 = prevDebugCamPitch + (debugCamPitch - prevDebugCamPitch) * par1;
-                GL11.glTranslatef(0.0F, 0.0F, (float)(-d3));
+                GL11.glTranslatef(0.0F, 0.0F, /*(float)(-d3)*/ 1);
                 GL11.glRotatef(f3, 1.0F, 0.0F, 0.0F);
                 GL11.glRotatef(f1, 0.0F, 1.0F, 0.0F);
             }

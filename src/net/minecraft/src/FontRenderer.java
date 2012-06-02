@@ -16,7 +16,7 @@ public class FontRenderer
     /**
      * Compiled regular expression pattern for matching color codes in a string
      */
-    private static final Pattern colorCodeRegex = Pattern.compile("(?i)\\u00A7[0-9A-FK-OR]");
+    private static final Pattern colorCodeRegex = Pattern.compile("(?i)\\u00A7[0-9A-Z]");
     private int charWidth[];
     public int fontTextureName;
 
@@ -71,7 +71,7 @@ public class FontRenderer
         fontRandom = new Random();
         glyphWidth = new byte[0x10000];
         glyphTextureName = new int[256];
-        colorCode = new int[32];
+        colorCode = new int[6];
         renderEngine = null;
     }
 
@@ -1006,7 +1006,7 @@ public class FontRenderer
      */
     private static boolean isFormatColor(char par0)
     {
-        return par0 >= '0' && par0 <= '9' || par0 >= 'a' && par0 <= 'f' || par0 >= 'A' && par0 <= 'F';
+        return par0 >= '0' && par0 <= '9' || par0 >= 'a' && par0 <= 'z' || par0 >= 'A' && par0 <= 'Z';
     }
 
     /**
