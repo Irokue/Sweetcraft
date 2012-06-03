@@ -550,14 +550,18 @@ public class RenderBlocks
     {
     	boolean flag = false;
     	
-    	par1Block.setBlockBounds(0.0f, 0.0f, 0.0f, 0.1f, 0.9f, 0.1f);
+    	par1Block.setBlockBounds(0.1f, 0.0f, 0.1f, 0.2f, 0.9f, 0.2f);
     	renderStandardBlock(par1Block, par2, par3, par4);
-    	par1Block.setBlockBounds(0.9f, 0.0f, 0.0f, 1f, 0.9f, 0.1f);
+    	par1Block.setBlockBounds(0.8f, 0.0f, 0.1f, 0.9f, 0.9f, 0.2f);
     	renderStandardBlock(par1Block, par2, par3, par4);
-    	par1Block.setBlockBounds(0.0f, 0.0f, 0.9f, 0.1f, 0.9f, 1f);
+    	par1Block.setBlockBounds(0.1f, 0.0f, 0.8f, 0.2f, 0.9f, 0.9f);
     	renderStandardBlock(par1Block, par2, par3, par4);
-    	par1Block.setBlockBounds(0.9f, 0.0f, 0.9f, 1f, 0.9f, 1f);
+    	par1Block.setBlockBounds(0.8f, 0.0f, 0.8f, 0.9f, 0.9f, 0.9f);
     	renderStandardBlock(par1Block, par2, par3, par4);
+    	/*par1Block.setBlockBounds(0.2f,0.0f,0.2f, 0.8f,0.05f,0.8f);
+    	renderStandardBlock(par1Block, par2, par3, par4);
+    	par1Block.setBlockBounds(0.4f,0.0f,0.4f, 0.6f,1f,0.6f);
+    	renderStandardBlock(par1Block, par2, par3, par4);*/
     	par1Block.setBlockBounds(0.0f, 0.9f, 0.0f, 1f, 1f, 1f);
     	renderStandardBlock(par1Block, par2, par3, par4);
     	
@@ -5696,6 +5700,59 @@ public class RenderBlocks
             renderBlockStemSmall(par1Block, par2, par1Block.maxY, -0.5D, -0.5D, -0.5D);
             tessellator.draw();
         }
+        else if (j == 31)
+        {
+        	for (int k1 = 0; k1 < 5; k1++) //à voir par rapport aux nombres de bounds
+            {
+                if (k1 == 0)
+                {
+            		par1Block.setBlockBounds(0.1f, 0.0f, 0.1f, 0.2f, 0.9f, 0.2f);                 
+                }
+                if (k1 == 1)
+                {
+                	par1Block.setBlockBounds(0.8f, 0.0f, 0.1f, 0.9f, 0.9f, 0.2f);
+                }
+                if (k1 == 2)
+                {
+                	par1Block.setBlockBounds(0.1f, 0.0f, 0.8f, 0.2f, 0.9f, 0.9f);
+                }
+                if(k1 == 3)
+                {
+                	par1Block.setBlockBounds(0.8f, 0.0f, 0.8f, 0.9f, 0.9f, 0.9f);
+                }
+                if(k1 == 4)
+                {
+                	par1Block.setBlockBounds(0.0f, 0.9f, 0.0f, 1f, 1f, 1f);
+                }
+                GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+                tessellator.startDrawingQuads();
+                tessellator.setNormal(0.0F, -1F, 0.0F);
+                renderBottomFace(par1Block, 0.0D, 0.0D, 0.0D, par1Block.getBlockTextureFromSide(0));
+                tessellator.draw();
+                tessellator.startDrawingQuads();
+                tessellator.setNormal(0.0F, 1.0F, 0.0F);
+                renderTopFace(par1Block, 0.0D, 0.0D, 0.0D, par1Block.getBlockTextureFromSide(1));
+                tessellator.draw();
+                tessellator.startDrawingQuads();
+                tessellator.setNormal(0.0F, 0.0F, -1F);
+                renderEastFace(par1Block, 0.0D, 0.0D, 0.0D, par1Block.getBlockTextureFromSide(2));
+                tessellator.draw();
+                tessellator.startDrawingQuads();
+                tessellator.setNormal(0.0F, 0.0F, 1.0F);
+                renderWestFace(par1Block, 0.0D, 0.0D, 0.0D, par1Block.getBlockTextureFromSide(3));
+                tessellator.draw();
+                tessellator.startDrawingQuads();
+                tessellator.setNormal(-1F, 0.0F, 0.0F);
+                renderNorthFace(par1Block, 0.0D, 0.0D, 0.0D, par1Block.getBlockTextureFromSide(4));
+                tessellator.draw();
+                tessellator.startDrawingQuads();
+                tessellator.setNormal(1.0F, 0.0F, 0.0F);
+                renderSouthFace(par1Block, 0.0D, 0.0D, 0.0D, par1Block.getBlockTextureFromSide(5));
+                tessellator.draw();
+                GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+            }
+            	par1Block.setBlockBounds(0.0F, 0.0F, 0.0F, 1F, 1F, 1F);
+        }
         else if (j == 23)
         {
             tessellator.startDrawingQuads();
@@ -5742,6 +5799,80 @@ public class RenderBlocks
             tessellator.draw();
             GL11.glTranslatef(0.5F, 0.5F, 0.5F);
         }
+        else if(j == 30){
+        	 for (int k1 = 0; k1 < 10; k1++) //à voir par rapport aux nombres de bounds
+             {
+                 if (k1 == 0)
+                 {
+                     par1Block.setBlockBounds(0.2F, 0.0F, 0.2F, 0.3F, 0.4F, 0.3F);// faire tes coordonnées
+                  
+                 }
+                 if (k1 == 1)
+                 {
+                     par1Block.setBlockBounds(0.2F, 0.0F, 0.7F, 0.3F, 0.4F, 0.8F);// faire tes coordonnées
+                 }
+                 if (k1 == 2)
+                 {
+                     par1Block.setBlockBounds(0.7F, 0.0F, 0.2F, 0.8F, 0.4F, 0.2F);// faire tes coordonnées
+                 }
+                 if(k1 == 3)
+                 {
+                	 par1Block.setBlockBounds(0.7F,0.0F,0.7F, 0.8F,0.4F,0.7F);
+                 }
+                 if(k1 == 4)
+                 {
+                	 par1Block.setBlockBounds(0.2F, 0.0F, 0.2F, 0.3F, 0.4F, 0.3F);
+                 }
+                 if(k1 == 5)
+                 {
+                	 par1Block.setBlockBounds(0.2F, 0.4F, 0.2F, 0.8F, 0.5F, 0.8F);
+                 }
+                 if(k1 == 6)
+                 {
+                	 par1Block.setBlockBounds(0.2F, 0.5F, 0.2F, 0.3F, 1F, 0.3F);
+                 }
+                 if(k1 == 7)
+                 {
+                	 par1Block.setBlockBounds(0.7F, 0.5F, 0.2F, 0.8F, 1F, 0.3F);
+                 }
+                 if(k1 == 8)
+                 {
+                	 par1Block.setBlockBounds(0.2F, 0.6F, 0.2F, 0.8F, 0.7F, 0.3F);
+                 }
+                 if(k1 == 9)
+                 {
+                	 par1Block.setBlockBounds(0.2F, 0.8F, 0.2F, 0.8F, 0.9F, 0.3F);
+                 }
+            
+                 GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+                 tessellator.startDrawingQuads();
+                 tessellator.setNormal(0.0F, -1F, 0.0F);
+                 renderBottomFace(par1Block, 0.0D, 0.0D, 0.0D, par1Block.getBlockTextureFromSide(0));
+                 tessellator.draw();
+                 tessellator.startDrawingQuads();
+                 tessellator.setNormal(0.0F, 1.0F, 0.0F);
+                 renderTopFace(par1Block, 0.0D, 0.0D, 0.0D, par1Block.getBlockTextureFromSide(1));
+                 tessellator.draw();
+                 tessellator.startDrawingQuads();
+                 tessellator.setNormal(0.0F, 0.0F, -1F);
+                 renderEastFace(par1Block, 0.0D, 0.0D, 0.0D, par1Block.getBlockTextureFromSide(2));
+                 tessellator.draw();
+                 tessellator.startDrawingQuads();
+                 tessellator.setNormal(0.0F, 0.0F, 1.0F);
+                 renderWestFace(par1Block, 0.0D, 0.0D, 0.0D, par1Block.getBlockTextureFromSide(3));
+                 tessellator.draw();
+                 tessellator.startDrawingQuads();
+                 tessellator.setNormal(-1F, 0.0F, 0.0F);
+                 renderNorthFace(par1Block, 0.0D, 0.0D, 0.0D, par1Block.getBlockTextureFromSide(4));
+                 tessellator.draw();
+                 tessellator.startDrawingQuads();
+                 tessellator.setNormal(1.0F, 0.0F, 0.0F);
+                 renderSouthFace(par1Block, 0.0D, 0.0D, 0.0D, par1Block.getBlockTextureFromSide(5));
+                 tessellator.draw();
+                 GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+             }
+             	par1Block.setBlockBounds(0.2F, 0.0F, 0.2F, 0.8F, 1F, 0.8F);
+             }
         else if (j == 22)
         {
             ChestItemRenderHelper.instance.func_35609_a(par1Block, par2, par3);
@@ -6035,6 +6166,11 @@ public class RenderBlocks
         }
         
         if (par0 == 30)
+        {
+        	return true;
+        }
+        
+        if (par0 == 31)
         {
         	return true;
         }
