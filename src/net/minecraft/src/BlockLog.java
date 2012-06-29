@@ -7,7 +7,7 @@ public class BlockLog extends Block
     protected BlockLog(int par1)
     {
         super(par1, Material.wood);
-        blockIndexInTexture = 20;
+        blockIndexInTexture = 21;
     }
 
     /**
