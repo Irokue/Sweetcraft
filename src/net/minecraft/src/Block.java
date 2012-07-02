@@ -154,8 +154,18 @@ public class Block
     public static final Block redstoneLampIdle;
     public static final Block redstoneLampActive;
 
+    
+    /**AJOUTS BLOCKS
+     */
+    
     public static final Block chaise;
     public static final Block table;
+    public static final Block X;
+    
+
+    
+    
+    
     
     /**
      * The index of the texture to be displayed for this block. May vary based on graphics settings. Mostly seems to
@@ -1300,10 +1310,18 @@ public class Block
         dragonEgg = (new BlockDragonEgg(122, 167)).setHardness(3F).setResistance(15F).setStepSound(soundStoneFootstep).setLightValue(0.125F).setBlockName("dragonEgg");
         redstoneLampIdle = (new BlockRedstoneLight(123, false)).setHardness(0.3F).setStepSound(soundGlassFootstep).setBlockName("redstoneLight");
         redstoneLampActive = (new BlockRedstoneLight(124, true)).setHardness(0.3F).setStepSound(soundGlassFootstep).setBlockName("redstoneLight");
+       
+        
+        /** INI.BLOCKS
+         */
         
         chaise = (new BlockChaise(125, 4)).setHardness(2.0F).setResistance(5F).setStepSound(soundWoodFootstep).setBlockName("chaise").setRequiresSelfNotify();
         table = (new BlockTable(126, 4)).setHardness(2.0F).setResistance(5F).setStepSound(soundWoodFootstep).setBlockName("table").setRequiresSelfNotify();
-      
+        X = (new BlockGlass(127, 168, Material.glass, false)).setHardness(99999999999F).setStepSound(soundGlassFootstep).setBlockName("x");
+        
+        
+        
+        
         Item.itemsList[cloth.blockID] = (new ItemCloth(cloth.blockID - 256)).setItemName("cloth");
         Item.itemsList[wood.blockID] = (new ItemMetadata(wood.blockID - 256, wood)).setItemName("log");
         Item.itemsList[planks.blockID] = (new ItemMetadata(planks.blockID - 256, planks)).setItemName("wood");

@@ -48,6 +48,8 @@ public class Material
     /** Pistons' material. */
     public static final Material piston;
 
+	public static Material x;
+
     /** Bool defining if the block can burn or not. */
     private boolean canBurn;
 
