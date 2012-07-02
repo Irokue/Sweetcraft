@@ -26,12 +26,16 @@ public abstract class NetHandler
     public void handleJob(Packet134Job packet){
     	registerPacket(packet);
     }
-    
+
     public void handleMoney(Packet133Money packet){
     	registerPacket(packet);
     }
     
     public void handleGuilde(Packet135Guilde packet){
+    	registerPacket(packet);
+    }
+
+    public void handleQuests(Packet136Quest packet){
     	registerPacket(packet);
     }
     

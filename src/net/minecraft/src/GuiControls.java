@@ -42,10 +42,10 @@ public class GuiControls extends GuiScreen
 
         for (int j = 0; j < options.keyBindings.length; j++)
         {
-            controlList.add(new GuiSmallButton(j, i + (j % 2) * 160, height / 6 + 24 * (j >> 1), 70, 20, options.getOptionDisplayString(j)));
+            controlList.add(new GuiSmallButton(j, i + (j % 2) * 160, height / 10 + 24 * (j >> 1), 70, 20, options.getOptionDisplayString(j)));
         }
 
-        controlList.add(new GuiButton(200, width / 2 - 100, height / 6 + 168, stringtranslate.translateKey("gui.done")));
+        controlList.add(new GuiButton(200, width / 2 - 100, height / 6 + 178, stringtranslate.translateKey("gui.done")));
         screenTitle = stringtranslate.translateKey("controls.title");
     }
 
@@ -112,7 +112,7 @@ public class GuiControls extends GuiScreen
     public void drawScreen(int par1, int par2, float par3)
     {
         drawDefaultBackground();
-        drawCenteredString(fontRenderer, screenTitle, width / 2, 20, 0xffffff);
+        drawCenteredString(fontRenderer, screenTitle, width / 2, 10, 0xffffff);
         int i = func_20080_j();
 
         for (int j = 0; j < options.keyBindings.length; j++)
@@ -152,7 +152,7 @@ public class GuiControls extends GuiScreen
                 ((GuiButton)controlList.get(k)).displayString = options.getOptionDisplayString(k);
             }
 
-            drawString(fontRenderer, options.getKeyBindingDescription(j), i + (j % 2) * 160 + 70 + 6, height / 6 + 24 * (j >> 1) + 7, -1);
+            drawString(fontRenderer, options.getKeyBindingDescription(j), i + (j % 2) * 160 + 70 + 6, height / 10 + 24 * (j >> 1) + 7, -1);
         }
 
         super.drawScreen(par1, par2, par3);

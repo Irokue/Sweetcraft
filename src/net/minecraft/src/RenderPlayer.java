@@ -161,13 +161,13 @@ public class RenderPlayer extends RenderLiving
         /**
          * Ajout condition
          */
-        if (loadDownloadableImageTexture(par1EntityPlayer.playerHatUrl, null))
-        	 
-        {
-         
-        modelBipedMain.renderHat(0.0625F);
-         
-        }
+//        if (loadDownloadableImageTexture(par1EntityPlayer.playerHatUrl, null))
+//        	 
+//        {
+//         
+//        modelBipedMain.renderHat(0.0625F);
+//         
+//        }
 
         if (itemstack != null && itemstack.getItem().shiftedIndex < 256)
         {
@@ -188,7 +188,7 @@ public class RenderPlayer extends RenderLiving
         /**
          * !!!  Changement du 'entityplayer' de Deadmau par 'par1EntityPlayer' se trouvant juste en dessous !!!
          */
-        if (loadDownloadableImageTexture(par1EntityPlayer.earsUrl, null))
+        if (par1EntityPlayer.username.equals("deadmau5"))
         {
             for (int i = 0; i < 2; i++)
             {
@@ -203,7 +203,7 @@ public class RenderPlayer extends RenderLiving
                 GL11.glRotatef(-f1, 0.0F, 1.0F, 0.0F);
                 float f7 = 1.333333F;
                 GL11.glScalef(f7, f7, f7);
-                modelBipedMain.renderEars(0.0625F);
+//                modelBipedMain.renderEars(0.0625F);
                 GL11.glPopMatrix();
             }
         }

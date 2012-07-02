@@ -128,6 +128,7 @@ public abstract class PlayerController
      */
     public void interactWithEntity(EntityPlayer par1EntityPlayer, Entity par2Entity)
     {
+    	//System.out.println(par2Entity.entityId);
         par1EntityPlayer.useCurrentItemOnEntity(par2Entity);
     }
 

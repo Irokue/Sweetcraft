@@ -22,10 +22,10 @@ public abstract class Entity
     public Entity ridingEntity;
     
     /** Variable Oreille */
-    public String earsUrl;
+//    public String earsUrl;
     
     /** Variable chapeau */
-    public String hatUrl;
+//    public String hatUrl;
 
     /** Reference to the World object. */
     public World worldObj;
@@ -1717,19 +1717,19 @@ public abstract class Entity
     {
     }
     
-    /**
-     * Init. chapeau
-     */
-    public void updateHat()
-    {
-    }
-    
-    /**
-     * Init. Oreille
-     */
-    public void updateEars()
-    {
-    }
+//    /**
+//     * Init. chapeau
+//     */
+//    public void updateHat()
+//    {
+//    }
+//    
+//    /**
+//     * Init. Oreille
+//     */
+//    public void updateEars()
+//    {
+//    }
 
     /**
      * Parameters: item slot, item ID, item damage. If slot >= 0 a new item will be generated with the specified item ID

@@ -18,5 +18,6 @@ public class FontColors {
 	public static String DARK_BLUE = "\u00A71";
 	public static String DARK_AQUA = "\u00A73";
 	public static String DARK_GREEN = "\u00A72";
+	public static String BOLD = "\u00A7L";
 	
 }

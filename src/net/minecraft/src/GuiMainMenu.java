@@ -422,7 +422,7 @@ public class GuiMainMenu extends GuiScreen
 
         if ((double)updateCounter < 0.0001D)
         {
-            drawTexturedModalRect(i + 0, byte0 + 0, 0, 0, 99, 44);
+        	drawTexturedModalRect(i + 0, byte0 + 0, 0, 0, 99, 44);
             drawTexturedModalRect(i + 99, byte0 + 0, 129, 0, 27, 44);
             drawTexturedModalRect(i + 99 + 26, byte0 + 0, 126, 0, 3, 44);
             drawTexturedModalRect(i + 99 + 26 + 3, byte0 + 0, 99, 0, 26, 44);
@@ -430,8 +430,8 @@ public class GuiMainMenu extends GuiScreen
         }
         else
         {
-            drawTexturedModalRect(i + 0, byte0 + 0, 0, 0, 155, 44);
-            drawTexturedModalRect(i + 155, byte0 + 0, 0, 45, 155, 44);
+            drawTexturedModalRect(i + 0, byte0 + 0, 0, 0, 180, 44);
+            drawTexturedModalRect(i + 155, byte0 + 0, 0, 45, 180, 44);
         }
 
         tessellator.setColorOpaque_I(0xffffff);
@@ -443,8 +443,10 @@ public class GuiMainMenu extends GuiScreen
         GL11.glScalef(f, f, f);
         drawCenteredString(fontRenderer, splashText, 0, -8, 0xffff00);
         GL11.glPopMatrix();
-        drawString(fontRenderer, FontColors.GREEN + "Sweet" + FontColors.GOLD + "craft" + FontColors.WHITE +" 1.2.0", 2, height - 10, 0xffffff);
-        String s = "Copyright Mojang AB. Do not distribute!";
+        drawString(fontRenderer, FontColors.GREEN + "Sweet" + FontColors.GOLD + "craft" + FontColors.WHITE +" 1.3.0", 2, height - 10, 0xffffff);
+        String s1 = "Basé sur Minecraft.";
+        drawString(fontRenderer, s1, width - fontRenderer.getStringWidth(s1) - 2, height - 12 - fontRenderer.FONT_HEIGHT, 0xffffff);
+        String s = "Copyright Mojang AB.";
 			drawRect(0, 0, this.width, fontRenderer.FONT_HEIGHT + 4, Integer.MIN_VALUE);
 			drawString(fontRenderer, announces[announceCount], (int)this.strpos, 2, 0xffffff);
         drawString(fontRenderer, s, width - fontRenderer.getStringWidth(s) - 2, height - 10, 0xffffff);

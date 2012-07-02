@@ -66,10 +66,10 @@ public class GuiIngame extends Gui
         FontRenderer fontrenderer = mc.fontRenderer;
         mc.entityRenderer.setupOverlayRendering();
         GL11.glEnable(GL11.GL_BLEND);
-
+        
         if (Minecraft.isFancyGraphicsEnabled())
         {
-          //  renderVignette(mc.thePlayer.getBrightness(par1), i, j);
+            renderVignette(mc.thePlayer.getBrightness(par1), i, j);
         }
         else
         {
@@ -794,7 +794,7 @@ public class GuiIngame extends Gui
 
             if (!flag1)
             {
-                s = (new StringBuilder()).append(" ").append(s).toString();
+                s = (new StringBuilder()).append("> ").append(s).toString();
             }
 
             flag1 = false;

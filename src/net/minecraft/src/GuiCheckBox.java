@@ -60,7 +60,7 @@ public class GuiCheckBox extends GuiButton{
 	  
 	/**
 	 * Renvoie la valeur booléenne en entier
-	 * @return valeur booléenne en entier
+	 * @return valeur booléenne en entier, 1 = true, 0 = false
 	 */
 	public int intValue(){
 		if(checked) return 1;

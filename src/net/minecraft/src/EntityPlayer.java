@@ -37,6 +37,15 @@ public abstract class EntityPlayer extends EntityLiving
     public int jobMaxExperience = 0;
     
     /**
+     * Quests
+     */
+    public String questsTitles = "Aucune";
+    public String questsDesc = "Aucune";
+    public String questsObjectives = "Aucune";
+    public String questsRewards = "Aucune";
+    
+    
+    /**
      * Used to tell if the player pressed jump twice. If this is at 0 and it's pressed (And they are allowed to fly, as
      * defined in the player's movementInput) it sets this to 7. If it's pressed and it's greater than 0 enable fly.
      */
@@ -465,8 +474,8 @@ public abstract class EntityPlayer extends EntityLiving
      */
     public void updateHat()
     {
-        playerHatUrl = (new StringBuilder()).append("http://launcher.sweetcraft.fr/chapeau/").append(username).append(".png").toString();
-        hatUrl = playerHatUrl;
+//        playerHatUrl = (new StringBuilder()).append("http://launcher.sweetcraft.fr/chapeau/").append(username).append(".png").toString();
+//        hatUrl = playerHatUrl;
     }
     
     /**
@@ -474,8 +483,8 @@ public abstract class EntityPlayer extends EntityLiving
      */
     public void updateEars()
     {
-    	playerEarUrl = (new StringBuilder()).append("http://launcher.sweetcraft.fr/oreilles/").append(username).append(".png").toString();
-        earsUrl = playerEarUrl;
+//    	plqayerEarUrl = (new StringBuilder()).append("http://launcher.sweetcraft.fr/oreilles/").append(username).append(".png").toString();
+//        earsUrl = playerEarUrl;
     }
     
     public void updateCloak(String cloak){

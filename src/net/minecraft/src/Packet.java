@@ -367,6 +367,7 @@ public abstract class Packet
         addIdClassMapping(133, true, true, net.minecraft.src.Packet133Money.class);
         addIdClassMapping(134, true, true, net.minecraft.src.Packet134Job.class);
         addIdClassMapping(135, true, true, net.minecraft.src.Packet135Guilde.class);
+        addIdClassMapping(136, true, true, net.minecraft.src.Packet136Quest.class);
         addIdClassMapping(200, true, false, net.minecraft.src.Packet200Statistic.class);
         addIdClassMapping(201, true, false, net.minecraft.src.Packet201PlayerInfo.class);
         addIdClassMapping(202, true, true, net.minecraft.src.Packet202PlayerAbilities.class);

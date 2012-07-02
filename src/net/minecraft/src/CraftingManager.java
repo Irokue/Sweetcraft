@@ -315,6 +315,10 @@ public class CraftingManager
                 {
                     " B ", "D#D", "###", '#', Block.obsidian, 'B', Item.book, 'D', Item.diamond
                 });
+        addRecipe(new ItemStack(Block.table, 1), new Object[]
+                {
+                    "###", "S S", "S S", '#', Block.planks, 'S', Item.stick
+                });
         addShapelessRecipe(new ItemStack(Item.eyeOfEnder, 1), new Object[]
                 {
                     Item.enderPearl, Item.blazePowder
@@ -327,6 +331,7 @@ public class CraftingManager
                 {
                     Item.gunpowder, Item.blazePowder, new ItemStack(Item.coal, 1, 1)
                 });
+        
         Collections.sort(recipes, new RecipeSorter(this));
         System.out.println((new StringBuilder()).append(recipes.size()).append(" recipes").toString());
     }

@@ -63,6 +63,7 @@ public class GameSettings
     public KeyBinding keyBindPlayerList;
     public KeyBinding keyBindPickBlock;
     public KeyBinding keyBindSweetcraft;
+    public KeyBinding keyBindQuests;
     public KeyBinding keyBindings[];
     protected Minecraft mc;
     private File optionsFile;
@@ -136,10 +137,11 @@ public class GameSettings
         keyBindPlayerList = new KeyBinding("key.playerlist", 15);
         keyBindPickBlock = new KeyBinding("key.pickItem", -98);
         keyBindSweetcraft = new KeyBinding("Caractéristiques", 46);
+        keyBindQuests = new KeyBinding("Quêtes", Keyboard.KEY_L);
         keyBindings = (new KeyBinding[]
                 {
                     keyBindAttack, keyBindUseItem, keyBindForward, keyBindLeft, keyBindBack, keyBindRight, keyBindJump, keyBindSneak, keyBindDrop, keyBindInventory,
-                    keyBindChat, keyBindPlayerList, keyBindPickBlock, keyBindSweetcraft
+                    keyBindChat, keyBindPlayerList, keyBindPickBlock, keyBindSweetcraft, keyBindQuests
                 });
         difficulty = 2;
         hideGUI = false;
@@ -197,10 +199,11 @@ public class GameSettings
         keyBindPlayerList = new KeyBinding("key.playerlist", 15);
         keyBindPickBlock = new KeyBinding("key.pickItem", -98);
         keyBindSweetcraft = new KeyBinding("Caractéristiques", 46);
+        keyBindQuests = new KeyBinding("Quêtes", Keyboard.KEY_L);
         keyBindings = (new KeyBinding[]
                 {
                     keyBindAttack, keyBindUseItem, keyBindForward, keyBindLeft, keyBindBack, keyBindRight, keyBindJump, keyBindSneak, keyBindDrop, keyBindInventory,
-                    keyBindChat, keyBindPlayerList, keyBindPickBlock, keyBindSweetcraft
+                    keyBindChat, keyBindPlayerList, keyBindPickBlock, keyBindSweetcraft, keyBindQuests
                 });
         difficulty = 2;
         hideGUI = false;

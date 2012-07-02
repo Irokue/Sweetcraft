@@ -1989,8 +1989,8 @@ public class RenderGlobal implements IWorldAccess
     public void obtainEntitySkin(Entity entity)
     {
         entity.updateCloak();
-        entity.updateEars();
-        entity.updateHat();
+//        entity.updateEars();
+//        entity.updateHat();
         if (entity.skinUrl != null)
         {
             renderEngine.obtainImageData(entity.skinUrl, new ImageBufferDownload());
@@ -1999,18 +1999,18 @@ public class RenderGlobal implements IWorldAccess
         {
             renderEngine.obtainImageData(entity.cloakUrl, new ImageBufferDownload());
         }
-        if (entity.earsUrl != null)
-        {
-            renderEngine.obtainImageData(entity.earsUrl, new ImageBufferDownload());
-        }
-        
-        if (entity.hatUrl != null)
+//        if (entity.earsUrl != null)
+//        {
+//            renderEngine.obtainImageData(entity.earsUrl, new ImageBufferDownload());
+//        }
+//        
+//        if (entity.hatUrl != null)
+//         
+//        {
+//         
+//        renderEngine.obtainImageData(entity.hatUrl, new ImageBufferDownload());
          
-        {
-         
-        renderEngine.obtainImageData(entity.hatUrl, new ImageBufferDownload());
-         
-        }
+//        }
     }
 
     /**
@@ -2026,18 +2026,18 @@ public class RenderGlobal implements IWorldAccess
         {
             renderEngine.releaseImageData(entity.cloakUrl);
         }
-        if (entity.earsUrl != null)
-        {
-            renderEngine.releaseImageData(entity.earsUrl);
-        }
-        
-        if (entity.hatUrl != null)
+//        if (entity.earsUrl != null)
+//        {
+//            renderEngine.releaseImageData(entity.earsUrl);
+//        }
+//        
+//        if (entity.hatUrl != null)
+//         
+//        {
          
-        {
+//        renderEngine.releaseImageData(entity.hatUrl);
          
-        renderEngine.releaseImageData(entity.hatUrl);
-         
-        }
+//        }
     }
 
     /**

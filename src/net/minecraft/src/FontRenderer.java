@@ -761,7 +761,7 @@ public class FontRenderer
             for (int i = 0; i < as.length; i++)
             {
                 renderSplitStringNoShadow(as[i], par2, par3, par4, par5);
-                par3 += splitStringWidth(as[i], par4);
+                par3 += splitStringWidth(as[i], par4) + FONT_HEIGHT + 7;
             }
 
             return;
@@ -801,7 +801,7 @@ public class FontRenderer
                 }
 
                 renderString(s2, par2, par3, par5, par6);
-                par3 += FONT_HEIGHT;
+                par3 += FONT_HEIGHT + 7;
             }
 
             if (getStringWidth(s1.trim()) > 0)
@@ -812,7 +812,7 @@ public class FontRenderer
                 }
 
                 renderString(s1, par2, par3, par5, par6);
-                par3 += FONT_HEIGHT;
+                par3 += FONT_HEIGHT + 7;
             }
         }
         while (true);

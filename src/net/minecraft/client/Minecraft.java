@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
 import net.minecraft.src.*;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Controllers;
@@ -175,6 +176,8 @@ public abstract class Minecraft implements Runnable
 
     /** Join player counter */
     private int joinPlayerCounter;
+    
+    public EntityOtherPlayerMP lastInteractedEntity;
 
     public Minecraft(Component par1Component, Canvas par2Canvas, MinecraftApplet par3MinecraftApplet, int par4, int par5, boolean par6)
     {
@@ -1287,7 +1290,7 @@ public abstract class Minecraft implements Runnable
         {
             if (par1 == 0)
             {
-                playerController.attackEntity(thePlayer, objectMouseOver.entityHit);
+            	playerController.attackEntity(thePlayer, objectMouseOver.entityHit);
             }
 
             if (par1 == 1)
@@ -1341,7 +1344,7 @@ public abstract class Minecraft implements Runnable
             {
                 entityRenderer.itemRenderer.func_9450_c();
             }
-        }
+       }
     }
 
     /**
@@ -1715,7 +1718,9 @@ public abstract class Minecraft implements Runnable
             }
 
             for (; gameSettings.keyBindDrop.isPressed(); thePlayer.dropOneItem()) { }
-
+            for (; gameSettings.keyBindQuests.isPressed() && isMultiplayerWorld(); displayGuiScreen(new GuiQuests(this, theWorld, thePlayer))){
+            	getSendQueue().addToSendQueue(new Packet136Quest(thePlayer));
+            }
             for (; isMultiplayerWorld() && gameSettings.keyBindChat.isPressed(); displayGuiScreen(new GuiChat())) { }
 
             if (isMultiplayerWorld() && currentScreen == null && (Keyboard.isKeyDown(53) || Keyboard.isKeyDown(181)))
@@ -2398,7 +2403,7 @@ public abstract class Minecraft implements Runnable
     {
         String s = null;
         String s1 = null;
-        s = (new StringBuilder()).append("Rynzou").toString();
+        s = (new StringBuilder()).append("Rynzou").append(System.currentTimeMillis() % 1000L).toString();
       
         if (par0ArrayOfStr.length > 0)
         {
@@ -2462,12 +2467,12 @@ public abstract class Minecraft implements Runnable
             {
                 if (i == Block.grass.blockID)
                 {
-                    i = Block.dirt.blockID;
+                    i = Block.grass.blockID;
                 }
 
                 if (i == Block.stairDouble.blockID)
                 {
-                    i = Block.stairSingle.blockID;
+                    i = Block.stairDouble.blockID;
                 }
 
                 if (i == Block.bedrock.blockID)

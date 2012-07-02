@@ -309,7 +309,7 @@ public class EntityPlayerSP extends EntityPlayer
 
         if (capabilities.isFlying)
         {
-            f *= 1.1F;
+            f *= 1.2F;
         }
 
         f *= ((landMovementFactor * getSpeedModifier()) / speedOnGround + 1.0F) / 2.0F;
