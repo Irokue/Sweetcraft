@@ -161,6 +161,9 @@ public class Block
     public static final Block chaise;
     public static final Block table;
     public static final Block X;
+    public static final Block blockCoal;
+    public static final Block blockRedstone;
+    public static final Block blockRedstoneGlowing;
     
 
     
@@ -1317,11 +1320,11 @@ public class Block
         
         chaise = (new BlockChaise(125, 4)).setHardness(2.0F).setResistance(5F).setStepSound(soundWoodFootstep).setBlockName("chaise").setRequiresSelfNotify();
         table = (new BlockTable(126, 4)).setHardness(2.0F).setResistance(5F).setStepSound(soundWoodFootstep).setBlockName("table").setRequiresSelfNotify();
-        X = (new BlockGlass(127, 168, Material.glass, false)).setHardness(99999999999F).setStepSound(soundGlassFootstep).setBlockName("x");
-        
-        
-        
-        
+        X = (new BlockX(127, 173)).setHardness(99999999999F).setStepSound(soundGlassFootstep).setBlockName("x");
+        blockCoal = (new BlockOreStorage(128, 168)).setHardness(5F).setResistance(10F).setStepSound(soundMetalFootstep).setBlockName("blockCoal");
+        blockRedstone = (new BlockRedstoneBlock(129, 169, false)).setHardness(5F).setResistance(10F).setStepSound(soundMetalFootstep).setBlockName("blockRedstone");
+        blockRedstoneGlowing = (new BlockRedstoneBlock(130, 169, true)).setLightValue(0.625F).setHardness(5F).setResistance(10F).setStepSound(soundMetalFootstep).setBlockName("blockRedstone").setRequiresSelfNotify();
+
         Item.itemsList[cloth.blockID] = (new ItemCloth(cloth.blockID - 256)).setItemName("cloth");
         Item.itemsList[wood.blockID] = (new ItemMetadata(wood.blockID - 256, wood)).setItemName("log");
         Item.itemsList[planks.blockID] = (new ItemMetadata(planks.blockID - 256, planks)).setItemName("wood");

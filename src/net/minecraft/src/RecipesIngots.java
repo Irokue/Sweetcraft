@@ -16,6 +16,10 @@ public class RecipesIngots
                         Block.blockDiamond, new ItemStack(Item.diamond, 9)
                     }, new Object[] {
                         Block.blockLapis, new ItemStack(Item.dyePowder, 9, 4)
+                    }, new Object[] {
+                        Block.blockCoal, new ItemStack(Item.coal, 9)
+                    }, new Object[] {
+                        Block.blockRedstone, new ItemStack(Item.redstone, 9)
                     }
                 });
     }

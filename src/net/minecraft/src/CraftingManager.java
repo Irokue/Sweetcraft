@@ -109,6 +109,10 @@ public class CraftingManager
                 {
                     "###", '#', Block.stoneBrick
                 });
+        addRecipe(new ItemStack(Block.stairSingle, 6, 6), new Object[]
+                {
+                    "###", '#', Block.netherBrick
+                });
         addRecipe(new ItemStack(Block.ladder, 3), new Object[]
                 {
                     "# #", "###", "# #", '#', Item.stick
@@ -318,6 +322,14 @@ public class CraftingManager
         addRecipe(new ItemStack(Block.table, 1), new Object[]
                 {
                     "###", "S S", "S S", '#', Block.planks, 'S', Item.stick
+                });
+        addRecipe(new ItemStack(Block.chaise, 1), new Object[]
+                {
+                    "  S", "###", "S S", '#', Block.planks, 'S', Item.stick
+                });
+        addShapelessRecipe(new ItemStack(Item.maille, 2), new Object[]
+                {
+                    Item.ingotIron
                 });
         addShapelessRecipe(new ItemStack(Item.eyeOfEnder, 1), new Object[]
                 {

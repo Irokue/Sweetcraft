@@ -5760,6 +5760,13 @@ public class RenderBlocks
             par1Block.setBlockBoundsForItemRender();
             tessellator.draw();
         }
+        else if (j == 34)
+        {
+        	tessellator.startDrawingQuads();
+            tessellator.setNormal(0.0F, -1F, 0.0F);
+            par1Block.setBlockBoundsForItemRender();
+            tessellator.draw();
+        }
         else if (j == 13)
         {
             par1Block.setBlockBoundsForItemRender();

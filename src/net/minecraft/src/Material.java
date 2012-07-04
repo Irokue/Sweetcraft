@@ -243,5 +243,6 @@ public class Material
         cake = (new Material(MapColor.airColor)).setNoPushMobility();
         web = (new MaterialWeb(MapColor.clothColor)).setNoHarvest().setNoPushMobility();
         piston = (new Material(MapColor.stoneColor)).setImmovableMobility();
+        x = new MaterialTransparent(MapColor.airColor);
     }
 }

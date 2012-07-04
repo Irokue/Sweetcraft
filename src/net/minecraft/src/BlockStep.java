@@ -7,7 +7,7 @@ public class BlockStep extends Block
 {
     public static final String blockStepTypes[] =
     {
-        "stone", "sand", "wood", "cobble", "brick", "smoothStoneBrick"
+        "stone", "sand", "wood", "cobble", "brick", "smoothStoneBrick", "netherBrick"
     };
 
     /** Boolean used to seperate different states of blocks */
@@ -120,9 +120,13 @@ public class BlockStep extends Block
         {
             return Block.stoneBrick.blockIndexInTexture;
         }
+        if(i == 6)
+        {
+        	return Block.netherBrick.blockIndexInTexture;
+        }
         else
         {
-            return 6;
+            return 7;
         }
     }
 
