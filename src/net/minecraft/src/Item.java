@@ -167,6 +167,10 @@ public class Item
      * Items de Sweetcraft
      */
     public static Item maille;
+    public static Item raisin;
+    public static Item raisinSeed;
+    public static Item vin;
+    public static Item vinVide;
     
     /** Item index + 256 */
     public final int shiftedIndex;
@@ -687,6 +691,11 @@ public class Item
         cauldron = (new ItemReed(124, Block.cauldron)).setIconCoord(12, 9).setItemName("cauldron");
         speckledMelon = (new Item(126)).setIconCoord(9, 8).setItemName("speckledMelon").setPotionEffect(PotionHelper.speckledMelonEffect);
         maille = (new ItemMaille(130)).setIconCoord(13, 11).setItemName("maille");
+        raisin = (new ItemRaisin(131, 6, false)).setIconCoord(11, 11).setItemName("raisin");
+        raisinSeed = (new ItemSeeds(132, Block.grappeCrops.blockID, Block.tilledField.blockID)).setIconCoord(10, 11).setItemName("raisinSeeds");
+        vin = (new ItemVin(133)).setPotionEffect(Potion.confusion.id, 60, 0, 1.0F).setIconCoord(12, 11).setItemName("vin");
+        vinVide = (new Item(134)).setIconCoord(12, 12).setItemName("vinVide");
         StatList.initStats();
     }
+
 }

@@ -95,6 +95,18 @@ public class ItemDye extends Item
                 return true;
             }
 
+            if (i == Block.grappeCrops.blockID)
+            {
+                if (!par3World.isRemote)
+                {
+                    ((BlockGrappeCrops)Block.grappeCrops).fertilize(par3World, par4, par5, par6);
+                    par1ItemStack.stackSize--;
+                }
+
+                return true;
+            }
+
+            
             if (i == Block.grass.blockID)
             {
                 if (!par3World.isRemote)

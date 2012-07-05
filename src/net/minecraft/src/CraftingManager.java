@@ -327,6 +327,14 @@ public class CraftingManager
                 {
                     "  S", "###", "S S", '#', Block.planks, 'S', Item.stick
                 });
+        addRecipe(new ItemStack(Item.vinVide, 1), new Object[]
+                {
+                    "S S", "S S", "SSS", 'S', Block.glass
+                });
+        addShapelessRecipe(new ItemStack(Item.vin, 1), new Object[]
+                {
+                    Item.raisin, Item.vinVide
+                });
         addShapelessRecipe(new ItemStack(Item.maille, 2), new Object[]
                 {
                     Item.ingotIron

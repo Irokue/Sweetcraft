@@ -22,6 +22,43 @@ public class BlockRedstoneBlock extends Block {
 	        return 30;
 	    }
 	 
+	  /**
+	     * Called whenever the block is added into the world. Args: world, x, y, z
+	     */
+	    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+	    {
+	        if (par1World.getBlockMetadata(par2, par3, par4) == 0)
+	        {
+	            super.onBlockAdded(par1World, par2, par3, par4);
+	        }
+
+	        if (glowing)
+	        {
+	            par1World.notifyBlocksOfNeighborChange(par2, par3 - 1, par4, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2, par3 + 1, par4, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2 - 1, par3, par4, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2 + 1, par3, par4, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2, par3, par4 - 1, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2, par3, par4 + 1, blockID);
+	        }
+	    }
+
+	    /**
+	     * Called whenever the block is removed.
+	     */
+	    public void onBlockRemoval(World par1World, int par2, int par3, int par4)
+	    {
+	        if (glowing)
+	        {
+	            par1World.notifyBlocksOfNeighborChange(par2, par3 - 1, par4, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2, par3 + 1, par4, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2 - 1, par3, par4, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2 + 1, par3, par4, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2, par3, par4 - 1, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2, par3, par4 + 1, blockID);
+	        }
+	    }
+	 
 	 public void onBlockClicked(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer)
 	    {
 	        glow(par1World, par2, par3, par4);
@@ -67,6 +104,12 @@ public class BlockRedstoneBlock extends Block {
 	    {
 	        if (blockID == Block.blockRedstoneGlowing.blockID)
 	        {
+	        	par1World.notifyBlocksOfNeighborChange(par2, par3 - 1, par4, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2, par3 + 1, par4, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2 - 1, par3, par4, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2 + 1, par3, par4, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2, par3, par4 - 1, blockID);
+	            par1World.notifyBlocksOfNeighborChange(par2, par3, par4 + 1, blockID);
 	            par1World.setBlockWithNotify(par2, par3, par4, Block.blockRedstone.blockID);
 	        }
 	    }
@@ -80,6 +123,53 @@ public class BlockRedstoneBlock extends Block {
 	        {
 	            sparkle(par1World, par2, par3, par4);
 	        }
+	    }
+	    
+	    /**
+	     * Is this block indirectly powering the block on the specified side
+	     */
+	    public boolean isIndirectlyPoweringTo(World par1World, int par2, int par3, int par4, int par5)
+	    {
+	        if (par5 == 0)
+	        {
+	            return isPoweringTo(par1World, par2, par3, par4, par5);
+	        }
+	        else
+	        {
+	            return false;
+	        }
+	    }
+	    
+	    public boolean isPoweringTo(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+	    {
+	        if (!glowing)
+	        {
+	            return false;
+	        }
+
+	        int i = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+
+	        if (i == 5 && par5 == 1)
+	        {
+	            return false;
+	        }
+
+	        if (i == 3 && par5 == 3)
+	        {
+	            return false;
+	        }
+
+	        if (i == 4 && par5 == 2)
+	        {
+	            return false;
+	        }
+
+	        if (i == 1 && par5 == 5)
+	        {
+	            return false;
+	        }
+
+	        return i != 2 || par5 != 4;
 	    }
 	    
 	    public boolean canProvidePower(){

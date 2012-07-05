@@ -536,6 +536,11 @@ public class RenderBlocks
         	return renderBlockTable((BlockTable)par1Block, par2, par3, par4);
         }
 
+        if (i == 32)
+        {
+        	return renderBlockGrappeCrops(par1Block, par2, par3, par4);
+        }
+        
         if (i == 26)
         {
             return renderBlockEndPortalFrame(par1Block, par2, par3, par4);
@@ -2825,6 +2830,18 @@ public class RenderBlocks
     }
 
     /**
+     * Render block grappes crops
+     */
+    public boolean renderBlockGrappeCrops(Block par1Block, int par2, int par3, int par4)
+    {
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.setBrightness(par1Block.getMixedBrightnessForBlock(blockAccess, par2, par3, par4));
+        tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+        renderBlockGrappeCropsImpl(par1Block, blockAccess.getBlockMetadata(par2, par3, par4), par2, (float)par3 /*- 0.0625F*/, par4);
+        return true;
+    }
+    
+    /**
      * Renders a torch at the given coordinates, with the base slanting at the given delta
      */
     public void renderTorchAtAngle(Block par1Block, double par2, double par4, double par6, double par8, double par10)
@@ -3118,6 +3135,67 @@ public class RenderBlocks
         tessellator.addVertexWithUV(d5, par5 + 1.0D, d7, d1, d2);
     }
 
+    /**
+     * Render block crops implementation
+     */
+    public void renderBlockGrappeCropsImpl(Block par1Block, int par2, double par3, double par5, double par7)
+    {
+        Tessellator tessellator = Tessellator.instance;
+        int i = par1Block.getBlockTextureFromSideAndMetadata(0, par2);
+
+        if (overrideBlockTexture >= 0)
+        {
+            i = overrideBlockTexture;
+        }
+
+        int j = (i & 0xf) << 4;
+        int k = i & 0xf0;
+        double d = (float)j / 256F;
+        double d1 = ((float)j + 15.99F) / 256F;
+        double d2 = (float)k / 256F;
+        double d3 = ((float)k + 15.99F) / 256F;
+        double d4 = (par3 + 0.5D) - 0.0D;
+        double d5 = par3 + 0.5D + 0.0D;
+        double d6 = (par7 + 0.5D) - 0.5D;
+        double d7 = par7 + 0.5D + 0.5D;
+        tessellator.addVertexWithUV(d4, par5 + 1.0D, d6, d, d2);
+        tessellator.addVertexWithUV(d4, par5 + 0.0D, d6, d, d3);
+        tessellator.addVertexWithUV(d4, par5 + 0.0D, d7, d1, d3);
+        tessellator.addVertexWithUV(d4, par5 + 1.0D, d7, d1, d2);
+        tessellator.addVertexWithUV(d4, par5 + 1.0D, d7, d, d2);
+        tessellator.addVertexWithUV(d4, par5 + 0.0D, d7, d, d3);
+        tessellator.addVertexWithUV(d4, par5 + 0.0D, d6, d1, d3);
+        tessellator.addVertexWithUV(d4, par5 + 1.0D, d6, d1, d2);
+      /*  tessellator.addVertexWithUV(d5, par5 + 1.0D, d7, d, d2);
+        tessellator.addVertexWithUV(d5, par5 + 0.0D, d7, d, d3);
+        tessellator.addVertexWithUV(d5, par5 + 0.0D, d6, d1, d3);
+        tessellator.addVertexWithUV(d5, par5 + 1.0D, d6, d1, d2);
+        tessellator.addVertexWithUV(d5, par5 + 1.0D, d6, d, d2);
+        tessellator.addVertexWithUV(d5, par5 + 0.0D, d6, d, d3);
+        tessellator.addVertexWithUV(d5, par5 + 0.0D, d7, d1, d3);
+        tessellator.addVertexWithUV(d5, par5 + 1.0D, d7, d1, d2);*/
+        d4 = (par3 + 0.5D) - 0.5D;
+        d5 = par3 + 0.5D + 0.5D;
+        d6 = (par7 + 0.5D) - 0.0D;
+        d7 = par7 + 0.5D + 0.0D;
+        tessellator.addVertexWithUV(d4, par5 + 1.0D, d6, d, d2);
+        tessellator.addVertexWithUV(d4, par5 + 0.0D, d6, d, d3);
+        tessellator.addVertexWithUV(d5, par5 + 0.0D, d6, d1, d3);
+        tessellator.addVertexWithUV(d5, par5 + 1.0D, d6, d1, d2);
+        tessellator.addVertexWithUV(d5, par5 + 1.0D, d6, d, d2);
+        tessellator.addVertexWithUV(d5, par5 + 0.0D, d6, d, d3);
+        tessellator.addVertexWithUV(d4, par5 + 0.0D, d6, d1, d3);
+        tessellator.addVertexWithUV(d4, par5 + 1.0D, d6, d1, d2);
+//        tessellator.addVertexWithUV(d5, par5 + 1.0D, d7, d, d2);
+//        tessellator.addVertexWithUV(d5, par5 + 0.0D, d7, d, d3);
+        tessellator.addVertexWithUV(d4, par5 + 0.0D, d7, d1, d3);
+        tessellator.addVertexWithUV(d4, par5 + 1.0D, d7, d1, d2);
+        tessellator.addVertexWithUV(d4, par5 + 1.0D, d7, d, d2);
+        tessellator.addVertexWithUV(d4, par5 + 0.0D, d7, d, d3);
+//        tessellator.addVertexWithUV(d5, par5 + 0.0D, d7, d1, d3);
+//        tessellator.addVertexWithUV(d5, par5 + 1.0D, d7, d1, d2);
+    }
+    
     /**
      * Renders a block based on the BlockFluids class at the given coordinates
      */

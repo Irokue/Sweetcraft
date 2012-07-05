@@ -164,6 +164,7 @@ public class Block
     public static final Block blockCoal;
     public static final Block blockRedstone;
     public static final Block blockRedstoneGlowing;
+    public static final Block grappeCrops;
     
 
     
@@ -1324,7 +1325,9 @@ public class Block
         blockCoal = (new BlockOreStorage(128, 168)).setHardness(5F).setResistance(10F).setStepSound(soundMetalFootstep).setBlockName("blockCoal");
         blockRedstone = (new BlockRedstoneBlock(129, 169, false)).setHardness(5F).setResistance(10F).setStepSound(soundMetalFootstep).setBlockName("blockRedstone");
         blockRedstoneGlowing = (new BlockRedstoneBlock(130, 169, true)).setLightValue(0.625F).setHardness(5F).setResistance(10F).setStepSound(soundMetalFootstep).setBlockName("blockRedstone").setRequiresSelfNotify();
-
+        grappeCrops = (new BlockGrappeCrops(131, 170)).setHardness(0.0F).setStepSound(soundGrassFootstep).setBlockName("crops").disableStats().setRequiresSelfNotify();
+        
+        
         Item.itemsList[cloth.blockID] = (new ItemCloth(cloth.blockID - 256)).setItemName("cloth");
         Item.itemsList[wood.blockID] = (new ItemMetadata(wood.blockID - 256, wood)).setItemName("log");
         Item.itemsList[planks.blockID] = (new ItemMetadata(planks.blockID - 256, planks)).setItemName("wood");
