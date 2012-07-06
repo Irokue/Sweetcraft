@@ -254,6 +254,10 @@ public class CraftingManager
                 {
                     "#  ", "## ", "###", '#', Block.netherBrick
                 });
+        addRecipe(new ItemStack(Block.stairsFoin, 4), new Object[]
+                {
+                    "#  ", "## ", "###", '#', Block.foin
+                });
         addRecipe(new ItemStack(Item.painting, 1), new Object[]
                 {
                     "###", "#X#", "###", '#', Item.stick, 'X', Block.cloth
@@ -330,6 +334,10 @@ public class CraftingManager
         addRecipe(new ItemStack(Item.vinVide, 1), new Object[]
                 {
                     "S S", "S S", "SSS", 'S', Block.glass
+                });
+        addRecipe(new ItemStack(Block.stairSingle, 6, 7), new Object[]
+                {
+                    "SSS", 'S', Block.foin
                 });
         addShapelessRecipe(new ItemStack(Item.vin, 1), new Object[]
                 {
