@@ -43,11 +43,11 @@ public class RecipesIngots
                     });
         }
 
-        par1CraftingManager.addRecipe(new ItemStack(Block.foin), new Object[]
+        par1CraftingManager.addRecipe(new ItemStack(Block.foin, 3), new Object[]
                 {
                     "###", "###", "###", '#', Item.wheat
                 });
-        par1CraftingManager.addRecipe(new ItemStack(Item.wheat, 9), new Object[]
+        par1CraftingManager.addRecipe(new ItemStack(Item.wheat, 3), new Object[]
                 {
                     "#", '#', Block.foin
                 });

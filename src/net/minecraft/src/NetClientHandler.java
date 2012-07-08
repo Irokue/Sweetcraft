@@ -665,7 +665,7 @@ public class NetClientHandler extends NetHandler {
 							"disconnect.genericReason",
 							new Object[] { "The server responded with an invalid server key" });
 		} else if (par1Packet2Handshake.username.equals("-")) {
-			addToSendQueue(new Packet1Login(mc.session.username, 29));
+			addToSendQueue(new Packet1Login(mc.session.username, 500));
 		} else {
 			try {
 				URL url = new URL(
@@ -683,7 +683,7 @@ public class NetClientHandler extends NetHandler {
 				bufferedreader.close();
 
 				if (s1.equalsIgnoreCase("ok")) {
-					addToSendQueue(new Packet1Login(mc.session.username, 29));
+					addToSendQueue(new Packet1Login(mc.session.username, 500));
 				} else {
 					netManager.networkShutdown("disconnect.loginFailedInfo",
 							new Object[] { s1 });

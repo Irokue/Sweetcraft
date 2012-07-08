@@ -5,7 +5,7 @@ public class BlockX extends Block
 {
     public BlockX(int par1, int par2)
     {
-        super(par1, par2, Material.x);
+        super(par1, par2, Material.X);
     }
 
     public boolean isOpaqueCube()

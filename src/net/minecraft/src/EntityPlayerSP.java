@@ -42,19 +42,24 @@ public class EntityPlayerSP extends EntityPlayer
 
         if (par3Session != null && par3Session.username != null && par3Session.username.length() > 0)
         {
-        	try{	
-	        	URL url = new URL((new StringBuilder()).append("http://launcher.sweetcraft.fr/skins/").append(par3Session.username).append(".png").toString());
-				HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-				huc.setRequestMethod ("GET");  //OR  huc.setRequestMethod ("HEAD"); 
-				huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
-				huc.connect () ; 
-				if(huc.getResponseCode() == HttpURLConnection.HTTP_OK){
-					skinUrl = (new StringBuilder()).append("http://launcher.sweetcraft.fr/skins/").append(par3Session.username).append(".png").toString();
-				}else{
-					skinUrl = (new StringBuilder()).append("http://s3.amazonaws.com/MinecraftSkins/").append(par3Session.username).append(".png").toString();
-				}
-	        } catch(Exception e){System.out.println("fail");}
+        	if(mc.gameSettings.hdSkins){
+		    	try{
+		        	URL url = new URL((new StringBuilder()).append("http://launcher.sweetcraft.fr/skins/").append(par3Session.username).append(".png").toString());
+					HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+					huc.setRequestMethod ("GET");  //OR  huc.setRequestMethod ("HEAD"); 
+					huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
+					huc.connect () ; 
+					if(huc.getResponseCode() == HttpURLConnection.HTTP_OK){
+						skinUrl = (new StringBuilder()).append("http://launcher.sweetcraft.fr/skins/").append(par3Session.username).append(".png").toString();
+					}else{
+						skinUrl = (new StringBuilder()).append("http://s3.amazonaws.com/MinecraftSkins/").append(par3Session.username).append(".png").toString();
+					}
+		        } catch(Exception e){System.out.println("fail");}
+        	}else{
+				skinUrl = (new StringBuilder()).append("http://s3.amazonaws.com/MinecraftSkins/").append(par3Session.username).append(".png").toString();
+        	}
         }
+        	
 
         username = par3Session.username;
     }

@@ -5,6 +5,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import net.minecraft.client.Minecraft;
+
 public class EntityOtherPlayerMP extends EntityPlayer {
 	private boolean isItemInUse;
 	private int otherPlayerMPPosRotationIncrements;
@@ -26,29 +28,35 @@ public class EntityOtherPlayerMP extends EntityPlayer {
 		stepHeight = 0.0F;
 
 		if (par2Str != null && par2Str.length() > 0) {
-			try {
-				URL url = new URL((new StringBuilder())
-						.append("http://launcher.sweetcraft.fr/skins/")
-						.append(par2Str).append(".png").toString());
-				HttpURLConnection huc = (HttpURLConnection) url
-						.openConnection();
-				huc.setRequestMethod("GET"); // OR huc.setRequestMethod
-												// ("HEAD");
-				huc.setRequestProperty(
-						"User-Agent",
-						"Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
-				huc.connect();
-				if (huc.getResponseCode() == HttpURLConnection.HTTP_OK) {
-					skinUrl = (new StringBuilder())
+			if(Minecraft.theMinecraft.gameSettings.hdSkins){
+				try {
+					URL url = new URL((new StringBuilder())
 							.append("http://launcher.sweetcraft.fr/skins/")
-							.append(par2Str).append(".png").toString();
-				} else {
-					skinUrl = (new StringBuilder())
-							.append("http://s3.amazonaws.com/MinecraftSkins/")
-							.append(par2Str).append(".png").toString();
+							.append(par2Str).append(".png").toString());
+					HttpURLConnection huc = (HttpURLConnection) url
+							.openConnection();
+					huc.setRequestMethod("GET"); // OR huc.setRequestMethod
+													// ("HEAD");
+					huc.setRequestProperty(
+							"User-Agent",
+							"Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
+					huc.connect();
+					if (huc.getResponseCode() == HttpURLConnection.HTTP_OK) {
+						skinUrl = (new StringBuilder())
+								.append("http://launcher.sweetcraft.fr/skins/")
+								.append(par2Str).append(".png").toString();
+					} else {
+						skinUrl = (new StringBuilder())
+								.append("http://s3.amazonaws.com/MinecraftSkins/")
+								.append(par2Str).append(".png").toString();
+					}
+				} catch (Exception e) {
+					System.out.println("fail");
 				}
-			} catch (Exception e) {
-				System.out.println("fail");
+			}else{
+				skinUrl = (new StringBuilder())
+						.append("http://s3.amazonaws.com/MinecraftSkins/")
+						.append(par2Str).append(".png").toString();
 			}
 		}
 

@@ -48,7 +48,7 @@ public class Material
     /** Pistons' material. */
     public static final Material piston;
 
-	public static Material x;
+	public static final Material X;
 
     /** Bool defining if the block can burn or not. */
     private boolean canBurn;
@@ -243,6 +243,6 @@ public class Material
         cake = (new Material(MapColor.airColor)).setNoPushMobility();
         web = (new MaterialWeb(MapColor.clothColor)).setNoHarvest().setNoPushMobility();
         piston = (new Material(MapColor.stoneColor)).setImmovableMobility();
-        x = new MaterialTransparent(MapColor.airColor);
+        X = new MaterialTransparent(MapColor.airColor);
     }
 }

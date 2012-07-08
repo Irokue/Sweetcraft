@@ -8,7 +8,6 @@ public class WorldRenderer
     /** Reference to the World object. */
     public World worldObj;
     private int glRenderList;
-    private static Tessellator tessellator;
     public static int chunksUpdated = 0;
     public int posX;
     public int posY;
@@ -71,9 +70,34 @@ public class WorldRenderer
 
     /** Bytes sent to the GPU */
     private int bytesDrawn;
+    public boolean isVisibleFromPosition;
+    public double visibleFromX;
+    public double visibleFromY;
+    public double visibleFromZ;
+    private boolean needsBoxUpdate;
+    public boolean isInFrustrumFully;
+    public static int globalChunkOffsetX = 0;
+    public static int globalChunkOffsetZ = 0;
+    public boolean isUpdating;
+    private WrUpdateState updateState;
+    public int activeSet;
+    public int activeListIndex[] =
+    {
+        0, 0
+    };
+    public int glWorkLists[][][];
+    public boolean tempSkipRenderPass[];
 
     public WorldRenderer(World par1World, List par2List, int par3, int par4, int par5, int par6)
     {
+        isVisibleFromPosition = false;
+        needsBoxUpdate = false;
+        isInFrustrumFully = false;
+        isUpdating = false;
+        updateState = new WrUpdateState();
+        activeSet = 0;
+        glWorkLists = new int[2][2][16];
+        tempSkipRenderPass = new boolean[2];
         glRenderList = -1;
         isInFrustum = false;
         skipRenderPass = new boolean[2];
@@ -83,6 +107,23 @@ public class WorldRenderer
         worldObj = par1World;
         tileEntities = par2List;
         glRenderList = par6;
+        int i = 0x60000 + 64 * (glRenderList / 3);
+
+        for (int j = 0; j < 2; j++)
+        {
+            int k = i + j * 2 * 16;
+
+            for (int l = 0; l < 2; l++)
+            {
+                int i1 = k + l * 16;
+
+                for (int j1 = 0; j1 < 16; j1++)
+                {
+                    glWorkLists[j][l][j1] = i1 + j1;
+                }
+            }
+        }
+
         posX = -999;
         setPosition(par3, par4, par5);
         needsUpdate = false;
@@ -97,29 +138,30 @@ public class WorldRenderer
         {
             return;
         }
-        else
+
+        if (isUpdating)
         {
-            setDontDraw();
-            posX = par1;
-            posY = par2;
-            posZ = par3;
-            posXPlus = par1 + 8;
-            posYPlus = par2 + 8;
-            posZPlus = par3 + 8;
-            posXClip = par1 & 0x3ff;
-            posYClip = par2;
-            posZClip = par3 & 0x3ff;
-            posXMinus = par1 - posXClip;
-            posYMinus = par2 - posYClip;
-            posZMinus = par3 - posZClip;
-            float f = 6F;
-            rendererBoundingBox = AxisAlignedBB.getBoundingBox((float)par1 - f, (float)par2 - f, (float)par3 - f, (float)(par1 + 16) + f, (float)(par2 + 16) + f, (float)(par3 + 16) + f);
-            GL11.glNewList(glRenderList + 2, GL11.GL_COMPILE);
-            RenderItem.renderAABB(AxisAlignedBB.getBoundingBoxFromPool((float)posXClip - f, (float)posYClip - f, (float)posZClip - f, (float)(posXClip + 16) + f, (float)(posYClip + 16) + f, (float)(posZClip + 16) + f));
-            GL11.glEndList();
-            markDirty();
-            return;
+            updateRenderer();
         }
+
+        setDontDraw();
+        posX = par1;
+        posY = par2;
+        posZ = par3;
+        posXPlus = par1 + 8;
+        posYPlus = par2 + 8;
+        posZPlus = par3 + 8;
+        posXClip = par1 & 0x3ff;
+        posYClip = par2;
+        posZClip = par3 & 0x3ff;
+        posXMinus = par1 - posXClip;
+        posYMinus = par2 - posYClip;
+        posZMinus = par3 - posZClip;
+        float f = 0.0F;
+        rendererBoundingBox = AxisAlignedBB.getBoundingBox((float)par1 - f, (float)par2 - f, (float)par3 - f, (float)(par1 + 16) + f, (float)(par2 + 16) + f, (float)(par3 + 16) + f);
+        needsBoxUpdate = true;
+        markDirty();
+        isVisibleFromPosition = false;
     }
 
     private void setupGLTranslation()
@@ -132,79 +174,233 @@ public class WorldRenderer
      */
     public void updateRenderer()
     {
-        if (!needsUpdate)
+        if (worldObj == null)
         {
             return;
         }
+        else
+        {
+            updateRenderer(0L);
+            finishUpdate();
+            return;
+        }
+    }
+
+    public void finishUpdate()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            if (skipRenderPass[i])
+            {
+                continue;
+            }
+
+            GL11.glNewList(glRenderList + i, GL11.GL_COMPILE);
+
+            for (int l = 0; l <= activeListIndex[i]; l++)
+            {
+                int j1 = glWorkLists[activeSet][i][l];
+                GL11.glCallList(j1);
+            }
+
+            GL11.glEndList();
+        }
+
+        if (activeSet == 0)
+        {
+            activeSet = 1;
+        }
+        else
+        {
+            activeSet = 0;
+        }
+
+        for (int j = 0; j < 2; j++)
+        {
+            if (skipRenderPass[j])
+            {
+                continue;
+            }
+
+            for (int i1 = 0; i1 <= activeListIndex[j]; i1++)
+            {
+                int k1 = glWorkLists[activeSet][j][i1];
+                GL11.glNewList(k1, GL11.GL_COMPILE);
+                GL11.glEndList();
+            }
+        }
+
+        for (int k = 0; k < 2; k++)
+        {
+            activeListIndex[k] = 0;
+        }
+    }
+
+    public boolean updateRenderer(long l)
+    {
+        if (worldObj == null)
+        {
+            return true;
+        }
 
         needsUpdate = false;
+
+        if (!isUpdating)
+        {
+            if (needsBoxUpdate)
+            {
+                float f = 0.0F;
+                GL11.glNewList(glRenderList + 2, GL11.GL_COMPILE);
+                RenderItem.renderAABB(AxisAlignedBB.getBoundingBoxFromPool((float)posXClip - f, (float)posYClip - f, (float)posZClip - f, (float)(posXClip + 16) + f, (float)(posYClip + 16) + f, (float)(posZClip + 16) + f));
+                GL11.glEndList();
+                needsBoxUpdate = false;
+            }
+
+            if (Reflector.hasClass(3))
+            {
+                Object obj = Reflector.getFieldValue(30);
+                Reflector.callVoid(obj, 30, new Object[0]);
+                Reflector.callVoid(40, new Object[0]);
+            }
+
+            Chunk.isLit = false;
+        }
+
         int i = posX;
         int j = posY;
         int k = posZ;
-        int l = posX + 16;
-        int i1 = posY + 16;
-        int j1 = posZ + 16;
+        int i1 = posX + 16;
+        int j1 = posY + 16;
+        int k1 = posZ + 16;
+        ChunkCache chunkcache = null;
+        RenderBlocks renderblocks = null;
+        HashSet hashset = null;
 
-        for (int k1 = 0; k1 < 2; k1++)
+        if (!isUpdating)
         {
-            skipRenderPass[k1] = true;
+            for (int l1 = 0; l1 < 2; l1++)
+            {
+                tempSkipRenderPass[l1] = true;
+            }
+
+            int i2 = 1;
+            chunkcache = new ChunkCache(worldObj, i - i2, j - i2, k - i2, i1 + i2, j1 + i2, k1 + i2);
+            renderblocks = new RenderBlocks(chunkcache);
+            hashset = new HashSet();
+            hashset.addAll(tileEntityRenderers);
+            tileEntityRenderers.clear();
         }
 
-        Chunk.isLit = false;
-        HashSet hashset = new HashSet();
-        hashset.addAll(tileEntityRenderers);
-        tileEntityRenderers.clear();
-        int l1 = 1;
-        ChunkCache chunkcache = new ChunkCache(worldObj, i - l1, j - l1, k - l1, l + l1, i1 + l1, j1 + l1);
-
-        if (!chunkcache.func_48452_a())
+        if (isUpdating || !chunkcache.func_48452_a())
         {
-            chunksUpdated++;
-            RenderBlocks renderblocks = new RenderBlocks(chunkcache);
             bytesDrawn = 0;
-            int i2 = 0;
+            Tessellator tessellator = Tessellator.instance;
+            boolean flag = Reflector.hasClass(1);
+            int j2 = 0;
 
             do
             {
-                if (i2 >= 2)
+                if (j2 >= 2)
                 {
                     break;
                 }
 
-                boolean flag = false;
                 boolean flag1 = false;
                 boolean flag2 = false;
+                boolean flag3 = false;
 
-                for (int j2 = j; j2 < i1; j2++)
+                for (int k2 = j; k2 < j1; k2++)
                 {
-                    for (int k2 = k; k2 < j1; k2++)
+                    if (isUpdating)
                     {
-                        for (int l2 = i; l2 < l; l2++)
-                        {
-                            int i3 = chunkcache.getBlockId(l2, j2, k2);
+                        isUpdating = false;
+                        chunkcache = updateState.chunkcache;
+                        renderblocks = updateState.renderblocks;
+                        hashset = updateState.setOldEntityRenders;
+                        j2 = updateState.renderPass;
+                        k2 = updateState.y;
+                        flag1 = updateState.flag;
+                        flag2 = updateState.hasRenderedBlocks;
+                        flag3 = updateState.hasGlList;
 
-                            if (i3 <= 0)
+                        if (flag3)
+                        {
+                            GL11.glNewList(glWorkLists[activeSet][j2][activeListIndex[j2]], GL11.GL_COMPILE);
+
+                            if (flag)
+                            {
+                                Reflector.callVoid(13, new Object[]
+                                        {
+                                            Integer.valueOf(j2)
+                                        });
+                            }
+
+                            tessellator.setRenderingChunk(true);
+                            tessellator.startDrawingQuads();
+                            tessellator.setTranslation(-globalChunkOffsetX, 0.0D, -globalChunkOffsetZ);
+                        }
+                    }
+                    else if (flag3 && l != 0L && System.nanoTime() - l > 0L && activeListIndex[j2] < 15)
+                    {
+                        if (flag)
+                        {
+                            Reflector.callVoid(14, new Object[]
+                                    {
+                                        Integer.valueOf(j2)
+                                    });
+                        }
+
+                        tessellator.draw();
+                        GL11.glEndList();
+                        tessellator.setRenderingChunk(false);
+                        tessellator.setTranslation(0.0D, 0.0D, 0.0D);
+                        activeListIndex[j2] = activeListIndex[j2] + 1;
+                        updateState.chunkcache = chunkcache;
+                        updateState.renderblocks = renderblocks;
+                        updateState.setOldEntityRenders = hashset;
+                        updateState.renderPass = j2;
+                        updateState.y = k2;
+                        updateState.flag = flag1;
+                        updateState.hasRenderedBlocks = flag2;
+                        updateState.hasGlList = flag3;
+                        isUpdating = true;
+                        return false;
+                    }
+
+                    for (int l2 = k; l2 < k1; l2++)
+                    {
+                        for (int i3 = i; i3 < i1; i3++)
+                        {
+                            int j3 = chunkcache.getBlockId(i3, k2, l2);
+
+                            if (j3 <= 0)
                             {
                                 continue;
                             }
 
-                            if (!flag2)
+                            if (!flag3)
                             {
-                                flag2 = true;
-                                GL11.glNewList(glRenderList + i2, GL11.GL_COMPILE);
-                                GL11.glPushMatrix();
-                                setupGLTranslation();
-                                float f = 1.000001F;
-                                GL11.glTranslatef(-8F, -8F, -8F);
-                                GL11.glScalef(f, f, f);
-                                GL11.glTranslatef(8F, 8F, 8F);
+                                flag3 = true;
+                                GL11.glNewList(glWorkLists[activeSet][j2][activeListIndex[j2]], GL11.GL_COMPILE);
+
+                                if (flag)
+                                {
+                                    Reflector.callVoid(13, new Object[]
+                                            {
+                                                Integer.valueOf(j2)
+                                            });
+                                }
+
+                                tessellator.setRenderingChunk(true);
                                 tessellator.startDrawingQuads();
-                                tessellator.setTranslation(-posX, -posY, -posZ);
+                                tessellator.setTranslation(-globalChunkOffsetX, 0.0D, -globalChunkOffsetZ);
                             }
 
-                            if (i2 == 0 && Block.blocksList[i3].hasTileEntity())
+                            Block block = Block.blocksList[j3];
+
+                            if (j2 == 0 && block.hasTileEntity())
                             {
-                                TileEntity tileentity = chunkcache.getBlockTileEntity(l2, j2, k2);
+                                TileEntity tileentity = chunkcache.getBlockTileEntity(i3, k2, l2);
 
                                 if (TileEntityRenderer.instance.hasSpecialRenderer(tileentity))
                                 {
@@ -212,46 +408,80 @@ public class WorldRenderer
                                 }
                             }
 
-                            Block block = Block.blocksList[i3];
-                            int j3 = block.getRenderBlockPass();
+                            int k3 = block.getRenderBlockPass();
+                            boolean flag4 = true;
 
-                            if (j3 != i2)
+                            if (k3 != j2)
                             {
-                                flag = true;
+                                flag1 = true;
+                                flag4 = false;
+                            }
+
+                            if (flag)
+                            {
+                                flag4 = Reflector.callBoolean(11, new Object[]
+                                        {
+                                            block, Integer.valueOf(j2)
+                                        });
+                            }
+
+                            if (!flag4)
+                            {
                                 continue;
                             }
 
-                            if (j3 == i2)
+                            if (flag)
                             {
-                                flag1 |= renderblocks.renderBlockByRenderType(block, l2, j2, k2);
+                                Reflector.callVoid(15, new Object[]
+                                        {
+                                            block, renderblocks
+                                        });
+                            }
+
+                            flag2 |= renderblocks.renderBlockByRenderType(block, i3, k2, l2);
+
+                            if (flag)
+                            {
+                                Reflector.callVoid(16, new Object[]
+                                        {
+                                            block, renderblocks
+                                        });
                             }
                         }
                     }
                 }
 
-                if (flag2)
+                if (flag3)
                 {
+                    if (flag)
+                    {
+                        Reflector.callVoid(14, new Object[]
+                                {
+                                    Integer.valueOf(j2)
+                                });
+                    }
+
                     bytesDrawn += tessellator.draw();
-                    GL11.glPopMatrix();
                     GL11.glEndList();
+                    tessellator.setRenderingChunk(false);
                     tessellator.setTranslation(0.0D, 0.0D, 0.0D);
                 }
                 else
                 {
-                    flag1 = false;
+                    flag2 = false;
                 }
 
-                if (flag1)
+                if (flag2)
                 {
-                    skipRenderPass[i2] = false;
+                    tempSkipRenderPass[j2] = false;
                 }
 
-                if (!flag)
+                if (!flag1)
                 {
                     break;
                 }
 
-                i2++;
+                j2++;
             }
             while (true);
         }
@@ -264,6 +494,13 @@ public class WorldRenderer
         tileEntities.removeAll(hashset);
         isChunkLit = Chunk.isLit;
         isInitialized = true;
+        chunksUpdated++;
+        isVisible = true;
+        isVisibleFromPosition = false;
+        skipRenderPass[0] = tempSkipRenderPass[0];
+        skipRenderPass[1] = tempSkipRenderPass[1];
+        isUpdating = false;
+        return true;
     }
 
     /**
@@ -321,6 +558,15 @@ public class WorldRenderer
     public void updateInFrustum(ICamera par1ICamera)
     {
         isInFrustum = par1ICamera.isBoundingBoxInFrustum(rendererBoundingBox);
+
+        if (isInFrustum && Config.isOcclusionEnabled() && Config.isOcclusionFancy())
+        {
+            isInFrustrumFully = par1ICamera.isBoundingBoxInFrustumFully(rendererBoundingBox);
+        }
+        else
+        {
+            isInFrustrumFully = false;
+        }
     }
 
     /**
@@ -352,10 +598,5 @@ public class WorldRenderer
     public void markDirty()
     {
         needsUpdate = true;
-    }
-
-    static
-    {
-        tessellator = Tessellator.instance;
     }
 }

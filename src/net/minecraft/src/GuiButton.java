@@ -29,6 +29,8 @@ public class GuiButton extends Gui
     /** Hides the button completely if false. */
     public boolean drawButton;
 
+    public String tooltip;
+    
     public GuiButton(int par1, int par2, int par3, String par4Str)
     {
         this(par1, par2, par3, 200, 20, par4Str);
@@ -87,7 +89,7 @@ public class GuiButton extends Gui
         drawTexturedModalRect(xPosition + width / 2, yPosition, 200 - width / 2, 46 + i * 20, width / 2, height);
         mouseDragged(par1Minecraft, par2, par3);
         int j = 0xe0e0e0;
-
+//        GL11.glEnable(GL11.GL_QUADS);
         if (!enabled)
         {
             j = 0xe0e0e0;

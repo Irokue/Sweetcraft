@@ -5,19 +5,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.Bidi;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Properties;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
+import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 public class FontRenderer
 {
-    /**
-     * Compiled regular expression pattern for matching color codes in a string
-     */
-    private static final Pattern colorCodeRegex = Pattern.compile("(?i)\\u00A7[0-9A-Z]");
-    private int charWidth[];
+    private static final Pattern field_52015_r = Pattern.compile("(?i)\\u00A7[0-9A-FK-OR]");
+    private float charWidth[];
     public int fontTextureName;
 
     /** the height in pixels of default text */
@@ -50,34 +51,31 @@ public class FontRenderer
      * If true, the Unicode Bidirectional Algorithm should be run before rendering any string.
      */
     private boolean bidiFlag;
-
-    /** Used to specify new red value for the current color. */
-    private float red;
-
-    /** Used to specify new blue value for the current color. */
-    private float blue;
-
-    /** Used to specify new green value for the current color. */
-    private float green;
-
-    /** Used to speify new alpha value for the current color. */
-    private float alpha;
+    private float field_50115_n;
+    private float field_50116_o;
+    private float field_50118_p;
+    private float field_50117_q;
+    private GameSettings gameSettings;
+    private String textureFile;
+    private long lastUpdateTime;
 
     FontRenderer()
     {
-        charWidth = new int[256];
+        lastUpdateTime = 0L;
+        charWidth = new float[256];
         fontTextureName = 0;
         FONT_HEIGHT = 8;
         fontRandom = new Random();
         glyphWidth = new byte[0x10000];
         glyphTextureName = new int[256];
-        colorCode = new int[6];
+        colorCode = new int[32];
         renderEngine = null;
     }
 
     public FontRenderer(GameSettings par1GameSettings, String par2Str, RenderEngine par3RenderEngine, boolean par4)
     {
-        charWidth = new int[256];
+        lastUpdateTime = 0L;
+        charWidth = new float[256];
         fontTextureName = 0;
         FONT_HEIGHT = 8;
         fontRandom = new Random();
@@ -86,12 +84,22 @@ public class FontRenderer
         colorCode = new int[32];
         renderEngine = par3RenderEngine;
         unicodeFlag = par4;
+        gameSettings = par1GameSettings;
+        textureFile = par2Str;
+        init();
+    }
+
+    private void init()
+    {
+        charWidth = new float[256];
+        fontTextureName = 0;
+        glyphWidth = new byte[0x10000];
         BufferedImage bufferedimage;
 
         try
         {
-            bufferedimage = ImageIO.read((net.minecraft.src.RenderEngine.class).getResourceAsStream(par2Str));
-            InputStream inputstream = (net.minecraft.src.RenderEngine.class).getResourceAsStream("/font/glyph_sizes.bin");
+            bufferedimage = ImageIO.read(getFontTexturePack().getResourceAsStream(textureFile));
+            InputStream inputstream = getFontTexturePack().getResourceAsStream("/font/glyph_sizes.bin");
             inputstream.read(glyphWidth);
         }
         catch (IOException ioexception)
@@ -101,92 +109,207 @@ public class FontRenderer
 
         int i = bufferedimage.getWidth();
         int j = bufferedimage.getHeight();
+        int k = i / 16;
+        int l = j / 16;
+        float f = (float)i / 128F;
         int ai[] = new int[i * j];
         bufferedimage.getRGB(0, 0, i, j, ai, 0, i);
 
-        for (int k = 0; k < 256; k++)
+        for (int i1 = 0; i1 < 256; i1++)
         {
-            int i1 = k % 16;
-            int k1 = k / 16;
-            int i2 = 7;
+            int j1 = i1 % 16;
+            int l1 = i1 / 16;
+            int j2 = 0;
+            j2 = k - 1;
 
             do
             {
-                if (i2 < 0)
+                if (j2 < 0)
                 {
                     break;
                 }
 
-                int k2 = i1 * 8 + i2;
-                boolean flag = true;
+                int l2 = j1 * k + j2;
+                boolean flag1 = true;
 
-                for (int j3 = 0; j3 < 8 && flag; j3++)
+                for (int k3 = 0; k3 < l && flag1; k3++)
                 {
-                    int l3 = (k1 * 8 + j3) * i;
-                    int j4 = ai[k2 + l3] & 0xff;
+                    int i4 = (l1 * l + k3) * i;
+                    int k4 = ai[l2 + i4];
+                    int i5 = k4 >> 24 & 0xff;
 
-                    if (j4 > 0)
+                    if (i5 > 16)
                     {
-                        flag = false;
+                        flag1 = false;
                     }
                 }
 
-                if (!flag)
+                if (!flag1)
                 {
                     break;
                 }
 
-                i2--;
+                j2--;
             }
             while (true);
 
-            if (k == 32)
+            if (i1 == 65)
             {
-                i2 = 2;
+                i1 = i1;
             }
 
-            charWidth[k] = i2 + 2;
+            if (i1 == 32)
+            {
+                j2 = (int)(1.5D * (double)f);
+            }
+
+            charWidth[i1] = (float)(j2 + 1) / f + 1.0F;
         }
 
-        fontTextureName = par3RenderEngine.allocateAndSetupTexture(bufferedimage);
+        readCustomCharWidths();
+        RenderEngine _tmp = renderEngine;
+        boolean flag = RenderEngine.useMipmaps;
 
-        for (int l = 0; l < 32; l++)
+        try
         {
-            int j1 = (l >> 3 & 1) * 85;
-            int l1 = (l >> 2 & 1) * 170 + j1;
-            int j2 = (l >> 1 & 1) * 170 + j1;
-            int l2 = (l >> 0 & 1) * 170 + j1;
+            RenderEngine _tmp1 = renderEngine;
+            RenderEngine.useMipmaps = false;
 
-            if (l == 6)
+            if (fontTextureName <= 0)
             {
-                l1 += 85;
+                fontTextureName = renderEngine.allocateAndSetupTexture(bufferedimage);
+            }
+            else
+            {
+                renderEngine.setupTexture(bufferedimage, fontTextureName);
+            }
+        }
+        finally
+        {
+            RenderEngine _tmp2 = renderEngine;
+            RenderEngine.useMipmaps = flag;
+        }
+
+        for (int k1 = 0; k1 < 32; k1++)
+        {
+            int i2 = (k1 >> 3 & 1) * 85;
+            int k2 = (k1 >> 2 & 1) * 170 + i2;
+            int i3 = (k1 >> 1 & 1) * 170 + i2;
+            int j3 = (k1 >> 0 & 1) * 170 + i2;
+
+            if (k1 == 6)
+            {
+                k2 += 85;
             }
 
-            if (par1GameSettings.anaglyph)
+            if (gameSettings.anaglyph)
             {
-                int i3 = (l1 * 30 + j2 * 59 + l2 * 11) / 100;
-                int k3 = (l1 * 30 + j2 * 70) / 100;
-                int i4 = (l1 * 30 + l2 * 70) / 100;
-                l1 = i3;
-                j2 = k3;
-                l2 = i4;
+                int l3 = (k2 * 30 + i3 * 59 + j3 * 11) / 100;
+                int j4 = (k2 * 30 + i3 * 70) / 100;
+                int l4 = (k2 * 30 + j3 * 70) / 100;
+                k2 = l3;
+                i3 = j4;
+                j3 = l4;
             }
 
-            if (l >= 16)
+            if (k1 >= 16)
             {
-                l1 /= 4;
-                j2 /= 4;
-                l2 /= 4;
+                k2 /= 4;
+                i3 /= 4;
+                j3 /= 4;
             }
 
-            colorCode[l] = (l1 & 0xff) << 16 | (j2 & 0xff) << 8 | l2 & 0xff;
+            colorCode[k1] = (k2 & 0xff) << 16 | (i3 & 0xff) << 8 | j3 & 0xff;
         }
     }
 
-    /**
-     * Pick how to render a single character and return the width used.
-     */
-    private float renderCharAtPos(int par1, char par2, boolean par3)
+    private void readCustomCharWidths()
+    {
+        String s = ".png";
+
+        if (!textureFile.endsWith(s))
+        {
+            return;
+        }
+
+        String s1 = (new StringBuilder()).append(textureFile.substring(0, textureFile.length() - s.length())).append(".properties").toString();
+        InputStream inputstream = getFontTexturePack().getResourceAsStream(s1);
+
+        if (inputstream == null)
+        {
+            return;
+        }
+
+        try
+        {
+            Config.log((new StringBuilder()).append("Loading ").append(s1).toString());
+            Properties properties = new Properties();
+            properties.load(inputstream);
+            Set set = properties.keySet();
+            Iterator iterator = set.iterator();
+
+            do
+            {
+                if (!iterator.hasNext())
+                {
+                    break;
+                }
+
+                String s2 = (String)iterator.next();
+                String s3 = "width.";
+
+                if (s2.startsWith(s3))
+                {
+                    String s4 = s2.substring(s3.length());
+                    int i = Config.parseInt(s4, -1);
+
+                    if (i >= 0 && i < charWidth.length)
+                    {
+                        String s5 = properties.getProperty(s2);
+                        float f = Config.parseFloat(s5, -1F);
+
+                        if (f >= 0.0F)
+                        {
+                            charWidth[i] = f;
+                        }
+                    }
+                }
+            }
+            while (true);
+        }
+        catch (IOException ioexception)
+        {
+            ioexception.printStackTrace();
+        }
+    }
+
+    private TexturePackBase getFontTexturePack()
+    {
+        if (gameSettings.ofCustomFonts)
+        {
+            return gameSettings.mc.texturePackList.selectedTexturePack;
+        }
+        else
+        {
+            return (TexturePackBase)gameSettings.mc.texturePackList.availableTexturePacks().get(0);
+        }
+    }
+
+    private void checkUpdated()
+    {
+        if (Config.getTextureUpdateTime() == lastUpdateTime)
+        {
+            return;
+        }
+        else
+        {
+            lastUpdateTime = Config.getTextureUpdateTime();
+            init();
+            return;
+        }
+    }
+
+    private float func_50112_a(int par1, char par2, boolean par3)
     {
         if (par2 == ' ')
         {
@@ -195,18 +318,15 @@ public class FontRenderer
 
         if (par1 > 0 && !unicodeFlag)
         {
-            return renderDefaultChar(par1 + 32, par3);
+            return func_50106_a(par1 + 32, par3);
         }
         else
         {
-            return renderUnicodeChar(par2, par3);
+            return func_50111_a(par2, par3);
         }
     }
 
-    /**
-     * Render a single character with the default.png font at current (posX,posY) location...
-     */
-    private float renderDefaultChar(int par1, boolean par2)
+    private float func_50106_a(int par1, boolean par2)
     {
         float f = (par1 % 16) * 8;
         float f1 = (par1 / 16) * 8;
@@ -218,7 +338,7 @@ public class FontRenderer
             boundTextureName = fontTextureName;
         }
 
-        float f3 = (float)charWidth[par1] - 0.01F;
+        float f3 = charWidth[par1] - 0.01F;
         GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
         GL11.glTexCoord2f(f / 128F, f1 / 128F);
         GL11.glVertex3f(posX + f2, posY, 0.0F);
@@ -229,7 +349,7 @@ public class FontRenderer
         GL11.glTexCoord2f((f + f3) / 128F, (f1 + 7.99F) / 128F);
         GL11.glVertex3f((posX + f3) - f2, posY + 7.99F, 0.0F);
         GL11.glEnd();
-        return (float)charWidth[par1];
+        return charWidth[par1];
     }
 
     /**
@@ -256,10 +376,7 @@ public class FontRenderer
         boundTextureName = glyphTextureName[par1];
     }
 
-    /**
-     * Render a single Unicode character at current (posX,posY) location using one of the /font/glyph_XX.png files...
-     */
-    private float renderUnicodeChar(char par1, boolean par2)
+    private float func_50111_a(char par1, boolean par2)
     {
         if (glyphWidth[par1] == 0)
         {
@@ -452,7 +569,7 @@ public class FontRenderer
                     }
 
                     int l = colorCode[j];
-                    GL11.glColor3f((float)(l >> 16) / 255F, (float)(l >> 8 & 0xff) / 255F, (float)(l & 0xff) / 255F);
+                    GL11.glColor4f((float)(l >> 16) / 255F, (float)(l >> 8 & 0xff) / 255F, (float)(l & 0xff) / 255F, field_50117_q);
                 }
                 else if (j == 16)
                 {
@@ -481,7 +598,7 @@ public class FontRenderer
                     flag4 = false;
                     flag3 = false;
                     flag2 = false;
-                    GL11.glColor4f(red, blue, green, alpha);
+                    GL11.glColor4f(field_50115_n, field_50116_o, field_50118_p, field_50117_q);
                 }
 
                 i++;
@@ -498,17 +615,17 @@ public class FontRenderer
                 {
                     i1 = fontRandom.nextInt(ChatAllowedCharacters.allowedCharacters.length());
                 }
-                while (charWidth[k + 32] != charWidth[i1 + 32]);
+                while ((int)charWidth[k + 32] != (int)charWidth[i1 + 32]);
 
                 k = i1;
             }
 
-            float f = renderCharAtPos(k, c, flag2);
+            float f = func_50112_a(k, c, flag2);
 
             if (flag1)
             {
                 posX++;
-                renderCharAtPos(k, c, flag2);
+                func_50112_a(k, c, flag2);
                 posX--;
                 f++;
             }
@@ -560,11 +677,11 @@ public class FontRenderer
                 par4 = (par4 & 0xfcfcfc) >> 2 | par4 & 0xff000000;
             }
 
-            red = (float)(par4 >> 16 & 0xff) / 255F;
-            blue = (float)(par4 >> 8 & 0xff) / 255F;
-            green = (float)(par4 & 0xff) / 255F;
-            alpha = (float)(par4 >> 24 & 0xff) / 255F;
-            GL11.glColor4f(red, blue, green, alpha);
+            field_50115_n = (float)(par4 >> 16 & 0xff) / 255F;
+            field_50116_o = (float)(par4 >> 8 & 0xff) / 255F;
+            field_50118_p = (float)(par4 & 0xff) / 255F;
+            field_50117_q = (float)(par4 >> 24 & 0xff) / 255F;
+            GL11.glColor4f(field_50115_n, field_50116_o, field_50118_p, field_50117_q);
             posX = par2;
             posY = par3;
             renderStringAtPos(par1Str, par5);
@@ -581,22 +698,24 @@ public class FontRenderer
      */
     public int getStringWidth(String par1Str)
     {
+        checkUpdated();
+
         if (par1Str == null)
         {
             return 0;
         }
 
-        int i = 0;
+        float f = 0.0F;
         boolean flag = false;
 
-        for (int j = 0; j < par1Str.length(); j++)
+        for (int i = 0; i < par1Str.length(); i++)
         {
-            char c = par1Str.charAt(j);
-            int k = getCharWidth(c);
+            char c = par1Str.charAt(i);
+            float f1 = getCharWidthFloat(c);
 
-            if (k < 0 && j < par1Str.length() - 1)
+            if (f1 < 0.0F && i < par1Str.length() - 1)
             {
-                char c1 = par1Str.charAt(++j);
+                char c1 = par1Str.charAt(++i);
 
                 if (c1 == 'l' || c1 == 'L')
                 {
@@ -607,41 +726,43 @@ public class FontRenderer
                     flag = false;
                 }
 
-                k = getCharWidth(c1);
+                f1 = getCharWidthFloat(c1);
             }
 
-            i += k;
+            f += f1;
 
             if (flag)
             {
-                i++;
+                f++;
             }
         }
 
-        return i;
+        return Math.round(f);
     }
 
-    /**
-     * Returns the width of this character as rendered.
-     */
-    public int getCharWidth(char par1)
+    public int func_50105_a(char par1)
     {
-        if (par1 == '\247')
+        return Math.round(getCharWidthFloat(par1));
+    }
+
+    private float getCharWidthFloat(char c)
+    {
+        if (c == '\247')
         {
-            return -1;
+            return -1F;
         }
 
-        int i = ChatAllowedCharacters.allowedCharacters.indexOf(par1);
+        int i = ChatAllowedCharacters.allowedCharacters.indexOf(c);
 
         if (i >= 0 && !unicodeFlag)
         {
             return charWidth[i + 32];
         }
 
-        if (glyphWidth[par1] != 0)
+        if (glyphWidth[c] != 0)
         {
-            int j = glyphWidth[par1] >> 4;
-            int k = glyphWidth[par1] & 0xf;
+            int j = glyphWidth[c] >> 4;
+            int k = glyphWidth[c] & 0xf;
 
             if (k > 7)
             {
@@ -649,38 +770,32 @@ public class FontRenderer
                 j = 0;
             }
 
-            return (++k - j) / 2 + 1;
+            return (float)((++k - j) / 2 + 1);
         }
         else
         {
-            return 0;
+            return 0.0F;
         }
     }
 
-    /**
-     * Trims a string to fit a specified Width.
-     */
     public String trimStringToWidth(String par1Str, int par2)
     {
         return trimStringToWidth(par1Str, par2, false);
     }
 
-    /**
-     * Trims a string to a specified width, and will reverse it if par3 is set.
-     */
     public String trimStringToWidth(String par1Str, int par2, boolean par3)
     {
         StringBuilder stringbuilder = new StringBuilder();
-        int i = 0;
-        int j = par3 ? par1Str.length() - 1 : 0;
-        byte byte0 = ((byte)(par3 ? -1 : 1));
+        float f = 0.0F;
+        int i = par3 ? par1Str.length() - 1 : 0;
+        byte byte0 = (byte)(par3 ? -1 : 1);
         boolean flag = false;
         boolean flag1 = false;
 
-        for (int k = j; k >= 0 && k < par1Str.length() && i < par2; k += byte0)
+        for (int j = i; j >= 0 && j < par1Str.length() && f < (float)par2; j += byte0)
         {
-            char c = par1Str.charAt(k);
-            int l = getCharWidth(c);
+            char c = par1Str.charAt(j);
+            float f1 = getCharWidthFloat(c);
 
             if (flag)
             {
@@ -695,21 +810,21 @@ public class FontRenderer
                     flag1 = false;
                 }
             }
-            else if (l < 0)
+            else if (f1 < 0.0F)
             {
                 flag = true;
             }
             else
             {
-                i += l;
+                f += f1;
 
                 if (flag1)
                 {
-                    i++;
+                    f++;
                 }
             }
 
-            if (i > par2)
+            if (f > (float)par2)
             {
                 break;
             }
@@ -732,6 +847,8 @@ public class FontRenderer
      */
     public void drawSplitString(String par1Str, int par2, int par3, int par4, int par5)
     {
+        checkUpdated();
+
         if (bidiFlag)
         {
             par1Str = bidiReorder(par1Str);
@@ -754,6 +871,7 @@ public class FontRenderer
      */
     private void renderSplitString(String par1Str, int par2, int par3, int par4, int par5, boolean par6)
     {
+        checkUpdated();
         String as[] = par1Str.split("\n");
 
         if (as.length > 1)
@@ -761,7 +879,7 @@ public class FontRenderer
             for (int i = 0; i < as.length; i++)
             {
                 renderSplitStringNoShadow(as[i], par2, par3, par4, par5);
-                par3 += splitStringWidth(as[i], par4) + FONT_HEIGHT + 7;
+                par3 += splitStringWidth(as[i], par4) + FONT_HEIGHT*2 + 7;
             }
 
             return;
@@ -823,6 +941,7 @@ public class FontRenderer
      */
     public int splitStringWidth(String par1Str, int par2)
     {
+        checkUpdated();
         String as[] = par1Str.split("\n");
 
         if (as.length > 1)
@@ -896,17 +1015,11 @@ public class FontRenderer
         bidiFlag = par1;
     }
 
-    /**
-     * Breaks a string into a list of pieces that will fit a specified width.
-     */
     public java.util.List listFormattedStringToWidth(String par1Str, int par2)
     {
         return Arrays.asList(wrapFormattedStringToWidth(par1Str, par2).split("\n"));
     }
 
-    /**
-     * Inserts newline and formatting into a string to wrap it within the specified width.
-     */
     String wrapFormattedStringToWidth(String par1Str, int par2)
     {
         int i = sizeStringToWidth(par1Str, par2);
@@ -918,37 +1031,34 @@ public class FontRenderer
         else
         {
             String s = par1Str.substring(0, i);
-            String s1 = (new StringBuilder()).append(getFormatFromString(s)).append(par1Str.substring(i + (par1Str.charAt(i) != ' ' ? 0 : 1))).toString();
-            return (new StringBuilder()).append(s).append("\n").append(wrapFormattedStringToWidth(s1, par2)).toString();
+            String s1 = (new StringBuilder()).append(func_50114_c(s)).append(par1Str.substring(i + (par1Str.charAt(i) == ' ' ? 1 : 0))).toString();
+            return (new StringBuilder()).append(s).append("\n").append(sizeStringToWidth(s1, par2)).toString();
         }
     }
 
-    /**
-     * Determines how many characters from the string will fit into the specified width.
-     */
     private int sizeStringToWidth(String par1Str, int par2)
     {
         int i = par1Str.length();
+        float f = 0.0F;
         int j = 0;
-        int k = 0;
-        int l = -1;
+        int k = -1;
         boolean flag = false;
 
         do
         {
-            if (k >= i)
+            if (j >= i)
             {
                 break;
             }
 
-            char c = par1Str.charAt(k);
+            char c = par1Str.charAt(j);
 
             switch (c)
             {
                 case 167:
-                    if (k != i)
+                    if (j != i)
                     {
-                        char c1 = par1Str.charAt(++k);
+                        char c1 = par1Str.charAt(++j);
 
                         if (c1 == 'l' || c1 == 'L')
                         {
@@ -963,14 +1073,14 @@ public class FontRenderer
                     break;
 
                 case 32:
-                    l = k;
+                    k = j;
 
                 default:
-                    j += getCharWidth(c);
+                    f += getCharWidthFloat(c);
 
                     if (flag)
                     {
-                        j++;
+                        f++;
                     }
 
                     break;
@@ -978,49 +1088,40 @@ public class FontRenderer
 
             if (c == '\n')
             {
-                l = ++k;
+                k = ++j;
                 break;
             }
 
-            if (j > par2)
+            if (f > (float)par2)
             {
                 break;
             }
 
-            k++;
+            j++;
         }
         while (true);
 
-        if (k != i && l != -1 && l < k)
-        {
-            return l;
-        }
-        else
+        if (j != i && k != -1 && k < j)
         {
             return k;
         }
+        else
+        {
+            return j;
+        }
     }
 
-    /**
-     * Checks if the char code is a hexadecimal character, used to set colour.
-     */
-    private static boolean isFormatColor(char par0)
+    private static boolean func_50110_b(char par0)
     {
-        return par0 >= '0' && par0 <= '9' || par0 >= 'a' && par0 <= 'z' || par0 >= 'A' && par0 <= 'Z';
+        return par0 >= '0' && par0 <= '9' || par0 >= 'a' && par0 <= 'f' || par0 >= 'A' && par0 <= 'F';
     }
 
-    /**
-     * Checks if the char code is O-K...lLrRk-o... used to set special formatting.
-     */
-    private static boolean isFormatSpecial(char par0)
+    private static boolean func_50109_c(char par0)
     {
         return par0 >= 'k' && par0 <= 'o' || par0 >= 'K' && par0 <= 'O' || par0 == 'r' || par0 == 'R';
     }
 
-    /**
-     * Digests a string for nonprinting formatting characters then returns a string containing only that formatting.
-     */
-    private static String getFormatFromString(String par0Str)
+    private static String func_50114_c(String par0Str)
     {
         String s = "";
         int i = -1;
@@ -1037,11 +1138,11 @@ public class FontRenderer
             {
                 char c = par0Str.charAt(i + 1);
 
-                if (isFormatColor(c))
+                if (func_50110_b(c))
                 {
                     s = (new StringBuilder()).append("\247").append(c).toString();
                 }
-                else if (isFormatSpecial(c))
+                else if (func_50109_c(c))
                 {
                     s = (new StringBuilder()).append(s).append("\247").append(c).toString();
                 }
@@ -1052,11 +1153,8 @@ public class FontRenderer
         return s;
     }
 
-    /**
-     * Remove all embedded color codes from a string
-     */
     public static String stripColorCodes(String par0Str)
     {
-        return colorCodeRegex.matcher(par0Str).replaceAll("");
+        return field_52015_r.matcher(par0Str).replaceAll("");
     }
 }

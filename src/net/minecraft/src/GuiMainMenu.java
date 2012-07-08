@@ -150,8 +150,8 @@ public class GuiMainMenu extends GuiScreen
         int i = height / 4 + 36;
         controlList.add(new GuiButton(1, width / 2 - 100, i, stringtranslate.translateKey("menu.singleplayer")));
         controlList.add(multiplayerButton = new GuiButton(2, width / 2 - 100, i + 24, stringtranslate.translateKey("menu.multiplayer")));
-        controlList.add(new GuiButton(3, width / 2 - 100, i + 48, stringtranslate.translateKey("menu.mods")));
-        controlList.add(new GuiButton(6, width / 2 - 100, i + 72, "Connexion à " + FontColors.GREEN + "Sweet" + FontColors.GOLD + "craft"));
+        controlList.add(new GuiButton(6, width / 2 - 100, i + 48, "Connexion à " + FontColors.GREEN + "Sweet" + FontColors.GOLD + "craft"));
+        controlList.add(new GuiButton(3, width / 2 - 100, i + 72, stringtranslate.translateKey("menu.mods")));
         controlList.add(new GuiButton(0, width / 2 - 100, i + 96 + 12, 98, 20, stringtranslate.translateKey("menu.options")));
         controlList.add(new GuiButton(4, width / 2 + 2, i + 96 + 12, 98, 20, stringtranslate.translateKey("menu.quit")));
         controlList.add(new GuiButtonLanguage(5, width / 2 - 124, i + 96 + 12));

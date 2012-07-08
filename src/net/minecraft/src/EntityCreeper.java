@@ -71,7 +71,7 @@ public class EntityCreeper extends EntityMob
         super.readEntityFromNBT(par1NBTTagCompound);
         dataWatcher.updateObject(17, Byte.valueOf((byte)(par1NBTTagCompound.getBoolean("powered") ? 1 : 0)));
     }
-
+    
     /**
      * Called to update the entity's position/logic.
      */
@@ -199,4 +199,5 @@ public class EntityCreeper extends EntityMob
         super.onStruckByLightning(par1EntityLightningBolt);
         dataWatcher.updateObject(17, Byte.valueOf((byte)1));
     }
+
 }

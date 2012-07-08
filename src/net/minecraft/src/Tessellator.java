@@ -1,6 +1,7 @@
 package net.minecraft.src;
 
 import java.nio.*;
+import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.*;
 
 public class Tessellator
@@ -72,31 +73,31 @@ public class Tessellator
     private boolean isColorDisabled;
 
     /** The draw mode currently being used by the tessellator. */
-    private int drawMode;
+    public int drawMode;
 
     /**
      * An offset to be applied along the x-axis for all vertices in this draw call.
      */
-    private double xOffset;
+    public double xOffset;
 
     /**
      * An offset to be applied along the y-axis for all vertices in this draw call.
      */
-    private double yOffset;
+    public double yOffset;
 
     /**
      * An offset to be applied along the z-axis for all vertices in this draw call.
      */
-    private double zOffset;
+    public double zOffset;
 
     /** The normal to be applied to the face being drawn. */
     private int normal;
 
     /** The static instance of the Tessellator. */
-    public static final Tessellator instance = new Tessellator(0x200000);
+    public static Tessellator instance = new Tessellator(0x80000);
 
     /** Whether this tessellator is currently in draw mode. */
-    private boolean isDrawing;
+    public boolean isDrawing;
 
     /** Whether we are currently using VBO or not. */
     private boolean useVBO;
@@ -115,9 +116,31 @@ public class Tessellator
 
     /** The size of the buffers used (in integers). */
     private int bufferSize;
+    private boolean renderingChunk;
+    private static boolean littleEndianByteOrder;
+    public static boolean renderingWorldRenderer = false;
+    public boolean defaultTexture;
+    public boolean autoGrow;
+    private Tessellator subTessellators[];
+    private int subTextures[];
+    private int terrainTexture;
+    private long textureUpdateTime;
 
-    private Tessellator(int par1)
+    public Tessellator()
     {
+        this(0x10000);
+        defaultTexture = false;
+    }
+
+    public Tessellator(int par1)
+    {
+        renderingChunk = false;
+        defaultTexture = true;
+        autoGrow = true;
+        subTessellators = new Tessellator[0];
+        subTextures = new int[0];
+        terrainTexture = 0;
+        textureUpdateTime = 0L;
         vertexCount = 0;
         hasColor = false;
         hasTexture = false;
@@ -153,6 +176,35 @@ public class Tessellator
         if (!isDrawing)
         {
             throw new IllegalStateException("Not tesselating!");
+        }
+
+        if (renderingChunk && subTessellators.length > 0)
+        {
+            boolean flag = false;
+
+            for (int j = 0; j < subTessellators.length; j++)
+            {
+                int k = subTextures[j];
+
+                if (k <= 0)
+                {
+                    break;
+                }
+
+                Tessellator tessellator = subTessellators[j];
+
+                if (tessellator.isDrawing)
+                {
+                    GL11.glBindTexture(GL11.GL_TEXTURE_2D, k);
+                    tessellator.draw();
+                    flag = true;
+                }
+            }
+
+            if (flag)
+            {
+                GL11.glBindTexture(GL11.GL_TEXTURE_2D, getTerrainTexture());
+            }
         }
 
         isDrawing = false;
@@ -419,7 +471,7 @@ public class Tessellator
 
         hasColor = true;
 
-        if (ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN)
+        if (littleEndianByteOrder)
         {
             color = par4 << 24 | par3 << 16 | par2 << 8 | par1;
         }
@@ -444,6 +496,19 @@ public class Tessellator
      */
     public void addVertex(double par1, double par3, double par5)
     {
+        if (autoGrow && rawBufferIndex >= bufferSize - 32)
+        {
+            Config.dbg((new StringBuilder()).append("Expand tessellator buffer, old: ").append(bufferSize).append(", new: ").append(bufferSize * 2).toString());
+            bufferSize *= 2;
+            int ai[] = new int[bufferSize];
+            System.arraycopy(rawBuffer, 0, ai, 0, rawBuffer.length);
+            rawBuffer = ai;
+            byteBuffer = GLAllocation.createDirectByteBuffer(bufferSize * 4);
+            intBuffer = byteBuffer.asIntBuffer();
+            floatBuffer = byteBuffer.asFloatBuffer();
+            shortBuffer = byteBuffer.asShortBuffer();
+        }
+
         addedVertices++;
 
         if (drawMode == 7 && convertQuadsToTriangles && addedVertices % 4 == 0)
@@ -503,7 +568,7 @@ public class Tessellator
         rawBufferIndex += 8;
         vertexCount++;
 
-        if (vertexCount % 4 == 0 && rawBufferIndex >= bufferSize - 32)
+        if (!autoGrow && addedVertices % 4 == 0 && rawBufferIndex >= bufferSize - 32)
         {
             draw();
             isDrawing = true;
@@ -570,5 +635,105 @@ public class Tessellator
         xOffset += par1;
         yOffset += par2;
         zOffset += par3;
+    }
+
+    public boolean isRenderingChunk()
+    {
+        return renderingChunk;
+    }
+
+    public void setRenderingChunk(boolean flag)
+    {
+        if (renderingChunk != flag)
+        {
+            for (int i = 0; i < subTextures.length; i++)
+            {
+                subTextures[i] = 0;
+            }
+        }
+
+        renderingChunk = flag;
+
+        if (textureUpdateTime != Config.getTextureUpdateTime())
+        {
+            terrainTexture = 0;
+            textureUpdateTime = Config.getTextureUpdateTime();
+        }
+    }
+
+    public Tessellator getSubTessellator(int i)
+    {
+        Tessellator tessellator = getSubTessellatorImpl(i);
+
+        if (!tessellator.isDrawing)
+        {
+            tessellator.startDrawing(drawMode);
+        }
+
+        tessellator.brightness = brightness;
+        tessellator.hasBrightness = hasBrightness;
+        tessellator.color = color;
+        tessellator.hasColor = hasColor;
+        tessellator.normal = normal;
+        tessellator.hasNormals = hasNormals;
+        tessellator.renderingChunk = renderingChunk;
+        tessellator.defaultTexture = false;
+        tessellator.xOffset = xOffset;
+        tessellator.yOffset = yOffset;
+        tessellator.zOffset = zOffset;
+        return tessellator;
+    }
+
+    public Tessellator getSubTessellatorImpl(int i)
+    {
+        for (int j = 0; j < subTextures.length; j++)
+        {
+            int l = subTextures[j];
+
+            if (l == i)
+            {
+                Tessellator tessellator1 = subTessellators[j];
+                return tessellator1;
+            }
+        }
+
+        for (int k = 0; k < subTextures.length; k++)
+        {
+            int i1 = subTextures[k];
+
+            if (i1 <= 0)
+            {
+                Tessellator tessellator2 = subTessellators[k];
+                subTextures[k] = i;
+                return tessellator2;
+            }
+        }
+
+        Tessellator tessellator = new Tessellator();
+        Tessellator atessellator[] = subTessellators;
+        int ai[] = subTextures;
+        subTessellators = new Tessellator[atessellator.length + 1];
+        subTextures = new int[ai.length + 1];
+        System.arraycopy(atessellator, 0, subTessellators, 0, atessellator.length);
+        System.arraycopy(ai, 0, subTextures, 0, ai.length);
+        subTessellators[atessellator.length] = tessellator;
+        subTextures[ai.length] = i;
+        Config.dbg((new StringBuilder()).append("Allocated subtessellator, count: ").append(subTessellators.length).toString());
+        return tessellator;
+    }
+
+    private int getTerrainTexture()
+    {
+        if (terrainTexture == 0)
+        {
+            terrainTexture = Config.getMinecraft().renderEngine.getTexture("/terrain.png");
+        }
+
+        return terrainTexture;
+    }
+
+    static
+    {
+        littleEndianByteOrder = ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN;
     }
 }

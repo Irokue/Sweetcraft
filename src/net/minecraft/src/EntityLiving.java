@@ -15,7 +15,6 @@ public abstract class EntityLiving extends Entity
 
     /** Entity head rotation yaw at previous tick */
     public float prevRotationYawHead;
-    public float prevRotationYawHead2;
     protected float field_9362_u;
     protected float field_9361_v;
     protected float field_9360_w;
@@ -56,7 +55,7 @@ public abstract class EntityLiving extends Entity
      * in each step in the damage calculations, this is set to the 'carryover' that would result if someone was damaged
      * .25 hearts (for example), and added to the damage in the next step
      */
-    protected int carryoverDamage;
+    public int carryoverDamage;
 
     /** Number of ticks since this EntityLiving last produced its sound */
     private int livingSoundTime;
@@ -175,21 +174,22 @@ public abstract class EntityLiving extends Entity
     /** Number of ticks since last jump */
     private int jumpTicks;
 
-    /** This entity's current target. */
+    /** This entities' current target */
     private Entity currentTarget;
 
     /** How long to keep a specific target entity */
     protected int numTicksToChaseTarget;
+    public int persistentId;
 
     public EntityLiving(World par1World)
     {
         super(par1World);
+        persistentId = rand.nextInt(0x7fffffff);
         heartsHalvesLife = 20;
         renderYawOffset = 0.0F;
         prevRenderYawOffset = 0.0F;
         rotationYawHead = 0.0F;
         prevRotationYawHead = 0.0F;
-        prevRotationYawHead2 = 0.0F;
         field_9358_y = true;
         texture = "/mob/char.png";
         field_9355_A = true;
@@ -263,9 +263,6 @@ public abstract class EntityLiving extends Entity
         return navigator;
     }
 
-    /**
-     * returns the EntitySenses Object for the EntityLiving
-     */
     public EntitySenses getEntitySenses()
     {
         return senses;
@@ -399,7 +396,7 @@ public abstract class EntityLiving extends Entity
     public void setRevengeTarget(EntityLiving par1EntityLiving)
     {
         entityLivingToAttack = par1EntityLiving;
-        revengeTimer = entityLivingToAttack == null ? 0 : 60;
+        revengeTimer = entityLivingToAttack != null ? 60 : 0;
     }
 
     protected void entityInit()
@@ -482,7 +479,7 @@ public abstract class EntityLiving extends Entity
 
         if (isEntityAlive() && isEntityInsideOpaqueBlock())
         {
-            if (!attackEntityFrom(DamageSource.inWall, 1));
+            if (attackEntityFrom(DamageSource.inWall, 1));
         }
 
         if (isImmuneToFire() || worldObj.isRemote)
@@ -1117,7 +1114,7 @@ public abstract class EntityLiving extends Entity
 
                     if (j < 5)
                     {
-                        dropRareDrop(j > 0 ? 0 : 1);
+                        dropRareDrop(j <= 0 ? 1 : 0);
                     }
                 }
             }
@@ -1351,6 +1348,20 @@ public abstract class EntityLiving extends Entity
         int j = MathHelper.floor_double(boundingBox.minY);
         int k = MathHelper.floor_double(posZ);
         int l = worldObj.getBlockId(i, j, k);
+
+        if (Reflector.hasMethod(50))
+        {
+            Block block = Block.blocksList[l];
+
+            if (block != null)
+            {
+                return Reflector.callBoolean(block, 50, new Object[]
+                        {
+                            worldObj, Integer.valueOf(i), Integer.valueOf(j), Integer.valueOf(k)
+                        });
+            }
+        }
+
         return l == Block.ladder.blockID || l == Block.vine.blockID;
     }
 
@@ -1380,6 +1391,8 @@ public abstract class EntityLiving extends Entity
 
             par1NBTTagCompound.setTag("ActiveEffects", nbttaglist);
         }
+
+        par1NBTTagCompound.setInteger("PersistentId", persistentId);
     }
 
     /**
@@ -1415,6 +1428,13 @@ public abstract class EntityLiving extends Entity
                 int j = nbttagcompound.getInteger("Duration");
                 activePotionsMap.put(Integer.valueOf(byte0), new PotionEffect(byte0, j, byte1));
             }
+        }
+
+        persistentId = par1NBTTagCompound.getInteger("PersistentId");
+
+        if (persistentId == 0)
+        {
+            persistentId = rand.nextInt(0x7fffffff);
         }
     }
 
@@ -1596,7 +1616,7 @@ public abstract class EntityLiving extends Entity
     }
 
     /**
-     * Causes this entity to do an upwards motion (jumping).
+     * jump, Causes this entity to do an upwards motion (jumping)
      */
     protected void jump()
     {
@@ -1752,27 +1772,27 @@ public abstract class EntityLiving extends Entity
     }
 
     /**
-     * Changes pitch and yaw so that the entity calling the function is facing the entity provided as an argument.
+     * changes pitch and yaw so that the entity calling the function is facing the entity provided as an argument
      */
     public void faceEntity(Entity par1Entity, float par2, float par3)
     {
         double d = par1Entity.posX - posX;
-        double d2 = par1Entity.posZ - posZ;
-        double d1;
+        double d1 = par1Entity.posZ - posZ;
+        double d2;
 
         if (par1Entity instanceof EntityLiving)
         {
             EntityLiving entityliving = (EntityLiving)par1Entity;
-            d1 = (posY + (double)getEyeHeight()) - (entityliving.posY + (double)entityliving.getEyeHeight());
+            d2 = (posY + (double)getEyeHeight()) - (entityliving.posY + (double)entityliving.getEyeHeight());
         }
         else
         {
-            d1 = (par1Entity.boundingBox.minY + par1Entity.boundingBox.maxY) / 2D - (posY + (double)getEyeHeight());
+            d2 = (par1Entity.boundingBox.minY + par1Entity.boundingBox.maxY) / 2D - (posY + (double)getEyeHeight());
         }
 
-        double d3 = MathHelper.sqrt_double(d * d + d2 * d2);
-        float f = (float)((Math.atan2(d2, d) * 180D) / Math.PI) - 90F;
-        float f1 = (float)(-((Math.atan2(d1, d3) * 180D) / Math.PI));
+        double d3 = MathHelper.sqrt_double(d * d + d1 * d1);
+        float f = (float)((Math.atan2(d1, d) * 180D) / Math.PI) - 90F;
+        float f1 = (float)(-((Math.atan2(d2, d3) * 180D) / Math.PI));
         rotationPitch = -updateRotation(rotationPitch, f1, par3);
         rotationYaw = updateRotation(rotationYaw, f, par2);
     }
@@ -2128,8 +2148,8 @@ public abstract class EntityLiving extends Entity
     }
 
     /**
-     * This method returns a value to be applied directly to entity speed, this factor is less than 1 when a slowdown
-     * potion effect is applied, more than 1 when a haste potion effect is applied and 2 for fleeing entities.
+     * This method return a value to be applyed directly to entity speed, this factor is less than 1 when a slowdown
+     * potion effect is applyed, more than 1 when a haste potion effect is applyed and 2 for fleeing entities.
      */
     protected float getSpeedModifier()
     {

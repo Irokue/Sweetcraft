@@ -80,5 +80,11 @@ class EnumOptionsMappingHelper
         }
         catch (NoSuchFieldError nosuchfielderror8) { }
         
+        try
+        {
+            enumOptionsMappingHelperArray[EnumOptions.HD_SKINS.ordinal()] = 13;
+        }
+        catch (NoSuchFieldError nosuchfielderror9) { }
+        
     }
 }
