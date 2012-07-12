@@ -171,6 +171,8 @@ public class Item
     public static Item raisinSeed;
     public static Item vin;
     public static Item vinVide;
+    public static Item chopeVide = (new Item(128)).setIconCoord(10, 15).setItemName("chopeVide");
+    public static Item chopeBière;
     
     /** Item index + 256 */
     public final int shiftedIndex;
@@ -692,10 +694,12 @@ public class Item
         speckledMelon = (new Item(126)).setIconCoord(9, 8).setItemName("speckledMelon").setPotionEffect(PotionHelper.speckledMelonEffect);
       
         maille = (new ItemMaille(130)).setIconCoord(13, 11).setItemName("maille");
-        raisin = (new ItemRaisin(131, 6, false)).setIconCoord(11, 11).setItemName("raisin");
+        raisin = (new ItemRaisin(131, 6, false)).setAlwaysEdible().setIconCoord(11, 11).setItemName("raisin");
         raisinSeed = (new ItemSeeds(132, Block.grappeCrops.blockID, Block.tilledField.blockID)).setIconCoord(10, 11).setItemName("raisinSeeds");
-        vin = (new ItemVin(133)).setPotionEffect(Potion.confusion.id, 60, 0, 1.0F).setIconCoord(12, 11).setItemName("vin");
+        vin = (new ItemVin(133)).setAlwaysEdible().setPotionEffect(Potion.confusion.id, 30, 0, 100F).setIconCoord(12, 11).setItemName("vin");
         vinVide = (new Item(134)).setIconCoord(12, 12).setItemName("vinVide");
+        chopeBière = (new ItemBière(135)).setAlwaysEdible().setPotionEffect(Potion.confusion.id, 30, 0, 1.0F).setIconCoord(12, 11).setItemName("chopeBière");
+         
         StatList.initStats();
     }
 

@@ -323,6 +323,18 @@ public class CraftingManager
                 {
                     " B ", "D#D", "###", '#', Block.obsidian, 'B', Item.book, 'D', Item.diamond
                 });
+        
+
+        addRecipe(new ItemStack(Item.chopeVide, 1), new Object[]
+                {
+                    "## ", "###", "## ", Character.valueOf('#'), Block.glass
+                });
+        addRecipe(new ItemStack(Item.chopeBière, 1), new Object[]
+                {
+                    "#X", Character.valueOf('#'), Item.chopeVide, Character.valueOf('X'), Item.wheat
+                });
+ 
+        
         addRecipe(new ItemStack(Block.table, 1), new Object[]
                 {
                     "###", "S S", "S S", '#', Block.planks, 'S', Item.stick
@@ -347,6 +359,9 @@ public class CraftingManager
                 {
                     Item.ingotIron
                 });
+        
+        
+        
         addShapelessRecipe(new ItemStack(Item.eyeOfEnder, 1), new Object[]
                 {
                     Item.enderPearl, Item.blazePowder

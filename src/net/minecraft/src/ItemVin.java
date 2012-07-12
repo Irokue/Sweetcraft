@@ -13,4 +13,9 @@ public class ItemVin extends ItemFood {
         return new ItemStack(Item.vinVide);
     }
 
+	public EnumAction getItemUseAction(ItemStack itemstack)
+    {
+        return EnumAction.drink;
+    }
+	
 }
