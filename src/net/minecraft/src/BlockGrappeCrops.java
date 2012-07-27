@@ -123,7 +123,7 @@ public class BlockGrappeCrops extends BlockFlower {
      */
     public int getRenderType()
     {
-        return 32;
+        return 6;
     }
 
     /**

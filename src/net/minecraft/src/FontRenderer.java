@@ -153,11 +153,6 @@ public class FontRenderer
             }
             while (true);
 
-            if (i1 == 65)
-            {
-                i1 = i1;
-            }
-
             if (i1 == 32)
             {
                 j2 = (int)(1.5D * (double)f);
