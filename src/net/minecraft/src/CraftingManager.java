@@ -325,13 +325,9 @@ public class CraftingManager
                 });
         
 
-        addRecipe(new ItemStack(Item.chopeVide, 2), new Object[]
+        addRecipe(new ItemStack(Item.chopeVide, 1), new Object[]
                 {
-                    "## ", "###", "## ", Character.valueOf('#'), Block.wood
-                });
-        addRecipe(new ItemStack(Item.chopeBiere, 1), new Object[]
-                {
-                    "#X", Character.valueOf('#'), Item.chopeVide, Character.valueOf('X'), Item.wheat
+                    "# #", "# #", "###", Character.valueOf('#'), Block.planks
                 });
  
         
@@ -359,11 +355,14 @@ public class CraftingManager
                 {
                     Item.ingotIron
                 });
-        addRecipe(new ItemStack(Item.chopeBiere, 1), new Object[]
+        addShapelessRecipe(new ItemStack(Item.chopeBiere, 1), new Object[]
                 {
-                    "#X", Character.valueOf('#'), Item.chopeBiere, Character.valueOf('X'), Item.vin
+                    Item.Orge, Item.chopeVide
                 });
-        
+        addShapelessRecipe(new ItemStack(Item.liquideSuspect, 1), new Object[]
+                {
+                    Item.glassBottle, Item.chopeBiere, Item.vin
+                });
         
         
         addShapelessRecipe(new ItemStack(Item.eyeOfEnder, 1), new Object[]

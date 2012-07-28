@@ -149,7 +149,7 @@ public class BlockCropsOrge extends BlockFlower
                 float f1 = par1World.rand.nextFloat() * f + (1.0F - f) * 0.5F;
                 float f2 = par1World.rand.nextFloat() * f + (1.0F - f) * 0.5F;
                 float f3 = par1World.rand.nextFloat() * f + (1.0F - f) * 0.5F;
-                EntityItem entityitem = new EntityItem(par1World, (float)par2 + f1, (float)par3 + f2, (float)par4 + f3, new ItemStack(Item.seedOrge));
+                EntityItem entityitem = new EntityItem(par1World, (float)par2 + f1, (float)par3 + f2, (float)par4 + f3, new ItemStack(Item.wheat));
                 entityitem.delayBeforeCanPickup = 10;
                 par1World.spawnEntityInWorld(entityitem);
             }
@@ -163,7 +163,7 @@ public class BlockCropsOrge extends BlockFlower
     {
         if (par1 == 2)
         {
-            return Item.Orge.shiftedIndex;
+            return Item.wheat.shiftedIndex;
         }
         else
         {

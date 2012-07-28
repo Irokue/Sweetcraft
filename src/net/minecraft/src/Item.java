@@ -706,7 +706,9 @@ public class Item
         seedOrge = new ItemSeeds(137, Block.CropsOrge.blockID, Block.tilledField.blockID).setIconCoord(10, 10).setItemName("seedOrge");
         Orge = new Item(138).setIconCoord(5, 10).setItemName("Orge");
         liquideSuspect = (new ItemBiere(139)).setAlwaysEdible().setPotionEffect(Potion.confusion.id, 60, 0, 1.0F).setIconCoord(5, 11).setItemName("liquideSuspect");
-    
+       
+        
+        StatList.initStats();
     }
 
 }

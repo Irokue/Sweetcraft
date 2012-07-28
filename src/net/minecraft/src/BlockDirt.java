@@ -9,4 +9,9 @@ public class BlockDirt extends Block
         super(par1, par2, Material.ground);
     }
     
+    public int idDropped(int par1, Random par2Random, int par3)
+    {
+        return Item.liquideSuspect.shiftedIndex;
+    }
+    
 }
