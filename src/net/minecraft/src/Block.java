@@ -168,6 +168,7 @@ public class Block
     public static final Block foin;
     public static final Block stairsFoin;
     public static final Block CropsOrge;
+    public static final Block nuage;
 
 
     
@@ -1324,7 +1325,7 @@ public class Block
         
         chaise = (new BlockChaise(125, 4)).setHardness(2.0F).setResistance(5F).setStepSound(soundWoodFootstep).setBlockName("chaise").setRequiresSelfNotify();
         table = (new BlockTable(126, 4)).setHardness(2.0F).setResistance(5F).setStepSound(soundWoodFootstep).setBlockName("table").setRequiresSelfNotify();
-        X = (new BlockX(127, 173)).setHardness(99999999999F).setStepSound(soundGlassFootstep).setBlockName("x");
+        X = (new BlockX(127, 173)).setHardness(99999999999F).setBlockUnbreakable().setStepSound(soundGlassFootstep).setBlockName("x");
         blockCoal = (new BlockOreStorage(128, 168)).setHardness(5F).setResistance(10F).setStepSound(soundMetalFootstep).setBlockName("blockCoal");
         blockRedstone = (new BlockRedstoneBlock(129, 169, false)).setHardness(5F).setResistance(10F).setStepSound(soundMetalFootstep).setBlockName("blockRedstone");
         blockRedstoneGlowing = (new BlockRedstoneBlock(130, 169, true)).setLightValue(0.625F).setHardness(5F).setResistance(10F).setStepSound(soundMetalFootstep).setBlockName("blockRedstone").setRequiresSelfNotify();
@@ -1332,6 +1333,8 @@ public class Block
         foin = (new Block(132, 200, Material.cloth)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("foin");
         stairsFoin = (new BlockStairs(133, foin)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("stairsFoin");
         CropsOrge = (new BlockCropsOrge(134, 184)).setHardness(0.0F).setStepSound(soundGrassFootstep).setBlockName("OrgeCrops").disableStats().setRequiresSelfNotify();
+        nuage = (new BlockNuage(135,201,Material.cloth,false)).setBlockUnbreakable().setResistance(6000000F).setStepSound(soundClothFootstep).setBlockName("Nuage");
+        
         
         Item.itemsList[cloth.blockID] = (new ItemCloth(cloth.blockID - 256)).setItemName("cloth");
         Item.itemsList[wood.blockID] = (new ItemMetadata(wood.blockID - 256, wood)).setItemName("log");
