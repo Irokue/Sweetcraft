@@ -176,6 +176,7 @@ public class Item
     public static Item seedOrge;
     public static Item Orge;
     public static Item liquideSuspect;
+    public static Item bolLait;
     
     /** Item index + 256 */
     public final int shiftedIndex;
@@ -706,7 +707,7 @@ public class Item
         seedOrge = new ItemSeeds(137, Block.CropsOrge.blockID, Block.tilledField.blockID).setIconCoord(10, 10).setItemName("seedOrge");
         Orge = new Item(138).setIconCoord(5, 10).setItemName("Orge");
         liquideSuspect = (new ItemliquideSuspect(139)).setAlwaysEdible().setPotionEffect(Potion.confusion.id, 60, 0, 1.0F).setIconCoord(5, 11).setItemName("liquideSuspect");
-       
+        bolLait = (new ItemSoup(140, 9)).setIconCoord(5, 13).setItemName("Bol de lait");
         
         StatList.initStats();
     }

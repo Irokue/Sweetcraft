@@ -363,6 +363,13 @@ public class CraftingManager
                 {
                     Item.glassBottle, Item.chopeBiere, Item.vin
                 });
+        addShapelessRecipe(new ItemStack(Item.bolLait, 1), new Object[]
+                {
+                    Item.bowlEmpty, Item.bucketMilk
+                });
+        
+        
+        
         
         
         addShapelessRecipe(new ItemStack(Item.eyeOfEnder, 1), new Object[]
