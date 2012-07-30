@@ -169,6 +169,22 @@ public class Block
     public static final Block stairsFoin;
     public static final Block CropsOrge;
     public static final Block nuage;
+    public static final Block TapisBlanc;
+    public static final Block TapisNoir;
+    public static final Block TapisGrisFonce;
+    public static final Block TapisRouge;
+    public static final Block TapisRose;
+    public static final Block TapisVert;
+    public static final Block TapisVertClair;
+    public static final Block TapisMarron;
+    public static final Block TapisJaune;
+    public static final Block TapisBleu;
+    public static final Block TapisBleuClair;
+    public static final Block TapisViolet;
+    public static final Block TapisMagenta;
+    public static final Block TapisCyan;
+    public static final Block TapisOrange;
+    public static final Block TapisGrisClair;
 
 
     
@@ -1243,7 +1259,7 @@ public class Block
         bookShelf = (new BlockBookshelf(47, 35)).setHardness(1.5F).setStepSound(soundWoodFootstep).setBlockName("bookshelf");
         cobblestoneMossy = (new Block(48, 36, Material.rock)).setHardness(2.0F).setResistance(10F).setStepSound(soundStoneFootstep).setBlockName("stoneMoss");
         obsidian = (new BlockObsidian(49, 37)).setHardness(50F).setResistance(2000F).setStepSound(soundStoneFootstep).setBlockName("obsidian");
-        torchWood = (new BlockTorch(50, 80)).setHardness(0.0F).setLightValue(0.9375F).setStepSound(soundWoodFootstep).setBlockName("torch").setRequiresSelfNotify();
+        torchWood = (new BlockTorch(50, 80)).setHardness(0.0F).setLightValue(1F).setStepSound(soundWoodFootstep).setBlockName("torch").setRequiresSelfNotify();
         fire = (BlockFire)(new BlockFire(51, 31)).setHardness(0.0F).setLightValue(1.0F).setStepSound(soundWoodFootstep).setBlockName("fire").disableStats();
         mobSpawner = (new BlockMobSpawner(52, 65)).setHardness(5F).setStepSound(soundMetalFootstep).setBlockName("mobSpawner").disableStats();
         stairCompactPlanks = (new BlockStairs(53, planks)).setBlockName("stairsWood").setRequiresSelfNotify();
@@ -1334,8 +1350,23 @@ public class Block
         stairsFoin = (new BlockStairs(133, foin)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("stairsFoin");
         CropsOrge = (new BlockCropsOrge(134, 184)).setHardness(0.0F).setStepSound(soundGrassFootstep).setBlockName("OrgeCrops").disableStats().setRequiresSelfNotify();
         nuage = (new BlockNuage(135,201,Material.cloth,false)).setBlockUnbreakable().setResistance(6000000F).setStepSound(soundClothFootstep).setBlockName("Nuage");
-        
-        
+        TapisBlanc = (new BlockTapis(136, 64)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisBlanc").setLightOpacity(0);
+        TapisNoir = (new BlockTapis(137, 113)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisNoir").setLightOpacity(0);
+        TapisGrisFonce = (new BlockTapis(138, 114)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisGrisFonce").setLightOpacity(0);
+        TapisRouge = (new BlockTapis(139, 129)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisRouge").setLightOpacity(0);
+        TapisRose = (new BlockTapis(140, 130)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisRose").setLightOpacity(0);
+        TapisVert = (new BlockTapis(141, 145)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisVert").setLightOpacity(0);
+        TapisVertClair = (new BlockTapis(142, 146)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisVertClair").setLightOpacity(0);
+        TapisMarron = (new BlockTapis(143, 161)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisMarron").setLightOpacity(0);
+        TapisJaune = (new BlockTapis(144, 162)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisJaune").setLightOpacity(0);
+        TapisBleu = (new BlockTapis(145, 177)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisBleu").setLightOpacity(0);
+        TapisBleuClair = (new BlockTapis(156, 178)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisBleuClair").setLightOpacity(0);
+        TapisViolet = (new BlockTapis(157, 193)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisViolet").setLightOpacity(0);
+        TapisMagenta = (new BlockTapis(158, 194)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisMagenta").setLightOpacity(0);
+        TapisCyan = (new BlockTapis(159, 209)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisCyan").setLightOpacity(0);
+        TapisOrange = (new BlockTapis(160, 210)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisOrange").setLightOpacity(0);
+        TapisGrisClair = (new BlockTapis(161, 225)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisGrisClair").setLightOpacity(0);
+
         Item.itemsList[cloth.blockID] = (new ItemCloth(cloth.blockID - 256)).setItemName("cloth");
         Item.itemsList[wood.blockID] = (new ItemMetadata(wood.blockID - 256, wood)).setItemName("log");
         Item.itemsList[planks.blockID] = (new ItemMetadata(planks.blockID - 256, planks)).setItemName("wood");
@@ -1352,7 +1383,9 @@ public class Block
         Item.itemsList[waterlily.blockID] = new ItemLilyPad(waterlily.blockID - 256);
         Item.itemsList[pistonBase.blockID] = new ItemPiston(pistonBase.blockID - 256);
         Item.itemsList[pistonStickyBase.blockID] = new ItemPiston(pistonStickyBase.blockID - 256);
-
+        
+        
+        
         for (int i = 0; i < 256; i++)
         {
             if (blocksList[i] == null)

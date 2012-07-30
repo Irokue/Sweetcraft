@@ -324,12 +324,29 @@ public class CraftingManager
                     " B ", "D#D", "###", '#', Block.obsidian, 'B', Item.book, 'D', Item.diamond
                 });
         
+        
+        
+        addShapelessRecipe(new ItemStack(Item.eyeOfEnder, 1), new Object[]
+                {
+                    Item.enderPearl, Item.blazePowder
+                });
+        addShapelessRecipe(new ItemStack(Item.fireballCharge, 3), new Object[]
+                {
+                    Item.gunpowder, Item.blazePowder, Item.coal
+                });
+        addShapelessRecipe(new ItemStack(Item.fireballCharge, 3), new Object[]
+                {
+                    Item.gunpowder, Item.blazePowder, new ItemStack(Item.coal, 1, 1)
+                });
+        
+        
 
+                                 // SWEETCRAFT
+        
         addRecipe(new ItemStack(Item.chopeVide, 1), new Object[]
                 {
                     "# #", "# #", "###", Character.valueOf('#'), Block.planks
                 });
- 
         
         addRecipe(new ItemStack(Block.table, 1), new Object[]
                 {
@@ -367,23 +384,73 @@ public class CraftingManager
                 {
                     Item.bowlEmpty, Item.bucketMilk
                 });
-        
-        
-        
-        
-        
-        addShapelessRecipe(new ItemStack(Item.eyeOfEnder, 1), new Object[]
+        addRecipe(new ItemStack(Block.TapisBlanc, 6), new Object[]
                 {
-                    Item.enderPearl, Item.blazePowder
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35)
                 });
-        addShapelessRecipe(new ItemStack(Item.fireballCharge, 3), new Object[]
+        addRecipe(new ItemStack(Block.TapisNoir, 6), new Object[]
                 {
-                    Item.gunpowder, Item.blazePowder, Item.coal
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 15)
                 });
-        addShapelessRecipe(new ItemStack(Item.fireballCharge, 3), new Object[]
+        addRecipe(new ItemStack(Block.TapisGrisFonce, 6), new Object[]
                 {
-                    Item.gunpowder, Item.blazePowder, new ItemStack(Item.coal, 1, 1)
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 7)
                 });
+        addRecipe(new ItemStack(Block.TapisRouge, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 14)
+                });
+        addRecipe(new ItemStack(Block.TapisRose, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 6)
+                });
+        addRecipe(new ItemStack(Block.TapisVert, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 13)
+                });
+        addRecipe(new ItemStack(Block.TapisVertClair, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 5)
+                });
+        addRecipe(new ItemStack(Block.TapisMarron, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 12)
+                });
+        addRecipe(new ItemStack(Block.TapisJaune, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 4)
+                });
+        addRecipe(new ItemStack(Block.TapisBleu, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 11)
+                });
+        addRecipe(new ItemStack(Block.TapisBleuClair, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 3)
+                });
+        addRecipe(new ItemStack(Block.TapisViolet, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 10)
+                });
+        addRecipe(new ItemStack(Block.TapisMagenta, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 2)
+                });
+        addRecipe(new ItemStack(Block.TapisCyan, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 9)
+                });
+        addRecipe(new ItemStack(Block.TapisOrange, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 1)
+                });
+        addRecipe(new ItemStack(Block.TapisGrisClair, 6), new Object[]
+                {
+                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 8)
+                });
+
+        
+
         
         Collections.sort(recipes, new RecipeSorter(this));
         System.out.println((new StringBuilder()).append(recipes.size()).append(" recipes").toString());
