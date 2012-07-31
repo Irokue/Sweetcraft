@@ -26,6 +26,8 @@ class ContainerCreative extends Container
             Block.torchWood, Block.stairCompactPlanks, Block.stairCompactCobblestone, Block.stairsBrick, Block.stairsStoneBrickSmooth, Block.lever, Block.pressurePlateStone, Block.pressurePlatePlanks, Block.torchRedstoneActive, Block.button,
             Block.trapdoor, Block.enchantmentTable, Block.redstoneLampIdle, Block.chaise, Block.table, Block.X, Block.foin, Block.stairsFoin, Block.nuage, 
             Block.TapisBlanc, Block.TapisNoir, Block.TapisGrisFonce, Block.TapisRouge, Block.TapisRose, Block.TapisVert, Block.TapisVertClair, Block.TapisMarron, Block.TapisJaune, Block.TapisBleu, Block.TapisBleuClair, Block.TapisViolet, Block.TapisMagenta, Block.TapisCyan, Block.TapisOrange, Block.TapisGrisClair, 
+            Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,
+            Block.barriereBrique,
         };
         int i = 0;
         int j = 0;
@@ -36,7 +38,8 @@ class ContainerCreative extends Container
         int k1 = 0;
         int l1 = 0;
         int i2 = 1;
-
+        int incrementLaine = 0;
+       
         for (int j2 = 0; j2 < ablock.length; j2++)
         {
             int i3 = 0;
@@ -68,6 +71,10 @@ class ContainerCreative extends Container
             else if (ablock[j2] == Block.sandStone)
             {
                 i3 = k1++;
+            }
+            else if (ablock[j2] == Block.demiDalleLaine)
+            {
+                i3 = incrementLaine++;
             }
             else if (ablock[j2] == Block.tallGrass)
             {

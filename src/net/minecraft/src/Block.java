@@ -185,7 +185,12 @@ public class Block
     public static final Block TapisCyan;
     public static final Block TapisOrange;
     public static final Block TapisGrisClair;
-
+    public static final Block highWood;
+    public static final Block highStone;
+    public static final Block barriereBrique;
+    public static final Block demiDalleLaine;
+    public static final Block demiDalleLaineEnvers;
+    public static final Block dalleLaine;
 
     
     
@@ -1366,7 +1371,15 @@ public class Block
         TapisCyan = (new BlockTapis(159, 209)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisCyan").setLightOpacity(0);
         TapisOrange = (new BlockTapis(160, 210)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisOrange").setLightOpacity(0);
         TapisGrisClair = (new BlockTapis(161, 225)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("TapisGrisClair").setLightOpacity(0);
-
+        highWood = (new Block(162, 25, Material.cloth)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("foin");
+        highStone = (new Block(163, 109, Material.rock)).setHardness(2.0F).setResistance(9F).setStepSound(soundWoodFootstep).setBlockName("highWood").setRequiresSelfNotify();
+        barriereBrique = (new BlockFence(164, 7, Material.rock)).setHardness(2.0F).setResistance(10F).setStepSound(soundStoneFootstep).setBlockName("barriereBrique");
+        dalleLaine = (new BlockDalleLaine(165,true)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("demiDalleLaine");
+        demiDalleLaine = (new BlockDalleLaine(166,false)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("demiDalleLaine");
+        demiDalleLaineEnvers = (new BlockDalleLaineEnvers(167,false)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("demiDalleLaine");
+        
+        
+        
         Item.itemsList[cloth.blockID] = (new ItemCloth(cloth.blockID - 256)).setItemName("cloth");
         Item.itemsList[wood.blockID] = (new ItemMetadata(wood.blockID - 256, wood)).setItemName("log");
         Item.itemsList[planks.blockID] = (new ItemMetadata(planks.blockID - 256, planks)).setItemName("wood");
@@ -1376,6 +1389,7 @@ public class Block
         Item.itemsList[sapling.blockID] = (new ItemSapling(sapling.blockID - 256)).setItemName("sapling");
         Item.itemsList[leaves.blockID] = (new ItemLeaves(leaves.blockID - 256)).setItemName("leaves");
         Item.itemsList[vine.blockID] = new ItemColored(vine.blockID - 256, false);
+        Item.itemsList[demiDalleLaine.blockID] = new ItemSlabLaine(demiDalleLaine.blockID - 256);
         Item.itemsList[tallGrass.blockID] = (new ItemColored(tallGrass.blockID - 256, true)).setBlockNames(new String[]
                 {
                     "shrub", "grass", "fern"
@@ -1424,6 +1438,10 @@ public class Block
             }
 
             if (canBlockGrass[i])
+            {
+                flag = true;
+            }
+            if (i > 0 && (blocksList[i] instanceof BlockDalleLaine))
             {
                 flag = true;
             }

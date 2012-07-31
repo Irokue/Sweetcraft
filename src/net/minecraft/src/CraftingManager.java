@@ -448,8 +448,26 @@ public class CraftingManager
                 {
                 "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 8)
                 });
-
-        
+        addRecipe(new ItemStack(Block.highWood, 1), new Object[]
+                {
+                "###", "###", "###", '#', new ItemStack(Block.planks)
+                });
+        addRecipe(new ItemStack(Block.highStone, 1), new Object[]
+                {
+                "###", "###", "###", '#', new ItemStack(Block.cobblestone)
+                });
+        addRecipe(new ItemStack(Block.barriereBrique, 2), new Object[]
+                {
+                    "###", "###", '#', Block.brick
+                });
+    
+        for (int i=0; i<16;i++)
+  {
+   addRecipe(new ItemStack(Block.demiDalleLaine, 6, i), new Object[]
+                {
+                    "###", '#', new ItemStack(Block.cloth, 1, i)
+                });
+  }
 
         
         Collections.sort(recipes, new RecipeSorter(this));

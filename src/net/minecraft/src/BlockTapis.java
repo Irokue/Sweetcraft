@@ -7,7 +7,7 @@ public class BlockTapis extends Block
     protected BlockTapis(int par1, int par2)
     {
         super(par1, par2, Material.grass);
-        setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
+        setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.1F, 1.0F);
         setTickRandomly(true);
     }
  
