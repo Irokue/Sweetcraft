@@ -384,70 +384,7 @@ public class CraftingManager
                 {
                     Item.bowlEmpty, Item.bucketMilk
                 });
-        addRecipe(new ItemStack(Block.TapisBlanc, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35)
-                });
-        addRecipe(new ItemStack(Block.TapisNoir, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 15)
-                });
-        addRecipe(new ItemStack(Block.TapisGrisFonce, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 7)
-                });
-        addRecipe(new ItemStack(Block.TapisRouge, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 14)
-                });
-        addRecipe(new ItemStack(Block.TapisRose, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 6)
-                });
-        addRecipe(new ItemStack(Block.TapisVert, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 13)
-                });
-        addRecipe(new ItemStack(Block.TapisVertClair, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 5)
-                });
-        addRecipe(new ItemStack(Block.TapisMarron, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 12)
-                });
-        addRecipe(new ItemStack(Block.TapisJaune, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 4)
-                });
-        addRecipe(new ItemStack(Block.TapisBleu, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 11)
-                });
-        addRecipe(new ItemStack(Block.TapisBleuClair, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 3)
-                });
-        addRecipe(new ItemStack(Block.TapisViolet, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 10)
-                });
-        addRecipe(new ItemStack(Block.TapisMagenta, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 2)
-                });
-        addRecipe(new ItemStack(Block.TapisCyan, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 9)
-                });
-        addRecipe(new ItemStack(Block.TapisOrange, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 1)
-                });
-        addRecipe(new ItemStack(Block.TapisGrisClair, 6), new Object[]
-                {
-                "  ", "###", "  ", '#', new ItemStack(Block.cloth, 35, 8)
-                });
+
         addRecipe(new ItemStack(Block.highWood, 1), new Object[]
                 {
                 "###", "###", "###", '#', new ItemStack(Block.planks)
@@ -460,9 +397,15 @@ public class CraftingManager
                 {
                     "###", "###", '#', Block.brick
                 });
-    
-        for (int i=0; i<16;i++)
+
+
+        
+  for (int i=0; i<16;i++)
   {
+      addRecipe(new ItemStack(Block.tapis, 6,i), new Object[]
+              {
+              "  ", "###", "  ", '#', new ItemStack(Block.cloth, 1, i)
+              });
    addRecipe(new ItemStack(Block.demiDalleLaine, 6, i), new Object[]
                 {
                     "###", '#', new ItemStack(Block.cloth, 1, i)

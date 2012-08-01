@@ -6,26 +6,40 @@ public class BlockTapis extends Block
 {
     protected BlockTapis(int par1, int par2)
     {
-        super(par1, par2, Material.grass);
+        super(par1, par2, Material.cloth);
         setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.1F, 1.0F);
-        setTickRandomly(true);
     }
  
     //Ceci est pour passer à travers le bloc. Enlevez-le si vous ne vous les pas avoir un effet "noclip".
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
     {
-        int i = par1World.getBlockMetadata(par2, par3, par4) & 7;
- 
-        if (i >= 3)
+    	return null;
+    }
+    
+    /**
+     * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
+     */
+    public int getBlockTextureFromSideAndMetadata(int par1, int par2)
+    {
+        if (par2 == 0)
         {
-            return AxisAlignedBB.getBoundingBoxFromPool((double)par2 + minX, (double)par3 + minY, (double)par4 + minZ, (double)par2 + maxX, (float)par3 + 0.5F, (double)par4 + maxZ);
+            return blockIndexInTexture;
         }
         else
         {
-            return null;
+            par2 = ~(par2 & 0xf);
+            return 113 + ((par2 & 8) >> 3) + (par2 & 7) * 16;
         }
     }
-   
+
+    /**
+     * Determines the damage on the item the block drops. Used in cloth and wood.
+     */
+    protected int damageDropped(int par1)
+    {
+        return par1;
+    }
+
  
     public boolean isOpaqueCube()
     {
