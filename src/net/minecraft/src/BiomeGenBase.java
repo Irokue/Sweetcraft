@@ -95,6 +95,7 @@ public abstract class BiomeGenBase
 
     /** The id number to this biome, and its index in the biomeList array. */
     public final int biomeID;
+    protected WorldGenPommier worldGenPommier;
     protected WorldGenTrees worldGenTrees;
     protected WorldGenBigTree worldGenBigTree;
     protected WorldGenForest worldGenForest;
@@ -114,6 +115,7 @@ public abstract class BiomeGenBase
         spawnableCreatureList = new ArrayList();
         spawnableWaterCreatureList = new ArrayList();
         enableRain = true;
+		worldGenPommier = new WorldGenPommier(false);
         worldGenTrees = new WorldGenTrees(false);
         worldGenBigTree = new WorldGenBigTree(false);
         worldGenForest = new WorldGenForest(false);
@@ -186,7 +188,10 @@ public abstract class BiomeGenBase
         if (par1Random.nextInt(10) == 0)
         {
             return worldGenBigTree;
-        }
+        }else if(par1Random.nextInt(2)==0)
+		{
+			return worldGenPommier;
+		}
         else
         {
             return worldGenTrees;

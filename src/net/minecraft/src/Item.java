@@ -177,7 +177,10 @@ public class Item
     public static Item Orge;
     public static Item liquideSuspect;
     public static Item bolLait;
-    
+	public static Item tube;
+	public static Item flechette;
+    public static Item sarbacane;
+	
     /** Item index + 256 */
     public final int shiftedIndex;
 
@@ -708,6 +711,9 @@ public class Item
         Orge = new Item(138).setIconCoord(5, 10).setItemName("Orge");
         liquideSuspect = (new ItemliquideSuspect(139)).setAlwaysEdible().setPotionEffect(Potion.confusion.id, 60, 0, 1.0F).setIconCoord(5, 11).setItemName("liquideSuspect");
         bolLait = (new ItemSoup(140, 9)).setIconCoord(5, 13).setItemName("Bol de lait");
+		tube = (new Item(141)).setIconCoord(1,6).setItemName("tube");
+		flechette = (new Item(142)).setIconCoord(1,7).setItemName("flechette");
+		sarbacane = (new ItemSarbacane(143)).setIconCoord(1,8).setItemName("sarbacanne");
         
         StatList.initStats();
     }

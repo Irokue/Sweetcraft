@@ -170,28 +170,14 @@ public class Block
     public static final Block CropsOrge;
     public static final Block nuage;
     public static final Block tapis;
-/*    public static final Block TapisNoir;
-    public static final Block TapisGrisFonce;
-    public static final Block TapisRouge;
-    public static final Block TapisRose;
-    public static final Block TapisVert;
-    public static final Block TapisVertClair;
-    public static final Block TapisMarron;
-    public static final Block TapisJaune;
-    public static final Block TapisBleu;
-    public static final Block TapisBleuClair;
-    public static final Block TapisViolet;
-    public static final Block TapisMagenta;
-    public static final Block TapisCyan;
-    public static final Block TapisOrange;
-    public static final Block TapisGrisClair;*/
     public static final Block highWood;
     public static final Block highStone;
     public static final Block barriereBrique;
     public static final Block demiDalleLaine;
     public static final Block demiDalleLaineEnvers;
     public static final Block dalleLaine;
-
+    public static final Block leavesPommier;
+	public static final Block blocCanne;
     
     
     
@@ -1356,13 +1342,15 @@ public class Block
         CropsOrge = (new BlockCropsOrge(134, 184)).setHardness(0.0F).setStepSound(soundGrassFootstep).setBlockName("OrgeCrops").disableStats().setRequiresSelfNotify();
         nuage = (new BlockNuage(135,201,Material.cloth,false)).setBlockUnbreakable().setResistance(6000000F).setStepSound(soundClothFootstep).setBlockName("Nuage");
         tapis = (new BlockTapis(136, 64)).setHardness(0.5F).setStepSound(soundClothFootstep).setBlockName("Tapis").setLightOpacity(0);
-        highWood = (new Block(169, 25, Material.cloth)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("foin");
-        highStone = (new Block(163, 109, Material.rock)).setHardness(2.0F).setResistance(9F).setStepSound(soundWoodFootstep).setBlockName("highWood").setRequiresSelfNotify();
-        barriereBrique = (new BlockFence(164, 7, Material.rock)).setHardness(2.0F).setResistance(10F).setStepSound(soundStoneFootstep).setBlockName("barriereBrique");
-        dalleLaine = (new BlockDalleLaine(165,true)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("demiDalleLaine");
-        demiDalleLaine = (new BlockDalleLaine(166,false)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("demiDalleLaine");
-        demiDalleLaineEnvers = (new BlockDalleLaineEnvers(167,false)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("demiDalleLaine");
-        
+        highWood = (new Block(137, 25, Material.cloth)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("foin");
+        highStone = (new Block(138, 109, Material.rock)).setHardness(2.0F).setResistance(9F).setStepSound(soundWoodFootstep).setBlockName("highWood").setRequiresSelfNotify();
+        barriereBrique = (new BlockFence(139, 7, Material.rock)).setHardness(2.0F).setResistance(10F).setStepSound(soundStoneFootstep).setBlockName("barriereBrique");
+        dalleLaine = (new BlockDalleLaine(140,true)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("demiDalleLaine");
+        demiDalleLaine = (new BlockDalleLaine(141,false)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("demiDalleLaine");
+        demiDalleLaineEnvers = (new BlockDalleLaineEnvers(142,false)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("demiDalleLaine");
+        leavesPommier =(new BlockLeavesPommier(143, 232)).setHardness(0.2F).setLightOpacity(1).setStepSound(soundGrassFootstep).setBlockName("leaves").setRequiresSelfNotify();
+		blocCanne = new Block(144, 233,Material.plants).setHardness(1.5F).setResistance(5F).setStepSound(soundStoneFootstep).setBlockName("blocCanne");
+		
         
         Item.itemsList[tapis.blockID] = new ItemTapis(tapis.blockID - 256);
         Item.itemsList[cloth.blockID] = (new ItemCloth(cloth.blockID - 256)).setItemName("cloth");

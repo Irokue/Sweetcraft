@@ -18,10 +18,14 @@ public class BiomeGenTaiga extends BiomeGenBase
      */
     public WorldGenerator getRandomWorldGenForTrees(Random par1Random)
     {
-        if (par1Random.nextInt(3) == 0)
+		if (par1Random.nextInt(3) == 0)
         {
             return new WorldGenTaiga1();
         }
+		else if (par1Random.nextInt(10) == 0)
+		{
+			return new WorldGenPommier(false);
+		}
         else
         {
             return new WorldGenTaiga2(false);

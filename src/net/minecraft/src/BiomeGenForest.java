@@ -27,6 +27,10 @@ public class BiomeGenForest extends BiomeGenBase
         {
             return worldGenBigTree;
         }
+		else if (par1Random.nextInt(8) == 0)
+		{
+			return new WorldGenPommier(false);
+		}
         else
         {
             return worldGenTrees;
