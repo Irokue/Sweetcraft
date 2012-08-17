@@ -14,6 +14,7 @@ public class WorldGenPommier extends WorldGenerator
         int i = par2Random.nextInt(3) + 5;
         boolean flag = true;
 
+        if(par1World.getBiomeGenForCoords(par3, par5).biomeName.equals("Taiga") || par1World.getBiomeGenForCoords(par3, par5).biomeName.equals("Swampland") || par1World.getBiomeGenForCoords(par3, par5).biomeName.equals("JungleHills")) return false;
         if (par4 < 1 || par4 + i + 1 > 256)
         {
             return false;

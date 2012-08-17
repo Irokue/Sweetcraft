@@ -34,7 +34,7 @@ public class BlockGrappeCrops extends BlockFlower {
             if (i < 2)
             {
                 float f = getGrowthRate(par1World, par2, par3, par4);	
-                if (par5Random.nextInt((int)(25F / f) + 1) == 0)
+                if (par5Random.nextInt((int)(35F / f) + 1) == 0)
                 {
                     i++;
                     par1World.setBlockMetadataWithNotify(par2, par3, par4, i);
