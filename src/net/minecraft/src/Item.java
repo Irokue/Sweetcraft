@@ -720,10 +720,10 @@ public class Item
 		tube = (new Item(141)).setIconCoord(1,6).setItemName("tube");
 		flechette = (new Item(142)).setIconCoord(1,7).setItemName("flechette");
 		sarbacane = (new ItemSarbacane(143)).setIconCoord(1,8).setItemName("sarbacanne");
-        helmetGlow = (new ItemArmor(146, EnumArmorMaterial.GLOWSTONE, 0, 9)).setIconCoord(4, 0).setItemName("helmetGlow");
-        plateGlow = (new ItemArmor(147, EnumArmorMaterial.GLOWSTONE, 0, 10)).setIconCoord(4, 1).setItemName("chestplateGlow");
-        legsGlow = (new ItemArmor(148, EnumArmorMaterial.GLOWSTONE, 0, 11)).setIconCoord(4, 2).setItemName("leggingsGlow");
-        bootsGlow = (new ItemArmor(149, EnumArmorMaterial.GLOWSTONE, 0, 12)).setIconCoord(4, 3).setItemName("bootsGlow");
+        helmetGlow = (new ItemArmor(146, EnumArmorMaterial.GLOWSTONE, 0, 0)).setIconCoord(4, 0).setItemName("helmetGlow");
+        plateGlow = (new ItemArmor(147, EnumArmorMaterial.GLOWSTONE, 0, 1)).setIconCoord(4, 1).setItemName("chestplateGlow");
+        legsGlow = (new ItemArmor(148, EnumArmorMaterial.GLOWSTONE, 0, 2)).setIconCoord(4, 2).setItemName("leggingsGlow");
+        bootsGlow = (new ItemArmor(149, EnumArmorMaterial.GLOWSTONE, 0, 3)).setIconCoord(4, 3).setItemName("bootsGlow");
         arrowRedstone = (new Item(150)).setIconCoord(1,8).setItemName("arrowredstone");
         sac = (new ItemSac(151));
         StatList.initStats();
