@@ -7,13 +7,6 @@ public class Achievement extends StatBase
 	
 	
 	
-	 /*TEST pour PRIOZ */
-	//test prioz
-	
-	
-	
-	
-	
     /**
      * Is the column (related to center of achievement gui, in 24 pixels unit) that the achievement will be displayed.
      */
