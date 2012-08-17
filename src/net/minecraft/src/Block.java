@@ -1358,7 +1358,7 @@ public class Block
         plantAddd = (BlockFlower)(new BlockFlower(146, 217)).setHardness(0.0F).setStepSound(soundGrassFootstep).setBlockName("flower2");
         plantAdddd = (BlockFlower)(new BlockFlower(147, 218)).setHardness(0.0F).setStepSound(soundGrassFootstep).setBlockName("flower3");
         plantAddddd = (BlockFlower)(new BlockFlower(148, 219)).setHardness(0.0F).setStepSound(soundGrassFootstep).setBlockName("flower4");
-        cible = new BlockCible(145,234).setHardness(0.5F).setStepSound(soundWoodFootstep).setBlockName("cible").setRequiresSelfNotify();
+        cible = new BlockCible(149,234).setHardness(0.5F).setStepSound(soundWoodFootstep).setBlockName("cible").setRequiresSelfNotify();
         
         
         Item.itemsList[tapis.blockID] = new ItemTapis(tapis.blockID - 256);
