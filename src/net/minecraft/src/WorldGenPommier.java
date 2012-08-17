@@ -83,7 +83,7 @@ public class WorldGenPommier extends WorldGenerator
 
                     if ((Math.abs(i3) != j2 || Math.abs(k3) != j2 || par2Random.nextInt(2) != 0 && k1 != 0) && !Block.opaqueCubeLookup[par1World.getBlockId(l2, l, j3)])
                     {
-                        if (par2Random.nextInt(5)!=0)
+                        if (par2Random.nextInt(12)!=0)
                         {
                         	setBlockAndMetadata(par1World, l2, l, j3, Block.leavesPommier.blockID, 0);
                         }else

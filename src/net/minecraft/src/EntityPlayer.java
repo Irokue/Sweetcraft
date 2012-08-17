@@ -1088,6 +1088,10 @@ public abstract class EntityPlayer extends EntityLiving
         health -= par2;
     }
 
+    
+    public void displayGUISac(ItemStack par1ItemStack)
+    {
+    }
     /**
      * Displays the furnace GUI for the passed in furnace entity. Args: tileEntityFurnace
      */

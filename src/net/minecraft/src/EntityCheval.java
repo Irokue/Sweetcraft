@@ -2,7 +2,7 @@ package net.minecraft.src;
 
 public class EntityCheval extends EntityAnimal
 {
-	 float f = 0.45F;
+	 float f = 1.1F;
     public EntityCheval(World par1World)
     {
         super(par1World);
@@ -10,26 +10,31 @@ public class EntityCheval extends EntityAnimal
         setSize(1.4F, 1.4F);
         getNavigator().setAvoidsWater(true);
         tasks.addTask(0, new EntityAISwimming(this));
-        tasks.addTask(1, new EntityAIPanic(this, 0.58F));
-        tasks.addTask(2, new EntityAIMate(this, f));
-        tasks.addTask(3, new EntityAITempt(this, 0.55F, Item.wheat.shiftedIndex, false));
-        tasks.addTask(4, new EntityAIFollowParent(this, 0.58F));
-        tasks.addTask(5, new EntityAIWander(this, f));
+        tasks.addTask(1, new EntityAIPanic(this, 0.5f));
+        tasks.addTask(2, new EntityAIMate(this, 0.5f));
+        tasks.addTask(3, new EntityAITempt(this,0.5f, Item.wheat.shiftedIndex, false));
+        tasks.addTask(4, new EntityAIFollowParent(this, 0.5f));
+        tasks.addTask(5, new EntityAIWander(this, 0.5f));
         tasks.addTask(6, new EntityAIWatchClosest(this, net.minecraft.src.EntityPlayer.class, 6F));
         tasks.addTask(7, new EntityAILookIdle(this));
     }
 	
 	public void updateEntityActionState()
 	{
-		super.updateEntityActionState();
-		if (riddenByEntity != null)
+		if (riddenByEntity != null )
 		{
 			EntityPlayer joueur = (EntityPlayer)riddenByEntity;
-			if(!isInWater())
+			if(!isInWater()  && this.isCollidedVertically)
 			{
 				 motionX+=((EntityPlayer)riddenByEntity).motionX*10*f;
 				 motionY+=((EntityPlayer)riddenByEntity).motionY*f;
 				 motionZ+=((EntityPlayer)riddenByEntity).motionZ*10*f;
+			}
+			else if(!isInWater()  && !this.isCollidedVertically)
+			{
+				motionX+=((EntityPlayer)riddenByEntity).motionX*4*f;
+				motionY+=((EntityPlayer)riddenByEntity).motionY*f;
+				motionZ+=((EntityPlayer)riddenByEntity).motionZ*4*f;
 			}
 			else
 			{
@@ -43,11 +48,18 @@ public class EntityCheval extends EntityAnimal
 			{
 				motionY=0.75f;
 			}
+			if (isInWater() && joueur.isJumping )
+			{
+				motionY=0.75f;
+			}
+		}else
+		{
+			super.updateEntityActionState();
 		}
 		
-		if (isCollidedHorizontally)
+		if (isCollidedHorizontally && this.isCollidedVertically)
 		{
-		    isJumping=true;
+			motionY=0.65f;
 		}
 	}
     /**

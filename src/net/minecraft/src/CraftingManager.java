@@ -385,7 +385,7 @@ public class CraftingManager
                     Item.bowlEmpty, Item.bucketMilk
                 });
 
-        addRecipe(new ItemStack(Block.highWood, 1), new Object[]
+ /*       addRecipe(new ItemStack(Block.highWood, 1), new Object[]
                 {
                 "###", "###", "###", '#', new ItemStack(Block.planks)
                 });
@@ -397,6 +397,31 @@ public class CraftingManager
                 {
                     "###", "###", '#', Block.brick
                 });
+        
+        addRecipe(new ItemStack(Block.blocCanne, 1), new Object[]
+                {
+                    "###","###", "###", '#', Item.tube
+                });
+        addRecipe(new ItemStack(Item.tube, 1), new Object[]
+                {
+                    "##", "##", '#', Item.reed
+                });
+        addRecipe(new ItemStack(Item.sarbacane, 1), new Object[]
+                {
+                    "#","#", "#", '#', Item.tube
+                });
+        addRecipe(new ItemStack(Item.flechette, 1), new Object[]
+                {
+                    "#", "A", '#', Item.reed,'A',Item.feather
+                });
+        addRecipe(new ItemStack(Block.cible, 1), new Object[]
+                {
+                    "#Z#", "ZAZ", "#Z#",'#', Block.planks,'Z',Block.tapis,'A',Item.redstone
+                });
+        addShapelessRecipe(new ItemStack(Item.arrowRedstone, 1), new Object[]
+                {
+        			Item.arrow, Item.redstone
+                });
 
 
         
@@ -404,7 +429,7 @@ public class CraftingManager
   {
       addRecipe(new ItemStack(Block.tapis, 6,i), new Object[]
               {
-              "  ", "###", "  ", '#', new ItemStack(Block.cloth, 1, i)
+             "##", '#', new ItemStack(Block.cloth, 1, i)
               });
    addRecipe(new ItemStack(Block.demiDalleLaine, 6, i), new Object[]
                 {
@@ -412,7 +437,7 @@ public class CraftingManager
                 });
   }
 
-        
+        */
         Collections.sort(recipes, new RecipeSorter(this));
         System.out.println((new StringBuilder()).append(recipes.size()).append(" recipes").toString());
     }

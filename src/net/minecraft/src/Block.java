@@ -178,7 +178,11 @@ public class Block
     public static final Block dalleLaine;
     public static final Block leavesPommier;
 	public static final Block blocCanne;
-    
+    public static final BlockFlower plantAdd;
+    public static final BlockFlower plantAddd;
+    public static final BlockFlower plantAdddd;
+    public static final BlockFlower plantAddddd;
+    public static final Block cible;
     
     
     
@@ -1350,7 +1354,12 @@ public class Block
         demiDalleLaineEnvers = (new BlockDalleLaineEnvers(142,false)).setHardness(0.8F).setStepSound(soundClothFootstep).setBlockName("demiDalleLaine");
         leavesPommier =(new BlockLeavesPommier(143, 232)).setHardness(0.2F).setLightOpacity(1).setStepSound(soundGrassFootstep).setBlockName("leaves").setRequiresSelfNotify();
 		blocCanne = new Block(144, 233,Material.plants).setHardness(1.5F).setResistance(5F).setStepSound(soundStoneFootstep).setBlockName("blocCanne");
-		
+		plantAdd = (BlockFlower)(new BlockFlower(145, 216)).setHardness(0.0F).setStepSound(soundGrassFootstep).setBlockName("flower1");
+        plantAddd = (BlockFlower)(new BlockFlower(146, 217)).setHardness(0.0F).setStepSound(soundGrassFootstep).setBlockName("flower2");
+        plantAdddd = (BlockFlower)(new BlockFlower(147, 218)).setHardness(0.0F).setStepSound(soundGrassFootstep).setBlockName("flower3");
+        plantAddddd = (BlockFlower)(new BlockFlower(148, 219)).setHardness(0.0F).setStepSound(soundGrassFootstep).setBlockName("flower4");
+        cible = new BlockCible(145,234).setHardness(0.5F).setStepSound(soundWoodFootstep).setBlockName("cible").setRequiresSelfNotify();
+        
         
         Item.itemsList[tapis.blockID] = new ItemTapis(tapis.blockID - 256);
         Item.itemsList[cloth.blockID] = (new ItemCloth(cloth.blockID - 256)).setItemName("cloth");

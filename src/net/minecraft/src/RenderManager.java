@@ -83,7 +83,10 @@ public class RenderManager
         entityRenderMap.put(net.minecraft.src.EntityFishHook.class, new RenderFish());
         entityRenderMap.put(net.minecraft.src.EntityLightningBolt.class, new RenderLightningBolt());
 		entityRenderMap.put(net.minecraft.src.EntityFlechette.class, new RenderFlechette());
+		entityRenderMap.put(net.minecraft.src.EntityArrowRedstone.class, new RenderArrowRedstone());
 		entityRenderMap.put(net.minecraft.src.EntityCheval.class, new RenderCheval(new ModelCheval(), 0.7f));
+		entityRenderMap.put(net.minecraft.src.EntityChevalNoir.class, new RenderChevalNoir(new ModelChevalNoir(), 0.7f));
+		entityRenderMap.put(net.minecraft.src.EntityChevalBlanc.class, new RenderChevalBlanc(new ModelChevalBlanc(), 0.7f));
         Render render;
 
         for (Iterator iterator = entityRenderMap.values().iterator(); iterator.hasNext(); render.setRenderManager(this))

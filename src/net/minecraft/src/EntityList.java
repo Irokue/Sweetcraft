@@ -233,6 +233,9 @@ public class EntityList
         addMapping(net.minecraft.src.EntityVillager.class, "Villager", 120, 0x563c33, 0xbd8b72);
         addMapping(net.minecraft.src.EntityEnderCrystal.class, "EnderCrystal", 200);
 		addMapping(net.minecraft.src.EntityFlechette.class, "flechette", 205);
-		addMapping(net.minecraft.src.EntityCheval.class, "cheval", 206, 0xffffff,0x000000);
+		addMapping(net.minecraft.src.EntityArrow.class, "ArrowRedstone", 206);
+		addMapping(net.minecraft.src.EntityCheval.class, "cheval", 207, 0xffffff,0x000000);
+		addMapping(net.minecraft.src.EntityChevalNoir.class, "chevalNoir", 208, 0xffffff,0x000000);
+		addMapping(net.minecraft.src.EntityChevalBlanc.class, "chevalBlanc", 209, 0xffffff,0x000000);
     }
 }

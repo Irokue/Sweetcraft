@@ -3,7 +3,7 @@ package net.minecraft.src;
 import java.util.List;
 import java.util.Random;
 
-public class EntityFlechette extends EntityArrow
+public class EntityFlechette extends Entity
 {
     private int xTile;
     private int yTile;
@@ -38,7 +38,7 @@ public class EntityFlechette extends EntityArrow
         doesArrowBelongToPlayer = false;
         arrowShake = 0;
         ticksInAir = 0;
-        damage = 2D;
+        damage = 1D;
         arrowCritical = false;
         shootingEntity = par2EntityLiving;
         doesArrowBelongToPlayer = par2EntityLiving instanceof EntityPlayer;
@@ -227,11 +227,11 @@ public class EntityFlechette extends EntityArrow
 
                 if (shootingEntity == null)
                 {
-                    damagesource = DamageSource.causeArrowDamage(this, this);
+                    damagesource = DamageSource.causeArrowDamage(new EntityArrow(worldObj), this);
                 }
                 else
                 {
-                    damagesource = DamageSource.causeArrowDamage(this, shootingEntity);
+                    damagesource = DamageSource.causeArrowDamage(new EntityArrow(worldObj), shootingEntity);
                 }
 
                 if (isBurning())

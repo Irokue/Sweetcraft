@@ -16,7 +16,11 @@ public enum EnumArmorMaterial
     }, 25),
     DIAMOND(33, new int[] {
         3, 8, 6, 3
-    }, 10);
+    }, 10),
+    /** ADD*/
+    GLOWSTONE(10, new int[] {
+            1, 3, 4, 1
+        }, 5);
 
     /**
      * Holds the maximum damage factor (each piece multiply this by it's own value) of the material, this is the item

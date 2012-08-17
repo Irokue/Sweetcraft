@@ -18,7 +18,7 @@ public class ItemBow extends Item
     {
         boolean flag = par3EntityPlayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, par1ItemStack) > 0;
 
-        if (flag || par3EntityPlayer.inventory.hasItem(Item.arrow.shiftedIndex))
+        if (flag || par3EntityPlayer.inventory.hasItem(Item.arrow.shiftedIndex)|| par3EntityPlayer.inventory.hasItem(Item.arrowRedstone.shiftedIndex))
         {
             int i = getMaxItemUseDuration(par1ItemStack) - par4;
             float f = (float)i / 20F;
@@ -33,49 +33,106 @@ public class ItemBow extends Item
             {
                 f = 1.0F;
             }
+			if (par3EntityPlayer.inventory.hasItem(Item.arrowRedstone.shiftedIndex))
+			{
+				EntityArrowRedstone entityarrow = new EntityArrowRedstone(par2World, par3EntityPlayer, f * 2.0F);
+				 if (f == 1.0F)
+		            {
+		                entityarrow.arrowCritical = true;
+		            }
 
-            EntityArrow entityarrow = new EntityArrow(par2World, par3EntityPlayer, f * 2.0F);
+		            int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, par1ItemStack);
 
-            if (f == 1.0F)
-            {
-                entityarrow.arrowCritical = true;
-            }
+		            if (j > 0)
+		            {
+		                entityarrow.setDamage(entityarrow.getDamage() + (double)j * 0.5D + 0.5D);
+		            }
 
-            int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, par1ItemStack);
+		            int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, par1ItemStack);
 
-            if (j > 0)
-            {
-                entityarrow.setDamage(entityarrow.getDamage() + (double)j * 0.5D + 0.5D);
-            }
+		            if (k > 0)
+		            {
+		                entityarrow.func_46023_b(k);
+		            }
 
-            int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, par1ItemStack);
+		            if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, par1ItemStack) > 0)
+		            {
+		                entityarrow.setFire(100);
+		            }
 
-            if (k > 0)
-            {
-                entityarrow.func_46023_b(k);
-            }
+		            par1ItemStack.damageItem(1, par3EntityPlayer);
+		            par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
-            if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, par1ItemStack) > 0)
-            {
-                entityarrow.setFire(100);
-            }
+		            if (!flag)
+		            {
+						if (!par3EntityPlayer.inventory.hasItem(Item.arrow.shiftedIndex))
+						{
+							par3EntityPlayer.inventory.consumeInventoryItem(Item.arrowRedstone.shiftedIndex);
+						}else
+						{
+							par3EntityPlayer.inventory.consumeInventoryItem(Item.arrow.shiftedIndex);
+						}
+		            }
+		            else
+		            {
+		                entityarrow.doesArrowBelongToPlayer = false;
+		            }
 
-            par1ItemStack.damageItem(1, par3EntityPlayer);
-            par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+		            if (!par2World.isRemote)
+		            {
+		                par2World.spawnEntityInWorld(entityarrow);
+		            }
+			}else
+			{
+				EntityArrow entityarrow = new EntityArrow(par2World, par3EntityPlayer, f * 2.0F);
+				 if (f == 1.0F)
+		            {
+		                entityarrow.arrowCritical = true;
+		            }
 
-            if (!flag)
-            {
-                par3EntityPlayer.inventory.consumeInventoryItem(Item.arrow.shiftedIndex);
-            }
-            else
-            {
-                entityarrow.doesArrowBelongToPlayer = false;
-            }
+		            int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, par1ItemStack);
 
-            if (!par2World.isRemote)
-            {
-                par2World.spawnEntityInWorld(entityarrow);
-            }
+		            if (j > 0)
+		            {
+		                entityarrow.setDamage(entityarrow.getDamage() + (double)j * 0.5D + 0.5D);
+		            }
+
+		            int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, par1ItemStack);
+
+		            if (k > 0)
+		            {
+		                entityarrow.func_46023_b(k);
+		            }
+
+		            if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, par1ItemStack) > 0)
+		            {
+		                entityarrow.setFire(100);
+		            }
+
+		            par1ItemStack.damageItem(1, par3EntityPlayer);
+		            par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+
+		            if (!flag)
+		            {
+						if (!par3EntityPlayer.inventory.hasItem(Item.arrow.shiftedIndex))
+						{
+							par3EntityPlayer.inventory.consumeInventoryItem(Item.arrowRedstone.shiftedIndex);
+						}else
+						{
+							par3EntityPlayer.inventory.consumeInventoryItem(Item.arrow.shiftedIndex);
+						}
+		            }
+		            else
+		            {
+		                entityarrow.doesArrowBelongToPlayer = false;
+		            }
+
+		            if (!par2World.isRemote)
+		            {
+		                par2World.spawnEntityInWorld(entityarrow);
+		            }
+			}
+           
         }
     }
 
@@ -105,7 +162,7 @@ public class ItemBow extends Item
      */
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (par3EntityPlayer.capabilities.isCreativeMode || par3EntityPlayer.inventory.hasItem(Item.arrow.shiftedIndex))
+        if (par3EntityPlayer.capabilities.isCreativeMode || par3EntityPlayer.inventory.hasItem(Item.arrow.shiftedIndex) || par3EntityPlayer.inventory.hasItem(Item.arrowRedstone.shiftedIndex))
         {
             par3EntityPlayer.setItemInUse(par1ItemStack, getMaxItemUseDuration(par1ItemStack));
         }

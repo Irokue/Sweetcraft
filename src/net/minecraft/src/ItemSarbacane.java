@@ -20,11 +20,18 @@ public class ItemSarbacane extends Item
 
         if (flag || par3EntityPlayer.inventory.hasItem(Item.flechette.shiftedIndex))
         {
-            float f = 1.0F;
-
+        	 int i = getMaxItemUseDuration(par1ItemStack) - par4;
+             float f = (float)i / 20F;
+             f = (f * f + f * 2.0F) / 3F;
+        	
             EntityFlechette entityflechette = new EntityFlechette(par2World, par3EntityPlayer, f * 2.0F);
-
-            if (f == 1.0F)
+            
+            if (f > 0.5F)
+            {
+                f = 0.5F;
+            }
+            
+            if (f == 0.5F)
             {
                 entityflechette.arrowCritical = true;
             }

@@ -27,7 +27,7 @@ class ContainerCreative extends Container
             Block.trapdoor, Block.enchantmentTable, Block.redstoneLampIdle, Block.chaise, Block.table, Block.X, Block.foin, Block.stairsFoin, Block.nuage, 
             Block.tapis,Block.tapis,Block.tapis,Block.tapis,Block.tapis,Block.tapis,Block.tapis,Block.tapis,Block.tapis,Block.tapis,Block.tapis,Block.tapis,Block.tapis,Block.tapis,Block.tapis,
             Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,Block.demiDalleLaine,
-            Block.barriereBrique,
+            Block.barriereBrique, Block.plantAdd, Block.plantAddd, Block.plantAdddd, Block.plantAddddd,Block.cible, Block.blocCanne
         };
         int i = 0;
         int j = 0;

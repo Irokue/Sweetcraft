@@ -191,4 +191,53 @@ public class GuiInventory extends GuiContainer
             j += l;
         }
     }
+    
+    protected void mouseClicked(int par1, int par2, int par3)
+    {
+    	if (par3 == 1)
+        {
+            Slot slot = getSlotAtPosition(par1, par2);
+            if (slot != null)
+            {
+            	if (slot.getStack()!=null)
+            	{
+	            if (slot.getStack().itemID==Block.dirt.blockID)
+	            {
+	            	System.out.print("test2");
+	            	return;
+	            }
+            	}
+            }
+        }
+    	super.mouseClicked(par1, par2, par3);
+    	
+    }
+        /**
+         * Returns the slot at the given coordinates or null if there is none.
+         */
+        private Slot getSlotAtPosition(int par1, int par2)
+        {
+            for (int i = 0; i < inventorySlots.inventorySlots.size(); i++)
+            {
+                Slot slot = (Slot)inventorySlots.inventorySlots.get(i);
+
+                if (isMouseOverSlot(slot, par1, par2))
+                {
+                    return slot;
+                }
+            }
+
+            return null;
+        }
+        
+        private boolean isMouseOverSlot(Slot par1Slot, int par2, int par3)
+        {
+            int i = guiLeft;
+            int j = guiTop;
+            par2 -= i;
+            par3 -= j;
+            return par2 >= par1Slot.xDisplayPosition - 1 && par2 < par1Slot.xDisplayPosition + 16 + 1 && par3 >= par1Slot.yDisplayPosition - 1 && par3 < par1Slot.yDisplayPosition + 16 + 1;
+        }
+
+
 }
