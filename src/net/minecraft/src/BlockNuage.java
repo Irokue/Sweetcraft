@@ -16,6 +16,25 @@ public class BlockNuage extends BlockBreakable{
     {
         return 0;
     }
+    
+    /**
+     * Triggered whenever an entity collides with this block (enters into the block). Args: world, x, y, z, entity
+     */
+    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    {
+    	par5Entity.motionX *= 0.40000000000000002D;
+        par5Entity.motionZ *= 0.40000000000000002D;
+        par5Entity.motionY *= 0.40000000000000002D;
+    }
+    
+    /**
+     * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
+     * cleared to be reused)
+     */
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int i)
+    {
+        return null;
+    }
 
     /**
      * Returns which pass should this block be rendered on. 0 for solids and 1 for alpha

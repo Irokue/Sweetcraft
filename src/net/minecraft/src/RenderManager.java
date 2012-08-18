@@ -87,6 +87,8 @@ public class RenderManager
 		entityRenderMap.put(net.minecraft.src.EntityCheval.class, new RenderCheval(new ModelCheval(), 0.7f));
 		entityRenderMap.put(net.minecraft.src.EntityChevalNoir.class, new RenderChevalNoir(new ModelChevalNoir(), 0.7f));
 		entityRenderMap.put(net.minecraft.src.EntityChevalBlanc.class, new RenderChevalBlanc(new ModelChevalBlanc(), 0.7f));
+		entityRenderMap.put(net.minecraft.src.EntityProtectingGolem.class, new RenderLiving(new ModelProtectingGolem(), 0.5f));
+		
         Render render;
 
         for (Iterator iterator = entityRenderMap.values().iterator(); iterator.hasNext(); render.setRenderManager(this))

@@ -237,5 +237,6 @@ public class EntityList
 		addMapping(net.minecraft.src.EntityCheval.class, "cheval", 207, 0xffffff,0x000000);
 		addMapping(net.minecraft.src.EntityChevalNoir.class, "chevalNoir", 208, 0xffffff,0x000000);
 		addMapping(net.minecraft.src.EntityChevalBlanc.class, "chevalBlanc", 209, 0xffffff,0x000000);
+		addMapping(net.minecraft.src.EntityProtectingGolem.class, "ProtectingGolem", 210, 0x1f1f1f,0x3fbdb8);
     }
 }
